@@ -17,5 +17,5 @@
 + (SCNGeometry *)hydrogenAtom;
 + (SCNGeometry *)nitrogenAtom;
 + (SCNGeometry *)chlorineAtom;
-
++ (SCNGeometry *)sulfurAtom;
 @end

@@ -10,20 +10,37 @@
 #import "Atom.h"
 #import "MathFunctions.h"
 
-@implementation Molecule {
-    CGFloat _distance;
+@implementation Molecule
+
+- (SCNNode *)connectorWithPositions:(SCNVector3)positionA and:(SCNVector3)positionB command:(NSString *)command distance:(CGFloat)distance {
+    SCNNode *node = [SCNNode node];
+
+    distance = distance *2;
+    SCNGeometry *cylinder = [SCNCylinder cylinderWithRadius:0.15 height:distance];
+    cylinder.firstMaterial.diffuse.contents = [UIColor blackColor];
+    cylinder.firstMaterial.specular.contents = [UIColor whiteColor];
+    node.geometry = cylinder;
+    
+    
+    //we set the position of the connector half way between the two points
+    node.position = [MathFunctions connectorPositionWithVector:positionA and:positionB];
+    
+    //now we set the angle of the cylinder
+    //CYLINDER APPROACH ===== find the angle the hard way
+    
+    node.pivot = [self rotationWithCommand:command];
+    node.name = @"connector";
+    
+    return node;
 }
+
+
 
 - (SCNNode *)connectorWithPositions:(SCNVector3)positionA and:(SCNVector3)positionB command:(NSString *)command {
     SCNNode *node = [SCNNode node];
     
     //first compute the distance. i.e height
     CGFloat distance = [MathFunctions distanceFormulaWithVectors:positionA and:positionB];
-    if(_distance > 0) {
-        distance = _distance;
-        _distance = 0;
-    }
-    
     
     SCNGeometry *cylinder = [SCNCylinder cylinderWithRadius:0.15 height:distance];
     cylinder.firstMaterial.diffuse.contents = [UIColor blackColor];
@@ -209,6 +226,34 @@
     hydroChloride.name = @"Hydrogen Chloride";
     return hydroChloride;
 }
+#pragma mark - going to start to factor in connector distances with future molecs here...
+
+
+- (SCNNode *)sulfuricAcidMolecule {
+    SCNNode *H2SO4 = [SCNNode node];
+    SCNVector3 sulfurPosition = SCNVector3Make(0, -0.3, 0);
+    SCNVector3 sulfurPositionDoubleBondA = SCNVector3Make(0, 0.3, 0);
+    
+    //45 and 135 degrees yz respectively
+    SCNVector3 oxygenDoubleBondedOne = SCNVector3Make(0, 3.3, 3.3);
+    SCNVector3 oxygenDoubleBondedOneB = SCNVector3Make(0, 2.7, 2.7);
+    SCNVector3 oxygenDoubleBondedTwo = SCNVector3Make(0, -3.3 ,3.3);
+    SCNVector3 oxygenDoubleBondedTwoB = SCNVector3Make(0, -2.7, -2.7);
+    
+    [self nodeWithAtom:[Atom sulfurAtom] molecule:H2SO4 position:sulfurPosition];
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:H2SO4 position:oxygenDoubleBondedOne];
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:H2SO4 position:oxygenDoubleBondedTwo];
+    
+    [H2SO4 addChildNode:[self connectorWithPositions:oxygenDoubleBondedOne and:sulfurPosition command:@"135yz" distance:1.42] ];
+    [H2SO4 addChildNode:[self connectorWithPositions:sulfurPositionDoubleBondA and:oxygenDoubleBondedOneB command:@"135yz" distance:1.42] ];
+    
+    [H2SO4 addChildNode:[self connectorWithPositions:oxygenDoubleBondedTwo and:sulfurPositionDoubleBondA command:@"45yz" distance:1.42]];
+    [H2SO4 addChildNode:[self connectorWithPositions:oxygenDoubleBondedTwoB and:sulfurPositionDoubleBondA command:@"45yz" distance:1.42]];
+    
+
+    H2SO4.name = @"Sulfuric Acid";
+    return H2SO4;
+}
 
 - (void)nodeWithAtom:(SCNGeometry *)atom molecule:(SCNNode *)molecule position:(SCNVector3)position {
     SCNNode *node = [SCNNode nodeWithGeometry:atom];
@@ -216,7 +261,6 @@
     [molecule addChildNode:node];
 }
 
-#pragma mark - going to start to factor in connector distances with future molecs here...
 
 
 @end

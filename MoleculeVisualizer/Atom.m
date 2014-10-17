@@ -58,4 +58,12 @@
     chlorine.name = @"chlorine";
     return chlorine;
 }
+
++ (SCNGeometry *)sulfurAtom {
+    SCNGeometry *sulfur = [SCNSphere sphereWithRadius:1.80];
+    sulfur.firstMaterial.diffuse.contents = [UIColor colorWithRed:155/255 green:153/255 blue:57/255 alpha:1.0];
+    sulfur.firstMaterial.specular.contents = [UIColor whiteColor];
+    sulfur.name = @"Sulfur";
+    return sulfur;
+}
 @end

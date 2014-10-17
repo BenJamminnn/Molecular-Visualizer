@@ -24,5 +24,6 @@
 
 - (SCNNode *)hydrogenChlorideMolecule;
 
+- (SCNNode *)sulfuricAcidMolecule;
 
 @end
