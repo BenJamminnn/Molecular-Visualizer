@@ -14,10 +14,12 @@
 @property (weak, nonatomic) IBOutlet SCNView *sceneView;
 
 @property (nonatomic) CGFloat currentAngle;
-
 @end
 
-@implementation ViewController
+@implementation ViewController {
+    CGFloat _scaleStart;
+    CGFloat _scaleEnd;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -25,7 +27,7 @@
                                                                   action:@selector(done)];
     self.navigationItem.leftBarButtonItem = backButton;
     self.navigationController.navigationBar.topItem.title = self.geometryNode.name;
-
+    
     [self sceneSetup];
 
 }
@@ -49,9 +51,7 @@
 
 
 - (void)sceneSetup {
-
-    
-    self.currentAngle = 0;
+    _scaleStart = 1.0;
     
     SCNScene *scene = [SCNScene scene];
     
@@ -69,16 +69,29 @@
     
     SCNNode *camNode = [SCNNode node];
     camNode.camera = [SCNCamera camera];
+    camNode.name = @"camNode";
     camNode.position = SCNVector3Make(0, 0, 40);
     [scene.rootNode addChildNode:camNode];
     
     scene.rootNode.position = SCNVector3Make(self.view.bounds.size.width/2, self.view.bounds.size.height/2, 0);
 
+    UIGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(pinchGesture:)];
     UIGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panGesture:)];
     self.sceneView.scene = scene;
     [self.sceneView addGestureRecognizer:pan];
+    [self.sceneView addGestureRecognizer:pinch];
 
     [self.sceneView.scene.rootNode addChildNode:self.geometryNode];
+}
+
+- (void)pinchGesture:(UIPinchGestureRecognizer *)sender {
+    CGFloat scale = sender.scale;
+    SCNNode *cam = [self.sceneView.scene.rootNode childNodeWithName:@"camNode" recursively:NO];
+    CGFloat zValue = cam.position.z - log(scale);
+    zValue = (zValue > 90) ? 90 : zValue;
+    zValue = (zValue < 10) ? 10 : zValue;
+    cam.position = SCNVector3Make(cam.position.x, cam.position.y, zValue);
+
 }
 
 - (void)panGesture:(UIPanGestureRecognizer *)sender {
@@ -91,7 +104,7 @@
     if(sender.state == UIGestureRecognizerStateEnded) {
         self.currentAngle = newAngle;
     }
-    
+
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {

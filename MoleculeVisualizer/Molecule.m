@@ -68,7 +68,7 @@
     methane.name = @"Methane";
     SCNVector3 carbonPosition = SCNVector3Make(0, 0, 0);
     
-    SCNVector3 hydrogenOnePosition = SCNVector3Make(0, -4, 4);
+    SCNVector3 hydrogenOnePosition = SCNVector3Make(0, -3.5, 3.5);
     SCNVector3 hydrogenTwoPosition = SCNVector3Make(+4, -2, -1);
     SCNVector3 hydrogenThreePosition = SCNVector3Make(-4, -2, -1);
     SCNVector3 hydrogenFourPosition = SCNVector3Make(0, +4, 0);
@@ -133,7 +133,7 @@
     SCNNode *ammonia = [SCNNode node];
     SCNVector3 nitrogenPosition = SCNVector3Make(0, 0, 0);
     
-    SCNVector3 hydroOne = SCNVector3Make(0, -4, -3);
+    SCNVector3 hydroOne = SCNVector3Make(0, -4, -4);
     SCNVector3 hydroTwo = SCNVector3Make(+4, -3, +2);
     SCNVector3 hydroThree = SCNVector3Make(-4, -3, +2);
 
@@ -167,6 +167,27 @@
     water.name = @"Water";
     
     return water;
+}
+
+- (SCNNode *)hydrogenPeroxideMolecule {
+    SCNNode *hydrogenPeroxide = [SCNNode node];
+    SCNVector3 oxygenOne = SCNVector3Make(-2, 0, 0);
+    SCNVector3 oxygenTwo = SCNVector3Make(+2, 0, 0);
+    
+    SCNVector3 hydroOne = SCNVector3Make(+5, +3, 0);
+    SCNVector3 hydroTwo = SCNVector3Make(-2, -3, 3);
+    
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:hydrogenPeroxide position:oxygenOne];
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:hydrogenPeroxide position:oxygenTwo];
+    [hydrogenPeroxide addChildNode:[self connectorWithPositions:oxygenOne and:oxygenTwo command:@"0xy"]];
+    
+    [hydrogenPeroxide addChildNode:[self connectorWithPositions:oxygenTwo and:hydroOne command:@"45xy"]];
+    [hydrogenPeroxide addChildNode:[self connectorWithPositions:oxygenOne and:hydroTwo command:@"45yz"]];
+    [self nodeWithAtom:[Atom hydrogenAtom] molecule:hydrogenPeroxide position:hydroOne];
+    [self nodeWithAtom:[Atom hydrogenAtom] molecule:hydrogenPeroxide position:hydroTwo];
+    
+    hydrogenPeroxide.name = @"Hydrogen Peroxide";
+    return hydrogenPeroxide;
 }
 
 

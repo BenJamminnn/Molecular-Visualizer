@@ -110,7 +110,8 @@
         SCNNode *p = [molec ptfeMolecule];
         SCNNode *n = [molec ammoniaMolecule];
         SCNNode *w = [molec waterMolecule];
-        _molecules = @[m, p, n, w];
+        SCNNode *h = [molec hydrogenPeroxideMolecule];
+        _molecules = @[m, p, n, w, h];
     }
     return _molecules;
 }

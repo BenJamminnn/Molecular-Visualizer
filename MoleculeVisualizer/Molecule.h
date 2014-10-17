@@ -19,4 +19,7 @@
 - (SCNNode *)ammoniaMolecule;
 
 - (SCNNode *)waterMolecule;
+
+- (SCNNode *)hydrogenPeroxideMolecule;
+
 @end
