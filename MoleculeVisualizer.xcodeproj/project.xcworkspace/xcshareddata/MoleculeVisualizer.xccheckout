@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>C3E23B38-47C3-49DF-A67F-5B378390EECB</string>
+	<key>IDESourceControlProjectName</key>
+	<string>MoleculeVisualizer</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>1743F6F8D2A55E2C92572A9EAF3AE827D3843796</key>
+		<string>github.com:BenJamminnn/Molecular-Visualizer.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>MoleculeVisualizer.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>1743F6F8D2A55E2C92572A9EAF3AE827D3843796</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:BenJamminnn/Molecular-Visualizer.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>1743F6F8D2A55E2C92572A9EAF3AE827D3843796</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>1743F6F8D2A55E2C92572A9EAF3AE827D3843796</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MoleculeVisualizer</string>
+		</dict>
+	</array>
+</dict>
+</plist>

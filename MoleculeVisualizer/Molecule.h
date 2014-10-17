@@ -22,4 +22,7 @@
 
 - (SCNNode *)hydrogenPeroxideMolecule;
 
+- (SCNNode *)hydrogenChlorideMolecule;
+
+
 @end

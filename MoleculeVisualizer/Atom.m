@@ -50,4 +50,12 @@
     nitrogen.name = @"nitrogen";
     return nitrogen;
 }
+
++ (SCNGeometry *)chlorineAtom {
+    SCNGeometry *chlorine = [SCNSphere sphereWithRadius:1.75];
+    chlorine.firstMaterial.diffuse.contents = [UIColor purpleColor];
+    chlorine.firstMaterial.specular.contents = [UIColor whiteColor];
+    chlorine.name = @"chlorine";
+    return chlorine;
+}
 @end

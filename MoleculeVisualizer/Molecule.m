@@ -10,13 +10,20 @@
 #import "Atom.h"
 #import "MathFunctions.h"
 
-@implementation Molecule
+@implementation Molecule {
+    CGFloat _distance;
+}
 
 - (SCNNode *)connectorWithPositions:(SCNVector3)positionA and:(SCNVector3)positionB command:(NSString *)command {
     SCNNode *node = [SCNNode node];
     
     //first compute the distance. i.e height
     CGFloat distance = [MathFunctions distanceFormulaWithVectors:positionA and:positionB];
+    if(_distance > 0) {
+        distance = _distance;
+        _distance = 0;
+    }
+    
     
     SCNGeometry *cylinder = [SCNCylinder cylinderWithRadius:0.15 height:distance];
     cylinder.firstMaterial.diffuse.contents = [UIColor blackColor];
@@ -190,13 +197,26 @@
     return hydrogenPeroxide;
 }
 
-
+- (SCNNode *)hydrogenChlorideMolecule {
+    SCNNode *hydroChloride = [SCNNode node];
+    
+    SCNVector3 chlorinePosition = SCNVector3Make(-2, 0, 0);
+    SCNVector3 hydrogenPosition = SCNVector3Make(2, 0, 0);
+    
+    [self nodeWithAtom:[Atom chlorineAtom] molecule:hydroChloride position:chlorinePosition];
+    [self nodeWithAtom:[Atom hydrogenAtom] molecule:hydroChloride position:hydrogenPosition];
+    [hydroChloride addChildNode:[self connectorWithPositions:chlorinePosition and:hydrogenPosition command:@"0xy"]];
+    hydroChloride.name = @"Hydrogen Chloride";
+    return hydroChloride;
+}
 
 - (void)nodeWithAtom:(SCNGeometry *)atom molecule:(SCNNode *)molecule position:(SCNVector3)position {
     SCNNode *node = [SCNNode nodeWithGeometry:atom];
     node.position = position;
     [molecule addChildNode:node];
 }
+
+#pragma mark - going to start to factor in connector distances with future molecs here...
 
 
 @end

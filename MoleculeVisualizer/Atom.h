@@ -16,5 +16,6 @@
 + (SCNGeometry *)oxygenAtom;
 + (SCNGeometry *)hydrogenAtom;
 + (SCNGeometry *)nitrogenAtom;
++ (SCNGeometry *)chlorineAtom;
 
 @end
