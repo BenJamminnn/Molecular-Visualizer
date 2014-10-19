@@ -17,7 +17,7 @@
 
     distance = distance *2;
     SCNGeometry *cylinder = [SCNCylinder cylinderWithRadius:0.15 height:distance];
-    cylinder.firstMaterial.diffuse.contents = [UIColor blackColor];
+    cylinder.firstMaterial.diffuse.contents = [UIColor darkGrayColor];
     cylinder.firstMaterial.specular.contents = [UIColor whiteColor];
     node.geometry = cylinder;
     
@@ -43,7 +43,7 @@
     CGFloat distance = [MathFunctions distanceFormulaWithVectors:positionA and:positionB];
     
     SCNGeometry *cylinder = [SCNCylinder cylinderWithRadius:0.15 height:distance];
-    cylinder.firstMaterial.diffuse.contents = [UIColor blackColor];
+    cylinder.firstMaterial.diffuse.contents = [UIColor darkGrayColor];
     cylinder.firstMaterial.specular.contents = [UIColor whiteColor];
     node.geometry = cylinder;
     
@@ -62,6 +62,8 @@
 
 - (SCNMatrix4)rotationWithCommand:(NSString *)command {
     SCNMatrix4 rotation = SCNMatrix4MakeRotation(M_PI_2, 0, 0, 0);
+    
+    //XY
     if([command isEqualToString:@"90xy"]) {
         rotation = SCNMatrix4MakeRotation(M_PI_2, 0, 1, 0);
     } else if([command isEqualToString:@"0xy"]) {
@@ -70,18 +72,29 @@
         rotation = SCNMatrix4MakeRotation(M_PI, 1, 2.5, 0);
     } else if([command isEqualToString:@"135xy"]) {
         rotation = SCNMatrix4MakeRotation(M_PI, 1, -2.5, 0);
+    //YZ
     } else if([command isEqualToString:@"45yz"]) {
         rotation = SCNMatrix4MakeRotation(M_PI, 0, -2.5, 1);
+    } else if([command isEqualToString:@"135yz"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, 0, -2.5, -1);
+    }else if([command isEqualToString:@"-135yz"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, 0, 2.5, -1);
+    }
+    //XYZ
+     else if([command isEqualToString:@"-45xyz"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, 1, -2.5, 0.5);
     } else if([command isEqualToString:@"45xyz"]) {
         rotation = SCNMatrix4MakeRotation(M_PI, 1, -2.5, -0.5);
     } else if([command isEqualToString:@"135xyz"]) {
         rotation = SCNMatrix4MakeRotation(M_PI, -1, -2.5, -0.5);
-    } else if([command isEqualToString:@"135yz"]) {
-        rotation = SCNMatrix4MakeRotation(M_PI, 0, -2.5, -1);
-    } else if([command isEqualToString:@"-45xyz"]) {
-        rotation = SCNMatrix4MakeRotation(M_PI, 1, -2.5, 0.5);
-    } else if([command isEqualToString:@"45-xyz"]) {
+    }  else if([command isEqualToString:@"45-xyz"]) {
         rotation = SCNMatrix4MakeRotation(M_PI, -1, -2.5, 0.5);
+    }  else if([command isEqualToString:@"-45yz"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, 0, -2.5, -1);
+    } else if([command isEqualToString:@"45xz"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, -3, 4, -2.5);
+    } else if([command isEqualToString:@"135xz"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, 3, 4, -2.5);
     }
     
     return rotation;
@@ -116,19 +129,19 @@
 
 - (SCNNode *)ptfeMolecule {
     SCNNode *ptfe = [SCNNode node];
-    SCNVector3 carbonLeft = SCNVector3Make(-4, 0, 0);
-    SCNVector3 carbonRight = SCNVector3Make(+4, 0, 0);
-    SCNVector3 carbonDoubleBondLeft = SCNVector3Make(+4, +0.3, 0);
-    SCNVector3 carbonDoubleBondRight = SCNVector3Make(-4, +0.3, 0);
-    SCNVector3 carbonDoubleBondLeftSecond = SCNVector3Make(+4, -0.3, 0);
-    SCNVector3 carbonDoubleBondRightSecond = SCNVector3Make(-4, -0.3, 0);
+    SCNVector3 carbonLeft = SCNVector3Make(-3, 0, 0);
+    SCNVector3 carbonRight = SCNVector3Make(+3, 0, 0);
+    SCNVector3 carbonDoubleBondLeft = SCNVector3Make(+3, +0.3, 0);
+    SCNVector3 carbonDoubleBondRight = SCNVector3Make(-3, +0.3, 0);
+    SCNVector3 carbonDoubleBondLeftSecond = SCNVector3Make(+3, -0.3, 0);
+    SCNVector3 carbonDoubleBondRightSecond = SCNVector3Make(-3, -0.3, 0);
 
 
     
-    SCNVector3 fluorineTopLeft = SCNVector3Make(-10, +6, 0);
-    SCNVector3 fluorineTopRight = SCNVector3Make(+10, +6, 0);
-    SCNVector3 fluorineBottomLeft = SCNVector3Make(-10, -6, 0);
-    SCNVector3 fluorineBottomRight = SCNVector3Make(+10, -6, 0);
+    SCNVector3 fluorineTopLeft = SCNVector3Make(-7, +4, 0);
+    SCNVector3 fluorineTopRight = SCNVector3Make(+7, +4, 0);
+    SCNVector3 fluorineBottomLeft = SCNVector3Make(-7, -4, 0);
+    SCNVector3 fluorineBottomRight = SCNVector3Make(+7, -4, 0);
     
     //connecting the carbons
     [self nodeWithAtom:[Atom carbonAtom] molecule:ptfe position:carbonLeft];
@@ -157,9 +170,9 @@
     SCNNode *ammonia = [SCNNode node];
     SCNVector3 nitrogenPosition = SCNVector3Make(0, 0, 0);
     
-    SCNVector3 hydroOne = SCNVector3Make(0, -4, -4);
-    SCNVector3 hydroTwo = SCNVector3Make(+4, -3, +2);
-    SCNVector3 hydroThree = SCNVector3Make(-4, -3, +2);
+    SCNVector3 hydroOne = SCNVector3Make(0, -3.4, -3.4);
+    SCNVector3 hydroTwo = SCNVector3Make(+3, -3.5, +2);
+    SCNVector3 hydroThree = SCNVector3Make(-3, -3.5, +2);
 
     [self nodeWithAtom:[Atom nitrogenAtom] molecule:ammonia position:nitrogenPosition];
     [ammonia addChildNode:[self connectorWithPositions:nitrogenPosition and:hydroOne command:@"135yz"]];
@@ -226,31 +239,64 @@
     hydroChloride.name = @"Hydrogen Chloride";
     return hydroChloride;
 }
-#pragma mark - going to start to factor in connector distances with future molecs here...
 
 
 - (SCNNode *)sulfuricAcidMolecule {
-    SCNNode *H2SO4 = [SCNNode node];
-    SCNVector3 sulfurPosition = SCNVector3Make(0, -0.3, 0);
-    SCNVector3 sulfurPositionDoubleBondA = SCNVector3Make(0, 0.3, 0);
     
-    //45 and 135 degrees yz respectively
-    SCNVector3 oxygenDoubleBondedOne = SCNVector3Make(0, 3.3, 3.3);
-    SCNVector3 oxygenDoubleBondedOneB = SCNVector3Make(0, 2.7, 2.7);
-    SCNVector3 oxygenDoubleBondedTwo = SCNVector3Make(0, -3.3 ,3.3);
-    SCNVector3 oxygenDoubleBondedTwoB = SCNVector3Make(0, -2.7, -2.7);
+    SCNNode *H2SO4 = [SCNNode node];
+   
+    //3 sulfur positions for double bonding
+    SCNVector3 sulfurPosition = SCNVector3Make(0, 0, 0);
+    SCNVector3 sulfurPositive = SCNVector3Make(0, 0, 2);
+    SCNVector3 sulfurNegative = SCNVector3Make(0, 0, 1);
+    //oxygens on the yz plane, double bonded at 45 and 135 degrees
+    SCNVector3 oxygenZPositiveA = SCNVector3Make(0, -4, -5);
+    SCNVector3 oxygenZPositiveB = SCNVector3Make(0, -3, -3);
+    SCNVector3 oxygenZPosition = SCNVector3Make(0, -4, -4);
+    
+    SCNVector3 oxygenZPositionNeg = SCNVector3Make(0, 4, -4);
+    SCNVector3 oxygenZNegativeA = SCNVector3Make(0, 4, -4.5);
+    SCNVector3 oxygenZNegativeB = SCNVector3Make(0, 4, -4.5);
+    
+    //oxygens on the xz plane, single bonded 45 and 135 degrees
+    SCNVector3 oxygenXZaxisA = SCNVector3Make(4, 0, 3.5);
+    SCNVector3 oxygenXZaxisB = SCNVector3Make(-4, 0, 3.5);
+    
+    //hydrogens on the yz plane, single bonded
+    SCNVector3 hydrogenPositive = SCNVector3Make(4, 3, 6);
+    SCNVector3 hydrogenNegative = SCNVector3Make(-4, -3, 6);
     
     [self nodeWithAtom:[Atom sulfurAtom] molecule:H2SO4 position:sulfurPosition];
-    [self nodeWithAtom:[Atom oxygenAtom] molecule:H2SO4 position:oxygenDoubleBondedOne];
-    [self nodeWithAtom:[Atom oxygenAtom] molecule:H2SO4 position:oxygenDoubleBondedTwo];
     
-    [H2SO4 addChildNode:[self connectorWithPositions:oxygenDoubleBondedOne and:sulfurPosition command:@"135yz" distance:1.42] ];
-    [H2SO4 addChildNode:[self connectorWithPositions:sulfurPositionDoubleBondA and:oxygenDoubleBondedOneB command:@"135yz" distance:1.42] ];
+    //adding yz oxygens
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:H2SO4 position:oxygenZPosition];
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:H2SO4 position:oxygenZPositionNeg];
     
-    [H2SO4 addChildNode:[self connectorWithPositions:oxygenDoubleBondedTwo and:sulfurPositionDoubleBondA command:@"45yz" distance:1.42]];
-    [H2SO4 addChildNode:[self connectorWithPositions:oxygenDoubleBondedTwoB and:sulfurPositionDoubleBondA command:@"45yz" distance:1.42]];
+    //adding xz oxygens
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:H2SO4 position:oxygenXZaxisA];
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:H2SO4 position:oxygenXZaxisB];
     
+    //adding hydrogens
+    [self nodeWithAtom:[Atom hydrogenAtom] molecule:H2SO4 position:hydrogenPositive];
+    [self nodeWithAtom:[Atom hydrogenAtom] molecule:H2SO4 position:hydrogenNegative];
+    
+    //+Z double bond
+    [H2SO4 addChildNode:[self connectorWithPositions:sulfurPositive and:oxygenZPositiveA command:@"-45yz"]];
+    [H2SO4 addChildNode:[self connectorWithPositions:sulfurPosition and:oxygenZPositiveB command:@"-45yz"]];
+    
+    //-Z double bond
+    [H2SO4 addChildNode:[self connectorWithPositions:sulfurPosition and:oxygenZNegativeA command:@"45yz"]];
+    [H2SO4 addChildNode:[self connectorWithPositions:sulfurNegative and:oxygenZNegativeB command:@"45yz"]];
 
+    //other 2 oxygens bonds xz plane
+    [H2SO4 addChildNode:[self connectorWithPositions:sulfurPosition and:oxygenXZaxisA command:@"45xz"]];
+    [H2SO4 addChildNode:[self connectorWithPositions:sulfurPosition and:oxygenXZaxisB command:@"135xz"]];
+    
+    //hydrogen connectors
+    [H2SO4 addChildNode:[self connectorWithPositions:oxygenXZaxisB and:hydrogenNegative command:@"-135yz"]];
+    [H2SO4 addChildNode:[self connectorWithPositions:oxygenXZaxisA and:hydrogenPositive command:@"135yz"]];
+
+    
     H2SO4.name = @"Sulfuric Acid";
     return H2SO4;
 }
