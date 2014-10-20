@@ -31,4 +31,6 @@
 - (SCNNode *)aceticAcidMolecule;
 
 - (SCNNode *)sulfurDioxideMolecule;
+
+- (SCNNode *)sulfurTrioxideMolecule;
 @end

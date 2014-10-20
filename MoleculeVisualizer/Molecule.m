@@ -441,6 +441,27 @@
     return sulfurDioxide;
 }
 
+- (SCNNode *)sulfurTrioxideMolecule {
+    SCNNode *sulfurTrioxide = [self sulfurDioxideMolecule];
+    
+    SCNVector3 southOxygen = SCNVector3Make(0, -5, 0);
+    
+    SCNVector3 sulfurDoubleBondA = SCNVector3Make(-0.2, 0, 0);
+    SCNVector3 sulfurDoubleBondB = SCNVector3Make(0.2, 0, 0);
+    
+    SCNVector3 oxygenDoubleA = SCNVector3Make(0.2, -5, 0);
+    SCNVector3 oxygenDoubleB = SCNVector3Make(-0.2, -5, 0);
+    
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:sulfurTrioxide position:southOxygen];
+    
+    //connectors
+    [sulfurTrioxide addChildNode:[self connectorWithPositions:sulfurDoubleBondA and:oxygenDoubleB command:@"90xy"]];
+    [sulfurTrioxide addChildNode:[self connectorWithPositions:sulfurDoubleBondB and:oxygenDoubleA command:@"90xy"]];
+
+    sulfurTrioxide.name = @"Sulfur Trioxide";
+    return sulfurTrioxide;
+}
+
 - (void)nodeWithAtom:(SCNGeometry *)atom molecule:(SCNNode *)molecule position:(SCNVector3)position {
     SCNNode *node = [SCNNode nodeWithGeometry:atom];
     node.position = position;
