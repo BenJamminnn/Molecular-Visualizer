@@ -36,4 +36,7 @@
 
 - (SCNNode *)carbonMonoxideMolecule;
 
+- (SCNNode *)carbonDioxideMolecule;
+
+
 @end

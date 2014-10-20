@@ -118,7 +118,8 @@
         SCNNode *sulfurDioxide = [molec sulfurDioxideMolecule];
         SCNNode *sulfurTrioxide = [molec sulfurTrioxideMolecule];
         SCNNode *carbonMonoxide = [molec carbonMonoxideMolecule];
-        _molecules = @[m, p, n, w, h, hcl, sulfuricAcid , nitricAcid, aceticAcid, sulfurDioxide, sulfurTrioxide, carbonMonoxide];
+        SCNNode *carbonDioxide = [molec carbonDioxideMolecule];
+        _molecules = @[carbonDioxide, m, p, n, w, h, hcl, sulfuricAcid , nitricAcid, aceticAcid, sulfurDioxide, sulfurTrioxide, carbonMonoxide];
     }
     return _molecules;
 }

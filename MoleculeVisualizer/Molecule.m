@@ -481,9 +481,39 @@
     [carbonMonoxide addChildNode:[self connectorWithPositions:carbonPosition and:oxygenPosition command:@"0xy"]];
     [carbonMonoxide addChildNode:[self connectorWithPositions:carbonPositionLower and:oxygenPositionLower command:@"0xy"]];
 
-    
     carbonMonoxide.name = @"Carbon Monoxide";
     return carbonMonoxide;
+}
+
+- (SCNNode *)carbonDioxideMolecule {
+    SCNNode *carbonDioxide = [SCNNode node];
+    
+    SCNVector3 carbonPosition = SCNVector3Make(0, 0, 0);
+    SCNVector3 carbonPositionUpper = SCNVector3Make(0, 0.2, 0);
+    SCNVector3 carbonPositionLower = SCNVector3Make(0, -0.2, 0);
+    
+    SCNVector3 oxygenLeft = SCNVector3Make(-5, 0, 0);
+    SCNVector3 oxygenLeftUpper = SCNVector3Make(-5, 0.2, 0);
+    SCNVector3 oxygenLeftLower = SCNVector3Make(-5, -0.2, 0);
+    
+    SCNVector3 oxygenRight = SCNVector3Make(5, 0, 0);
+    SCNVector3 oxygenRightUpper = SCNVector3Make(5, 0.2, 0);
+    SCNVector3 oxygenRightLower = SCNVector3Make(5, -0.2, 0);
+    
+    //adding atoms
+    [self nodeWithAtom:[Atom carbonAtom] molecule:carbonDioxide position:carbonPosition];
+    
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:carbonDioxide position:oxygenLeft];
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:carbonDioxide position:oxygenRight];
+    
+    //connectors
+    [carbonDioxide addChildNode:[self connectorWithPositions:carbonPositionUpper and:oxygenLeftUpper command:@"0xy"]];
+    [carbonDioxide addChildNode:[self connectorWithPositions:carbonPositionLower and:oxygenLeftLower command:@"0xy"]];
+    [carbonDioxide addChildNode:[self connectorWithPositions:carbonPositionUpper and:oxygenRightUpper command:@"0xy"]];
+    [carbonDioxide addChildNode:[self connectorWithPositions:carbonPositionLower and:oxygenRightLower command:@"0xy"]];
+
+    carbonDioxide.name = @"Carbon Dioxide";
+    return carbonDioxide;
 }
 
 - (void)nodeWithAtom:(SCNGeometry *)atom molecule:(SCNNode *)molecule position:(SCNVector3)position {
