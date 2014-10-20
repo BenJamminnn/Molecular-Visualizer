@@ -405,10 +405,40 @@
     [aceticAcid addChildNode:leftHydro];
     [aceticAcid addChildNode:southHydro];
     
-    
-    
     aceticAcid.name = @"Acetic Acid";
     return aceticAcid;
+}
+
+- (SCNNode *)sulfurDioxideMolecule {
+    SCNNode *sulfurDioxide = [SCNNode node];
+    
+    SCNVector3 sulfurPosition = SCNVector3Make(0, 0, 0);
+    SCNVector3 sulfurPositionRight = SCNVector3Make(1, 0, 0);
+    SCNVector3 sulfurPositionLeft = SCNVector3Make(-1, 0, 0);
+    
+    SCNVector3 oxygenPosition = SCNVector3Make(4, 4, 0);
+    SCNVector3 oxygenPositionA = SCNVector3Make(4, 3.5, 0);
+    SCNVector3 oxygenPositionB = SCNVector3Make(3, 4.5, 0);
+    
+    SCNVector3 oxygenTwoPosition = SCNVector3Make(-4, 4, 0);
+    SCNVector3 oxygenTwoPositionA = SCNVector3Make(-4, 3.5, 0);
+    SCNVector3 oxygenTwoPositionB = SCNVector3Make(-3, 4.5, 0);
+    
+    //adding atoms
+    [self nodeWithAtom:[Atom sulfurAtom] molecule:sulfurDioxide position:sulfurPosition];
+    
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:sulfurDioxide position:oxygenPosition];
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:sulfurDioxide position:oxygenTwoPosition];
+    
+    //adding connectors
+    [sulfurDioxide addChildNode:[self connectorWithPositions:sulfurPositionLeft and:oxygenTwoPositionB command:@"135xy"]];
+    [sulfurDioxide addChildNode:[self connectorWithPositions:sulfurPosition and:oxygenTwoPositionA command:@"135xy"]];
+
+    [sulfurDioxide addChildNode:[self connectorWithPositions:sulfurPosition and:oxygenPositionA command:@"45xy"]];
+    [sulfurDioxide addChildNode:[self connectorWithPositions:sulfurPositionRight and:oxygenPositionB command:@"45xy"]];
+
+    sulfurDioxide.name = @"Sulfur Dioxide";
+    return sulfurDioxide;
 }
 
 - (void)nodeWithAtom:(SCNGeometry *)atom molecule:(SCNNode *)molecule position:(SCNVector3)position {
