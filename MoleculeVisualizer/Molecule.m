@@ -72,6 +72,8 @@
         rotation = SCNMatrix4MakeRotation(M_PI, 1, 2.5, 0);
     } else if([command isEqualToString:@"135xy"]) {
         rotation = SCNMatrix4MakeRotation(M_PI, 1, -2.5, 0);
+    }else if ([command isEqualToString:@"345xy"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, 2.2,-2.5, 0);
     //YZ
     } else if([command isEqualToString:@"45yz"]) {
         rotation = SCNMatrix4MakeRotation(M_PI, 0, -2.5, 1);
@@ -240,7 +242,6 @@
     return hydroChloride;
 }
 
-
 - (SCNNode *)sulfuricAcidMolecule {
     
     SCNNode *H2SO4 = [SCNNode node];
@@ -299,6 +300,48 @@
     
     H2SO4.name = @"Sulfuric Acid";
     return H2SO4;
+}
+
+- (SCNNode *)nitricAcidMolecule {
+    SCNNode *nitricAcid = [SCNNode node];
+    
+    SCNVector3 nitrogenPosition = SCNVector3Make(0, 0, 0);
+    //double bond locations
+    SCNVector3 nitrogenPositionA = SCNVector3Make(0, 1, 0);
+    SCNVector3 nitrogenPositionB = SCNVector3Make(0, -1, 0);
+    
+    SCNVector3 oxygen45A = SCNVector3Make(4.5, 4, 0);
+    SCNVector3 oxygen45B = SCNVector3Make(4.5, 5, 0);
+    
+    SCNVector3 oxygen45 = SCNVector3Make(4.5, 4.5, 0);
+    
+    SCNVector3 oxygen135 = SCNVector3Make(-4.5, 4.5, 0);
+    
+    SCNVector3 oxygen90 = SCNVector3Make(0, -5, 0);
+    
+    SCNVector3 hydrogen = SCNVector3Make(4, -5.5, 0);
+    
+    [self nodeWithAtom:[Atom nitrogenAtom] molecule:nitricAcid position:nitrogenPosition];
+    
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:nitricAcid position:oxygen45];
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:nitricAcid position:oxygen135];
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:nitricAcid position:oxygen90];
+    
+    [self nodeWithAtom:[Atom hydrogenAtom] molecule:nitricAcid position:hydrogen];
+    
+    //adding bonds - oxygen
+    [nitricAcid addChildNode:[self connectorWithPositions:oxygen90 and:nitrogenPosition command:@"90xy"]];
+    [nitricAcid addChildNode:[self connectorWithPositions:oxygen135 and:nitrogenPosition command:@"135xy"]];
+    
+    //double bond
+    [nitricAcid addChildNode:[self connectorWithPositions:oxygen45A and:nitrogenPositionA command:@"45xy"]];
+    [nitricAcid addChildNode:[self connectorWithPositions:oxygen45B and:nitrogenPositionB command:@"45xy"]];
+
+    //adding hydrogen bond
+    [nitricAcid addChildNode:[self connectorWithPositions:oxygen90 and:hydrogen command:@"345xy"]];
+    
+    nitricAcid.name = @"Nitric Acid";
+    return nitricAcid;
 }
 
 - (void)nodeWithAtom:(SCNGeometry *)atom molecule:(SCNNode *)molecule position:(SCNVector3)position {

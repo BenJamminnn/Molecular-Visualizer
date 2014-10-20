@@ -113,7 +113,8 @@
         SCNNode *h = [molec hydrogenPeroxideMolecule];
         SCNNode *hcl = [molec hydrogenChlorideMolecule];
         SCNNode *sulfuricAcid = [molec sulfuricAcidMolecule];
-        _molecules = @[m, p, n, w, h, hcl, sulfuricAcid];
+        SCNNode *nitricAcid = [molec nitricAcidMolecule];
+        _molecules = @[m, p, n, w, h, hcl, sulfuricAcid , nitricAcid];
     }
     return _molecules;
 }
