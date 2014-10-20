@@ -33,4 +33,7 @@
 - (SCNNode *)sulfurDioxideMolecule;
 
 - (SCNNode *)sulfurTrioxideMolecule;
+
+- (SCNNode *)carbonMonoxideMolecule;
+
 @end

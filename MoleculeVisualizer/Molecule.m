@@ -462,6 +462,30 @@
     return sulfurTrioxide;
 }
 
+- (SCNNode *)carbonMonoxideMolecule {
+    SCNNode *carbonMonoxide = [SCNNode node];
+    
+    SCNVector3 carbonPosition = SCNVector3Make(-2, 0, 0);
+    SCNVector3 carbonPositionUpper = SCNVector3Make(-2, 0.35, 0);
+    SCNVector3 carbonPositionLower = SCNVector3Make(-2, -0.35, 0);
+    
+    SCNVector3 oxygenPosition = SCNVector3Make(2, 0, 0);
+    SCNVector3 oxygenPositionUpper = SCNVector3Make(2, 0.35, 0);
+    SCNVector3 oxygenPositionLower = SCNVector3Make(2, -0.35, 0);
+    
+    [self nodeWithAtom:[Atom carbonAtom] molecule:carbonMonoxide position:carbonPosition];
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:carbonMonoxide position:oxygenPosition];
+    
+    //connectors
+    [carbonMonoxide addChildNode:[self connectorWithPositions:carbonPositionUpper and:oxygenPositionUpper command:@"0xy"]];
+    [carbonMonoxide addChildNode:[self connectorWithPositions:carbonPosition and:oxygenPosition command:@"0xy"]];
+    [carbonMonoxide addChildNode:[self connectorWithPositions:carbonPositionLower and:oxygenPositionLower command:@"0xy"]];
+
+    
+    carbonMonoxide.name = @"Carbon Monoxide";
+    return carbonMonoxide;
+}
+
 - (void)nodeWithAtom:(SCNGeometry *)atom molecule:(SCNNode *)molecule position:(SCNVector3)position {
     SCNNode *node = [SCNNode nodeWithGeometry:atom];
     node.position = position;
