@@ -344,6 +344,73 @@
     return nitricAcid;
 }
 
+- (SCNNode *)aceticAcidMolecule {
+    //C4H2O2
+    SCNNode *aceticAcid = [SCNNode node];
+    
+    //right carbon with double bond
+    SCNVector3 carbonRight = SCNVector3Make(3, 0, 0);
+    SCNVector3 carbonRightA = SCNVector3Make(3, 1, 0);
+    SCNVector3 carbonRightB = SCNVector3Make(3, -1, 0);
+    
+    //left carbon
+    SCNVector3 carbonLeft = SCNVector3Make(-3, 0, 0);
+    
+    //oxygen45
+    SCNVector3 oxygen45 = SCNVector3Make(7, 4.5, 0);
+    SCNVector3 oxygen45A = SCNVector3Make(7, 4, 0);
+    SCNVector3 oxygen45B = SCNVector3Make(7, 5, 0);
+    
+    //oxygen135
+    SCNVector3 oxygen135 = SCNVector3Make(7, -4.5, 0);
+    
+    //hydrogens
+    SCNVector3 hydrogenRightMost = SCNVector3Make(11, -3.8, 0);
+    SCNVector3 hydrogenZ = SCNVector3Make(carbonLeft.x -1.75, carbonLeft.y - 2.5, 3);
+    SCNVector3 hydrogenZNeg = SCNVector3Make(carbonLeft.x -1.75, carbonLeft.y - 2.5, -3);
+    SCNVector3 hydrogenSouthMost = SCNVector3Make(carbonLeft.x -1.75, carbonLeft.y +3.5, 0);
+    
+    //adding atoms
+    [self nodeWithAtom:[Atom carbonAtom] molecule:aceticAcid position:carbonRight];
+    [self nodeWithAtom:[Atom carbonAtom] molecule:aceticAcid position:carbonLeft];
+    
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:aceticAcid position:oxygen45];
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:aceticAcid position:oxygen135];
+    
+    [self nodeWithAtom:[Atom hydrogenAtom] molecule:aceticAcid position:hydrogenRightMost];
+    
+    [self nodeWithAtom:[Atom hydrogenAtom] molecule:aceticAcid position:hydrogenZ];
+    [self nodeWithAtom:[Atom hydrogenAtom] molecule:aceticAcid position:hydrogenZNeg];
+    [self nodeWithAtom:[Atom hydrogenAtom] molecule:aceticAcid position:hydrogenSouthMost];
+    
+    //adding connectors
+    [aceticAcid addChildNode:[self connectorWithPositions:carbonRightA and:oxygen45A command:@"45xy"]];
+    [aceticAcid addChildNode:[self connectorWithPositions:carbonRightB and:oxygen45B command:@"45xy"]];
+
+    [aceticAcid addChildNode:[self connectorWithPositions:oxygen135 and:carbonRight command:@"135xy"]];
+    
+    SCNNode *hydroRightMost = [self connectorWithPositions:oxygen135 and:hydrogenRightMost command:@"0xy"];
+    hydroRightMost.pivot = SCNMatrix4MakeRotation(M_PI, 1, 1.2, 0);
+    [aceticAcid addChildNode:hydroRightMost];
+    
+    [aceticAcid addChildNode:[self connectorWithPositions:carbonLeft and:carbonRight command:@"0xy"]];
+    
+    SCNNode *leftHydro = [self connectorWithPositions:carbonLeft and:hydrogenZ command:@"45xyz"];
+    SCNNode *rightHydro = [self connectorWithPositions:carbonLeft and:hydrogenZNeg command:@"45xyz"];
+    SCNNode *southHydro = [self connectorWithPositions:carbonLeft and:hydrogenSouthMost command:@"45xy"];
+    leftHydro.pivot = SCNMatrix4MakeRotation(M_PI, -4, -14, 6);
+    rightHydro.pivot = SCNMatrix4MakeRotation(M_PI, -4, -14, -6);
+    southHydro.pivot = SCNMatrix4MakeRotation(M_PI, -2, 8, 0);
+    [aceticAcid addChildNode:rightHydro];
+    [aceticAcid addChildNode:leftHydro];
+    [aceticAcid addChildNode:southHydro];
+    
+    
+    
+    aceticAcid.name = @"Acetic Acid";
+    return aceticAcid;
+}
+
 - (void)nodeWithAtom:(SCNGeometry *)atom molecule:(SCNNode *)molecule position:(SCNVector3)position {
     SCNNode *node = [SCNNode nodeWithGeometry:atom];
     node.position = position;

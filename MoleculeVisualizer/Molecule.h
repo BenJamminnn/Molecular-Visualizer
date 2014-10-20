@@ -27,4 +27,6 @@
 - (SCNNode *)sulfuricAcidMolecule;
 
 - (SCNNode *)nitricAcidMolecule;
+
+- (SCNNode *)aceticAcidMolecule;
 @end

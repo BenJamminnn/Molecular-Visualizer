@@ -114,7 +114,8 @@
         SCNNode *hcl = [molec hydrogenChlorideMolecule];
         SCNNode *sulfuricAcid = [molec sulfuricAcidMolecule];
         SCNNode *nitricAcid = [molec nitricAcidMolecule];
-        _molecules = @[m, p, n, w, h, hcl, sulfuricAcid , nitricAcid];
+        SCNNode *aceticAcid = [molec aceticAcidMolecule];
+        _molecules = @[m, p, n, w, h, hcl, sulfuricAcid , nitricAcid, aceticAcid];
     }
     return _molecules;
 }
