@@ -665,9 +665,61 @@ static NSArray *molecules = nil;
     [pentane addChildNode:[self connectorWithPositions:middleSubMolecule.position and:rightSubMolecule.position command:@"40xy"]];
     [pentane addChildNode:[self connectorWithPositions:rightSubMolecule.position and:rightThreeHydro.position command:@"-40xy"]];
 
-
     pentane.name = @"Pentane";
     return pentane;
+}
+
+- (SCNNode *)benzeneMolecule {
+    SCNNode *benzeneMolecule = [SCNNode node];
+    
+    //adding atoms...
+    SCNNode *bottomHalf = [SCNNode node];
+    SCNNode *middleNode = [self oneCarbonOneHydrogenFaceUp:NO];
+    SCNNode *leftNode = [middleNode clone];
+    SCNNode *rightNode = [middleNode clone];
+    SCNMatrix4 leftNodeRotation = [self rotationWithCommand:@"40xy"];
+    SCNMatrix4 rightNodeRotation = [self rotationWithCommand:@"-40xy"];
+    
+    middleNode.position = SCNVector3Make(0, -4.5, 0);
+    leftNode.position = SCNVector3Make(-4.5, -2, 0);
+    rightNode.position = SCNVector3Make(+4.5, -2, 0);
+    
+    leftNode.pivot = leftNodeRotation;
+    rightNode.pivot = rightNodeRotation;
+    
+    [bottomHalf addChildNode:middleNode];
+    [bottomHalf addChildNode:rightNode];
+    [bottomHalf addChildNode:leftNode];
+    bottomHalf.position = SCNVector3Make(0, 0, 0);
+    
+    [benzeneMolecule addChildNode:bottomHalf];
+    
+    SCNNode *topHalf = [bottomHalf clone];
+    topHalf.pivot = SCNMatrix4MakeRotation(M_PI, 1, 1, 50);
+    topHalf.position = SCNVector3Make(0, 1, 0);
+    
+    [benzeneMolecule addChildNode:topHalf];
+    
+    //adding double bonds...
+
+    SCNNode *doubleBondLeft = [self doubleBondConnectorPositionA:SCNVector3Make(-4.5, 2, 0) b:SCNVector3Make(-4.5, -2, 0) YBased:NO command:@"90xy"];
+    SCNNode *doubleBondBottom = [self doubleBondConnectorPositionA:middleNode.position b:rightNode.position YBased:YES command:@"40xy"];
+    
+    SCNVector3 topDoubleBondPosition = SCNVector3Make(0, 5.5, 0);
+    SCNVector3 rightDoubleBondPosition = SCNVector3Make(4.5, 3, 0);
+    
+    SCNNode *doubleBondTop = [self doubleBondConnectorPositionA:topDoubleBondPosition b:rightDoubleBondPosition YBased:YES command:@"-40xy"];
+
+    [benzeneMolecule addChildNode:doubleBondTop];
+    [benzeneMolecule addChildNode:doubleBondBottom];
+    [benzeneMolecule addChildNode:doubleBondLeft];
+    
+    //adding single bonds
+    [benzeneMolecule addChildNode:[self connectorWithPositions:middleNode.position and:leftNode.position command:@"-40xy"]];
+    [benzeneMolecule addChildNode:[self connectorWithPositions:topDoubleBondPosition and:SCNVector3Make(-4.5, 3, 0) command:@"40xy"]];
+    [benzeneMolecule addChildNode:[self connectorWithPositions:rightNode.position and:rightDoubleBondPosition command:@"90xy"]];
+    benzeneMolecule.name = @"Benzene";
+    return benzeneMolecule;
 }
 
 - (void)nodeWithAtom:(SCNGeometry *)atom molecule:(SCNNode *)molecule position:(SCNVector3)position {
@@ -680,7 +732,7 @@ static NSArray *molecules = nil;
     if(!_allMolecules) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            molecules = @[[self pentaneMolecule] ,[self butaneMolecule] , [self propaneMolecule] , [self ethaneMolecule] , [self carbonDioxideMolecule] , [self carbonMonoxideMolecule], [self sulfurTrioxideMolecule],
+            molecules = @[[self benzeneMolecule] ,[self pentaneMolecule] ,[self butaneMolecule] , [self propaneMolecule] , [self ethaneMolecule] , [self carbonDioxideMolecule] , [self carbonMonoxideMolecule], [self sulfurTrioxideMolecule],
                           [self sulfurDioxideMolecule], [self aceticAcidMolecule] , [self nitricAcidMolecule] , [self sulfuricAcidMolecule] , [self hydrogenChlorideMolecule] , [self hydrogenPeroxideMolecule] , [self waterMolecule], [self ammoniaMolecule] ,
                           [self ptfeMolecule] , [self methaneMolecule]];
         });
@@ -689,7 +741,43 @@ static NSArray *molecules = nil;
     return _allMolecules;
 }
 
-#pragma mark - convinience submolecules
+#pragma mark - convienience submolecules
+
+- (SCNNode *)doubleBondConnectorPositionA:(SCNVector3)positionA b:(SCNVector3)positionB YBased:(BOOL)yBased command:(NSString *)command {
+    SCNNode *connectors = [SCNNode node];
+    
+    SCNVector3 connectorPointA = SCNVector3Make(positionA.x, positionA.y - 0.25, positionA.z);
+    SCNVector3 connectorPointB = SCNVector3Make(positionA.x, positionA.y + 0.25, positionA.z);
+    
+    SCNVector3 connectorPointC = SCNVector3Make(positionB.x, positionB.y + 0.25, positionB.z);
+    SCNVector3 connectorPointD = SCNVector3Make(positionB.x, positionB.y - 0.25, positionB.z);
+    if(!yBased) {
+        connectorPointA = SCNVector3Make(positionA.x - 0.25, positionA.y, positionA.z);
+        connectorPointB = SCNVector3Make(positionA.x + 0.25, positionA.y, positionA.z);
+        connectorPointC = SCNVector3Make(positionB.x + 0.25, positionB.y, positionB.z);
+        connectorPointD = SCNVector3Make(positionB.x - 0.25, positionB.y, positionB.z);
+    }
+    
+    
+    [connectors addChildNode:[self connectorWithPositions:connectorPointB and:connectorPointC command:command]];
+    [connectors addChildNode:[self connectorWithPositions:connectorPointA and:connectorPointD command:command]];
+
+    
+    return connectors;
+}
+
+- (SCNNode *)oneCarbonOneHydrogenFaceUp:(BOOL)faceUp {
+    SCNNode *carbonHydroSubMolec = [SCNNode node];
+    SCNVector3 carbonPosition = SCNVector3Make(0, 0, 0);
+    SCNVector3 hydrogenPosition = (faceUp) ? SCNVector3Make(0, 3.5, 0) : SCNVector3Make(0 , -3.5, 0);
+    
+    [self nodeWithAtom:[Atom carbonAtom] molecule:carbonHydroSubMolec position:carbonPosition];
+    [self nodeWithAtom:[Atom hydrogenAtom] molecule:carbonHydroSubMolec position:hydrogenPosition];
+    
+    [carbonHydroSubMolec addChildNode:[self connectorWithPositions:carbonPosition and:hydrogenPosition command:@"90xy"]];
+    
+    return carbonHydroSubMolec;
+}
 
 - (SCNNode *)oneCarbonThreeHydrogen {
     SCNNode *topLeft = [SCNNode node];
@@ -726,6 +814,7 @@ static NSArray *molecules = nil;
     }
     return bottomSubMolec;
 }
+
 
 
 
