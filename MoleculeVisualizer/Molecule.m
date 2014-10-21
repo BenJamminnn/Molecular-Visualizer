@@ -782,6 +782,29 @@ static NSArray *molecules = nil;
     return ether;
 }
 
+- (SCNNode *)nitrousOxideMolecule {
+    SCNNode *nitrousOxide = [SCNNode node];
+    
+    SCNVector3 nitrogenCenter = SCNVector3Make(0, 0, 0);
+    SCNVector3 nitrogenLeft = SCNVector3Make(-4, 0, 0);
+    SCNVector3 oxygenRight = SCNVector3Make(4, 0, 0);
+    
+    [self nodeWithAtom:[Atom nitrogenAtom] molecule:nitrousOxide position:nitrogenCenter];
+    [self nodeWithAtom:[Atom nitrogenAtom] molecule:nitrousOxide position:nitrogenLeft];
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:nitrousOxide position:oxygenRight];
+    
+    
+    SCNNode *connector = [self tripleBondConnectorPositionA:nitrogenCenter b:nitrogenLeft YBased:YES command:@"0xy"];
+    
+    [nitrousOxide addChildNode:[self connectorWithPositions:nitrogenLeft and:nitrogenCenter command:@"0xy"]];
+    [nitrousOxide addChildNode:[self connectorWithPositions:nitrogenCenter and:oxygenRight command:@"0xy"]];
+    
+    [nitrousOxide addChildNode:connector];
+    
+    nitrousOxide.name = @"Nitrous Oxide";
+    return nitrousOxide;
+}
+
 - (void)nodeWithAtom:(SCNGeometry *)atom molecule:(SCNNode *)molecule position:(SCNVector3)position {
     SCNNode *node = [SCNNode nodeWithGeometry:atom];
     node.position = position;
@@ -792,7 +815,7 @@ static NSArray *molecules = nil;
     if(!_allMolecules) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            molecules = @[[self etherMolecule] , [self acetoneMolecule] , [self benzeneMolecule] ,[self pentaneMolecule] ,[self butaneMolecule] , [self propaneMolecule] , [self ethaneMolecule] , [self carbonDioxideMolecule] , [self carbonMonoxideMolecule], [self sulfurTrioxideMolecule],
+            molecules = @[[self nitrousOxideMolecule] , [self etherMolecule] , [self acetoneMolecule] , [self benzeneMolecule] ,[self pentaneMolecule] ,[self butaneMolecule] , [self propaneMolecule] , [self ethaneMolecule] , [self carbonDioxideMolecule] , [self carbonMonoxideMolecule], [self sulfurTrioxideMolecule],
                           [self sulfurDioxideMolecule], [self aceticAcidMolecule] , [self nitricAcidMolecule] , [self sulfuricAcidMolecule] , [self hydrogenChlorideMolecule] , [self hydrogenPeroxideMolecule] , [self waterMolecule], [self ammoniaMolecule] ,
                           [self ptfeMolecule] , [self methaneMolecule]];
         });
@@ -806,22 +829,47 @@ static NSArray *molecules = nil;
 - (SCNNode *)doubleBondConnectorPositionA:(SCNVector3)positionA b:(SCNVector3)positionB YBased:(BOOL)yBased command:(NSString *)command {
     SCNNode *connectors = [SCNNode node];
     
-    SCNVector3 connectorPointA = SCNVector3Make(positionA.x, positionA.y - 0.25, positionA.z);
-    SCNVector3 connectorPointB = SCNVector3Make(positionA.x, positionA.y + 0.25, positionA.z);
+    SCNVector3 connectorPointA = SCNVector3Make(positionA.x, positionA.y - 0.3, positionA.z);
+    SCNVector3 connectorPointB = SCNVector3Make(positionA.x, positionA.y + 0.3, positionA.z);
     
-    SCNVector3 connectorPointC = SCNVector3Make(positionB.x, positionB.y + 0.25, positionB.z);
-    SCNVector3 connectorPointD = SCNVector3Make(positionB.x, positionB.y - 0.25, positionB.z);
+    SCNVector3 connectorPointC = SCNVector3Make(positionB.x, positionB.y + 0.3, positionB.z);
+    SCNVector3 connectorPointD = SCNVector3Make(positionB.x, positionB.y - 0.3, positionB.z);
     if(!yBased) {
-        connectorPointA = SCNVector3Make(positionA.x - 0.25, positionA.y, positionA.z);
-        connectorPointB = SCNVector3Make(positionA.x + 0.25, positionA.y, positionA.z);
-        connectorPointC = SCNVector3Make(positionB.x + 0.25, positionB.y, positionB.z);
-        connectorPointD = SCNVector3Make(positionB.x - 0.25, positionB.y, positionB.z);
+        connectorPointA = SCNVector3Make(positionA.x - 0.3, positionA.y, positionA.z);
+        connectorPointB = SCNVector3Make(positionA.x + 0.3, positionA.y, positionA.z);
+        connectorPointC = SCNVector3Make(positionB.x + 0.3, positionB.y, positionB.z);
+        connectorPointD = SCNVector3Make(positionB.x - 0.3, positionB.y, positionB.z);
     }
     
     
     [connectors addChildNode:[self connectorWithPositions:connectorPointB and:connectorPointC command:command]];
     [connectors addChildNode:[self connectorWithPositions:connectorPointA and:connectorPointD command:command]];
 
+    
+    return connectors;
+}
+
+- (SCNNode *)tripleBondConnectorPositionA:(SCNVector3)positionA b:(SCNVector3)positionB YBased:(BOOL)yBased command:(NSString *)command {
+    SCNNode *connectors = [SCNNode node];
+    
+    SCNVector3 connectorPointA = SCNVector3Make(positionA.x, positionA.y - 0.4, positionA.z);
+    SCNVector3 connectorPointB = SCNVector3Make(positionA.x, positionA.y + 0.4, positionA.z);
+    
+    SCNVector3 connectorPointC = SCNVector3Make(positionB.x, positionB.y + 0.4, positionB.z);
+    SCNVector3 connectorPointD = SCNVector3Make(positionB.x, positionB.y - 0.4, positionB.z);
+    
+    if(!yBased) {
+        connectorPointA = SCNVector3Make(positionA.x - 0.4, positionA.y, positionA.z);
+        connectorPointB = SCNVector3Make(positionA.x + 0.4, positionA.y, positionA.z);
+        connectorPointC = SCNVector3Make(positionB.x + 0.4, positionB.y, positionB.z);
+        connectorPointD = SCNVector3Make(positionB.x - 0.4, positionB.y, positionB.z);
+    }
+    
+    
+    [connectors addChildNode:[self connectorWithPositions:connectorPointB and:connectorPointC command:command]];
+    [connectors addChildNode:[self connectorWithPositions:connectorPointA and:connectorPointD command:command]];
+    [connectors addChildNode:[self connectorWithPositions:positionA and:positionB command:command]];
+    
     
     return connectors;
 }
