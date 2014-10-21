@@ -722,6 +722,32 @@ static NSArray *molecules = nil;
     return benzeneMolecule;
 }
 
+- (SCNNode *)acetoneMolecule {
+    SCNNode *acetone = [SCNNode node];
+    
+    SCNNode *leftSubmolecule = [self oneCarbonThreeHydrogen];
+    leftSubmolecule.position = SCNVector3Make(-4, 3, 0);
+    
+    SCNNode *rightSubmolecule = [leftSubmolecule clone];
+    rightSubmolecule.position = SCNVector3Make(4, 3, 0);
+    rightSubmolecule.pivot = SCNMatrix4MakeRotation(M_PI, 1, 50, 1);
+    
+    [acetone addChildNode:rightSubmolecule];
+    [acetone addChildNode:leftSubmolecule];
+    
+    [self nodeWithAtom:[Atom carbonAtom] molecule:acetone position:SCNVector3Make(0, 0, 0)];
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:acetone position:SCNVector3Make(0, -4, 0)];
+    SCNNode *bottomDoubleBond = [self doubleBondConnectorPositionA:SCNVector3Make(0, 0, 0) b:SCNVector3Make(0, -4, 0) YBased:NO command:@"90xy"];
+    
+    [acetone addChildNode:bottomDoubleBond];
+    
+    [acetone addChildNode:[self connectorWithPositions:rightSubmolecule.position and:SCNVector3Make(0, 0, 0) command:@"40xy"]];
+    [acetone addChildNode:[self connectorWithPositions:leftSubmolecule.position and:SCNVector3Make(0, 0, 0) command:@"-40xy"]];
+    
+    acetone.name = @"Acetone";
+    return acetone;
+}
+
 - (void)nodeWithAtom:(SCNGeometry *)atom molecule:(SCNNode *)molecule position:(SCNVector3)position {
     SCNNode *node = [SCNNode nodeWithGeometry:atom];
     node.position = position;
@@ -732,7 +758,7 @@ static NSArray *molecules = nil;
     if(!_allMolecules) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            molecules = @[[self benzeneMolecule] ,[self pentaneMolecule] ,[self butaneMolecule] , [self propaneMolecule] , [self ethaneMolecule] , [self carbonDioxideMolecule] , [self carbonMonoxideMolecule], [self sulfurTrioxideMolecule],
+            molecules = @[[self acetoneMolecule] , [self benzeneMolecule] ,[self pentaneMolecule] ,[self butaneMolecule] , [self propaneMolecule] , [self ethaneMolecule] , [self carbonDioxideMolecule] , [self carbonMonoxideMolecule], [self sulfurTrioxideMolecule],
                           [self sulfurDioxideMolecule], [self aceticAcidMolecule] , [self nitricAcidMolecule] , [self sulfuricAcidMolecule] , [self hydrogenChlorideMolecule] , [self hydrogenPeroxideMolecule] , [self waterMolecule], [self ammoniaMolecule] ,
                           [self ptfeMolecule] , [self methaneMolecule]];
         });
