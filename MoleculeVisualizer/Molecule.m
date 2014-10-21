@@ -638,20 +638,20 @@ static NSArray *molecules = nil;
     SCNNode *pentane = [SCNNode node];
     
     SCNNode *leftSubMolecule = [self oneCarbonTwoHydrogenYZFaceUp:YES];
-    leftSubMolecule.position = SCNVector3Make(-5, +1.5, 0);
+    leftSubMolecule.position = SCNVector3Make(-4, +1.5, 0);
     SCNNode *middleSubMolecule = [self oneCarbonTwoHydrogenYZFaceUp:NO];
     middleSubMolecule.position = SCNVector3Make(0, -1.5, 0);
     SCNNode *rightSubMolecule = [self oneCarbonTwoHydrogenYZFaceUp:YES];
-    rightSubMolecule.position = SCNVector3Make(+5, +1.5, 0);
+    rightSubMolecule.position = SCNVector3Make(+4, +1.5, 0);
     
     SCNNode *leftThreeHydro = [self oneCarbonThreeHydrogen];
-    leftThreeHydro.position = SCNVector3Make(-10, -1.5, 0);
+    leftThreeHydro.position = SCNVector3Make(-8, -1.5, 0);
     leftThreeHydro.pivot = SCNMatrix4MakeRotation(M_PI, 7, -1, 0);
     
     SCNNode *rightThreeHydro = [self oneCarbonThreeHydrogen];
     rightThreeHydro.pivot = SCNMatrix4MakeRotation(M_PI, 7, -1, 0);
     rightThreeHydro.pivot = SCNMatrix4MakeRotation(M_PI, 0, 0, 10);
-    rightThreeHydro.position = SCNVector3Make(+10, -1.5, 0);
+    rightThreeHydro.position = SCNVector3Make(+8, -1.5, 0);
     
     [pentane addChildNode:leftSubMolecule];
     [pentane addChildNode:middleSubMolecule];
@@ -748,6 +748,40 @@ static NSArray *molecules = nil;
     return acetone;
 }
 
+- (SCNNode *)etherMolecule {
+    SCNNode *ether = [SCNNode node];
+    
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:ether position:SCNVector3Make(0, -1.5, 0)];
+    
+    SCNNode *leftSubMolecule = [self oneCarbonTwoHydrogenYZFaceUp:YES];
+    leftSubMolecule.position = SCNVector3Make(-4, +1.5, 0);
+    
+    SCNNode *rightSubMolecule = [self oneCarbonTwoHydrogenYZFaceUp:YES];
+    rightSubMolecule.position = SCNVector3Make(+4, +1.5, 0);
+    
+    SCNNode *leftThreeHydro = [self oneCarbonThreeHydrogen];
+    leftThreeHydro.position = SCNVector3Make(-8, -1.5, 0);
+    leftThreeHydro.pivot = SCNMatrix4MakeRotation(M_PI, 10, -1, 0);
+    
+    SCNNode *rightThreeHydro = [self oneCarbonThreeHydrogen];
+    rightThreeHydro.pivot = SCNMatrix4MakeRotation(M_PI, 10, -1, 0);
+    rightThreeHydro.pivot = SCNMatrix4MakeRotation(M_PI, 0, 0, 10);
+    rightThreeHydro.position = SCNVector3Make(+8, -1.5, 0);
+    
+    [ether addChildNode:leftSubMolecule];
+    [ether addChildNode:rightSubMolecule];
+    [ether addChildNode:leftThreeHydro];
+    [ether addChildNode:rightThreeHydro];
+    
+    [ether addChildNode:[self connectorWithPositions:leftThreeHydro.position and:leftSubMolecule.position command:@"40xy"]];
+    [ether addChildNode:[self connectorWithPositions:leftSubMolecule.position and:SCNVector3Make(0, -1.5, 0) command:@"-40xy"]];
+    [ether addChildNode:[self connectorWithPositions:SCNVector3Make(0, -1.5, 0) and:rightSubMolecule.position command:@"40xy"]];
+    [ether addChildNode:[self connectorWithPositions:rightSubMolecule.position and:rightThreeHydro.position command:@"-40xy"]];
+    
+    ether.name = @"Ether";
+    return ether;
+}
+
 - (void)nodeWithAtom:(SCNGeometry *)atom molecule:(SCNNode *)molecule position:(SCNVector3)position {
     SCNNode *node = [SCNNode nodeWithGeometry:atom];
     node.position = position;
@@ -758,7 +792,7 @@ static NSArray *molecules = nil;
     if(!_allMolecules) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            molecules = @[[self acetoneMolecule] , [self benzeneMolecule] ,[self pentaneMolecule] ,[self butaneMolecule] , [self propaneMolecule] , [self ethaneMolecule] , [self carbonDioxideMolecule] , [self carbonMonoxideMolecule], [self sulfurTrioxideMolecule],
+            molecules = @[[self etherMolecule] , [self acetoneMolecule] , [self benzeneMolecule] ,[self pentaneMolecule] ,[self butaneMolecule] , [self propaneMolecule] , [self ethaneMolecule] , [self carbonDioxideMolecule] , [self carbonMonoxideMolecule], [self sulfurTrioxideMolecule],
                           [self sulfurDioxideMolecule], [self aceticAcidMolecule] , [self nitricAcidMolecule] , [self sulfuricAcidMolecule] , [self hydrogenChlorideMolecule] , [self hydrogenPeroxideMolecule] , [self waterMolecule], [self ammoniaMolecule] ,
                           [self ptfeMolecule] , [self methaneMolecule]];
         });
