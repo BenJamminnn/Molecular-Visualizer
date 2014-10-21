@@ -104,22 +104,8 @@
 
 - (NSArray *)molecules   {
     if(!_molecules) {
-        Molecule *molec = [Molecule new];
-        
-        SCNNode *m = [molec methaneMolecule];
-        SCNNode *p = [molec ptfeMolecule];
-        SCNNode *n = [molec ammoniaMolecule];
-        SCNNode *w = [molec waterMolecule];
-        SCNNode *h = [molec hydrogenPeroxideMolecule];
-        SCNNode *hcl = [molec hydrogenChlorideMolecule];
-        SCNNode *sulfuricAcid = [molec sulfuricAcidMolecule];
-        SCNNode *nitricAcid = [molec nitricAcidMolecule];
-        SCNNode *aceticAcid = [molec aceticAcidMolecule];
-        SCNNode *sulfurDioxide = [molec sulfurDioxideMolecule];
-        SCNNode *sulfurTrioxide = [molec sulfurTrioxideMolecule];
-        SCNNode *carbonMonoxide = [molec carbonMonoxideMolecule];
-        SCNNode *carbonDioxide = [molec carbonDioxideMolecule];
-        _molecules = @[carbonDioxide, m, p, n, w, h, hcl, sulfuricAcid , nitricAcid, aceticAcid, sulfurDioxide, sulfurTrioxide, carbonMonoxide];
+        Molecule *m = [Molecule new];
+        _molecules = m.allMolecules;
     }
     return _molecules;
 }

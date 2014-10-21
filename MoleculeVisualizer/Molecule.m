@@ -10,6 +10,11 @@
 #import "Atom.h"
 #import "MathFunctions.h"
 
+static NSArray *molecules = nil;
+
+@interface Molecule()
+@property (nonatomic, strong, readwrite) NSArray *allMolecules;
+@end
 @implementation Molecule
 
 - (SCNNode *)connectorWithPositions:(SCNVector3)positionA and:(SCNVector3)positionB command:(NSString *)command distance:(CGFloat)distance {
@@ -83,6 +88,12 @@
         rotation = SCNMatrix4MakeRotation(M_PI, 0, 2.5, -1);
     }
     //XYZ
+    else if([command isEqualToString:@"45xyzWIDE"]){
+        rotation = SCNMatrix4MakeRotation(M_PI, 1, -2.5, -1);
+    } else if([command isEqualToString:@"-45xyzWIDE"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, 1, -2.5, 1);
+
+    }
      else if([command isEqualToString:@"-45xyz"]) {
         rotation = SCNMatrix4MakeRotation(M_PI, 1, -2.5, 0.5);
     } else if([command isEqualToString:@"45xyz"]) {
@@ -516,12 +527,62 @@
     return carbonDioxide;
 }
 
+- (SCNNode *)ethaneMolecule {
+    SCNNode *ethane = [SCNNode node];
+    
+    //left half of the molecule
+    SCNNode *leftHalf = [SCNNode node];
+    SCNVector3 carbonLeft = SCNVector3Make(0, 0, 0);
+    SCNVector3 hydrogenA = SCNVector3Make(-2.5, -2.5, 0);
+    SCNVector3 hydrogenB = SCNVector3Make(-2, 2, -2.5);
+    SCNVector3 hydrogenC = SCNVector3Make(-2, 2, 2.5);
+    
+    //atoms of the left
+    [self nodeWithAtom:[Atom carbonAtom] molecule:leftHalf position:carbonLeft];
+    [self nodeWithAtom:[Atom hydrogenAtom] molecule:leftHalf position:hydrogenA];
+    [self nodeWithAtom:[Atom hydrogenAtom] molecule:leftHalf position:hydrogenB];
+    [self nodeWithAtom:[Atom hydrogenAtom] molecule:leftHalf position:hydrogenC];
+    
+    //connectors of the left
+    [leftHalf addChildNode:[self connectorWithPositions:carbonLeft and:hydrogenA command:@"45xy"]];
+    SCNNode *problemConnector = [self connectorWithPositions:carbonLeft and:hydrogenB command:@"-45xyzWIDE"];
+    problemConnector.name = @"problem";
+    [leftHalf addChildNode:problemConnector];
+    [leftHalf addChildNode:[self connectorWithPositions:carbonLeft and:hydrogenC command:@"45xyzWIDE"]];
+
+    leftHalf.position = SCNVector3Make(-2.5, 0, 0);
+    [ethane addChildNode:leftHalf];
+    
+    SCNNode *rightHalf = [leftHalf clone];
+    rightHalf.position = SCNVector3Make(2.5, 0, 0);
+
+    rightHalf.pivot = SCNMatrix4MakeRotation(M_PI, 3, 10, -5);
+    
+    [ethane addChildNode:rightHalf];
+    
+    [ethane addChildNode:[self connectorWithPositions:SCNVector3Make(-2.5, 0, 0) and:SCNVector3Make(+2.5, 0, 0) command:@"0xy"]];
+    ethane.name = @"Ethane";
+    return ethane;
+}
+
 - (void)nodeWithAtom:(SCNGeometry *)atom molecule:(SCNNode *)molecule position:(SCNVector3)position {
     SCNNode *node = [SCNNode nodeWithGeometry:atom];
     node.position = position;
     [molecule addChildNode:node];
 }
 
+- (NSArray *)allMolecules {
+    if(!_allMolecules) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            molecules = @[[self ethaneMolecule] , [self carbonDioxideMolecule] , [self carbonMonoxideMolecule], [self sulfurTrioxideMolecule],
+                          [self sulfurDioxideMolecule], [self aceticAcidMolecule] , [self nitricAcidMolecule] , [self sulfuricAcidMolecule] , [self hydrogenChlorideMolecule] , [self hydrogenPeroxideMolecule] , [self waterMolecule], [self ammoniaMolecule] ,
+                          [self ptfeMolecule] , [self methaneMolecule]];
+        });
+        _allMolecules = molecules;
+    }
+    return _allMolecules;
+}
 
 
 @end

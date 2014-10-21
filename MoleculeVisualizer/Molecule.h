@@ -12,31 +12,6 @@
 
 @interface Molecule : NSObject
 
-- (SCNNode *)methaneMolecule;
-
-- (SCNNode *)ptfeMolecule;
-
-- (SCNNode *)ammoniaMolecule;
-
-- (SCNNode *)waterMolecule;
-
-- (SCNNode *)hydrogenPeroxideMolecule;
-
-- (SCNNode *)hydrogenChlorideMolecule;
-
-- (SCNNode *)sulfuricAcidMolecule;
-
-- (SCNNode *)nitricAcidMolecule;
-
-- (SCNNode *)aceticAcidMolecule;
-
-- (SCNNode *)sulfurDioxideMolecule;
-
-- (SCNNode *)sulfurTrioxideMolecule;
-
-- (SCNNode *)carbonMonoxideMolecule;
-
-- (SCNNode *)carbonDioxideMolecule;
-
+@property (nonatomic, readonly, strong) NSArray *allMolecules;
 
 @end
