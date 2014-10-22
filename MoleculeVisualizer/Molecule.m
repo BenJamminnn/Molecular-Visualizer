@@ -881,8 +881,7 @@ static NSArray *molecules = nil;
     return sulfur;
 }
 
-
-#pragma mark - convienience 
+#pragma mark - convienience
 
 - (void)nodeWithAtom:(SCNGeometry *)atom molecule:(SCNNode *)molecule position:(SCNVector3)position {
     SCNNode *node = [SCNNode nodeWithGeometry:atom];
@@ -1120,7 +1119,19 @@ static NSArray *molecules = nil;
     return bottomSubMolec;
 }
 
+#pragma mark - exposed methods
 
++ (SCNNode *)moleculeForName:(NSString *)name {
+    for(SCNNode *node in molecules) {
+        if([node.name isEqualToString:name]) {
+            return node;
+        }
+    }
+    NSException *e = [NSException exceptionWithName:@"Wrong molecule name" reason:@"no molecule available for given input" userInfo:0];
+    [e raise];
+    
+    return nil;
+}
 
 
 @end

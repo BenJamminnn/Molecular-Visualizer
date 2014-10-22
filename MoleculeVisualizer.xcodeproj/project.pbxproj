@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4607DE8E19F84F34008A4E94 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4607DE8D19F84F34008A4E94 /* DetailsViewController.m */; };
 		4661D1F319EC8C3C001F819E /* Main2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4661D1F219EC8C3C001F819E /* Main2.storyboard */; };
 		468755AA19EC993100AC4503 /* MathFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 468755A919EC993100AC4503 /* MathFunctions.m */; };
 		468928FB19EB592700308E42 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 468928FA19EB592700308E42 /* main.m */; };
@@ -31,6 +32,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4607DE8C19F84F34008A4E94 /* DetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
+		4607DE8D19F84F34008A4E94 /* DetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
 		4661D1F219EC8C3C001F819E /* Main2.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main2.storyboard; sourceTree = "<group>"; };
 		468755A819EC993100AC4503 /* MathFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathFunctions.h; sourceTree = "<group>"; };
 		468755A919EC993100AC4503 /* MathFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MathFunctions.m; sourceTree = "<group>"; };
@@ -98,6 +101,8 @@
 				468928FD19EB592700308E42 /* AppDelegate.m */,
 				4689290019EB592700308E42 /* ViewController.m */,
 				468928FF19EB592700308E42 /* ViewController.h */,
+				4607DE8C19F84F34008A4E94 /* DetailsViewController.h */,
+				4607DE8D19F84F34008A4E94 /* DetailsViewController.m */,
 				46D71A1B19EB9F8600053A5E /* MoleculesTableViewController.h */,
 				46D71A1C19EB9F8600053A5E /* MoleculesTableViewController.m */,
 				46D71A1519EB977900053A5E /* Molecule.h */,
@@ -246,6 +251,7 @@
 				468928FE19EB592700308E42 /* AppDelegate.m in Sources */,
 				468928FB19EB592700308E42 /* main.m in Sources */,
 				46D71A1719EB977900053A5E /* Molecule.m in Sources */,
+				4607DE8E19F84F34008A4E94 /* DetailsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

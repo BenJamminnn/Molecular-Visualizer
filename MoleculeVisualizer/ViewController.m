@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "Molecule.h"
 #import "MoleculesTableViewController.h"
+#import "DetailsViewController.h"
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet SCNView *sceneView;
@@ -25,22 +26,23 @@
     [super viewDidLoad];
     UIBarButtonItem* backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self
                                                                   action:@selector(done)];
+    UIBarButtonItem *details = [[UIBarButtonItem alloc]initWithTitle:@"Details" style:UIBarButtonItemStylePlain target:self action:@selector(details)];
+    self.navigationItem.rightBarButtonItem = details;
     self.navigationItem.leftBarButtonItem = backButton;
     self.navigationController.navigationBar.topItem.title = self.geometryNode.name;
     
     [self sceneSetup];
 
 }
-
+- (void)details {
+    DetailsViewController *vc = [[DetailsViewController alloc]initWithMolecule:self.geometryNode.name];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 - (void)done {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-}
 
 - (instancetype)initWithMolecule:(SCNNode *)molecule {
     if(self = [super init]) {

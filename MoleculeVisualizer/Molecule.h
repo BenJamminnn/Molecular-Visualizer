@@ -14,4 +14,6 @@
 
 @property (nonatomic, readonly, strong) NSArray *allMolecules;
 
++ (SCNNode *)moleculeForName:(NSString *)name;
+
 @end

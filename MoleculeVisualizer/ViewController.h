@@ -13,7 +13,7 @@
 @interface ViewController : UIViewController
 @property (strong, nonatomic) SCNNode *geometryNode;
 
-- (instancetype)initWithMolecule:(Molecule *)molecule;
+- (instancetype)initWithMolecule:(SCNNode *)molecule;
 
 @end
 
