@@ -845,6 +845,41 @@ static NSArray *molecules = nil;
     return phos;
 }
 
+- (SCNNode *)sulfurMolecule {
+    SCNNode *sulfur = [SCNNode node];
+    
+    //S8 is the same sub molecule 4 times
+    
+    SCNNode *sulfurSubmolecule = [SCNNode node];
+    sulfurSubmolecule.position = SCNVector3Make(0, 0, 0);
+    SCNVector3 sulfurRight = SCNVector3Make(-5, 0, 0);
+    SCNVector3 sulfurLeft = SCNVector3Make(5, 0, 0);
+    SCNVector3 sulfurCenter = SCNVector3Make(0, 3, 2);
+    [self nodeWithAtom:[Atom sulfurAtom] molecule:sulfurSubmolecule position:sulfurCenter];
+    [self nodeWithAtom:[Atom sulfurAtom] molecule:sulfurSubmolecule position:sulfurRight];
+    [self nodeWithAtom:[Atom sulfurAtom] molecule:sulfurSubmolecule position:sulfurLeft];
+    
+    [sulfurSubmolecule addChildNode:[self connectorWithPositions:sulfurLeft and:sulfurCenter command:@"45xyz"]];
+    [sulfurSubmolecule addChildNode:[self connectorWithPositions:sulfurRight and:sulfurCenter command:@"135xyz"]];
+
+    SCNNode *sulfurSubmoleculeLeft = [sulfurSubmolecule clone];
+    sulfurSubmoleculeLeft.position = SCNVector3Make(-5, 0, -5);
+    sulfurSubmoleculeLeft.pivot = SCNMatrix4MakeRotation(M_PI_2, 1, 50, 2);
+    
+    SCNNode *sulfurHalf = [SCNNode node];
+    sulfurHalf.position = SCNVector3Make(0, 0, 0);
+    [sulfurHalf addChildNode:sulfurSubmolecule];
+    [sulfurHalf addChildNode:sulfurSubmoleculeLeft];
+    
+    SCNNode *sulfurHalfB = [sulfurHalf clone];
+    sulfurHalfB.position = SCNVector3Make(0, 0, -10);
+    sulfurHalfB.pivot = SCNMatrix4MakeRotation(M_PI, 0.5, 50, 0.5);
+
+    [sulfur addChildNode:sulfurHalf];
+    [sulfur addChildNode:sulfurHalfB];
+    sulfur.name = @"Sulfur";
+    return sulfur;
+}
 
 
 #pragma mark - convienience 
@@ -973,7 +1008,7 @@ static NSArray *molecules = nil;
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             NSMutableArray *allMolecs = [NSMutableArray array];
-            NSArray *diatomics = @[[self ozoneMolecule] , [self IodineMolecule], [self chlorineMolecule] ,[self oxygenMolecule], [self bromineMolecule] , [self phosphorousMolecule], [self nitrogenMolecule] , [self fluorineMolecule]];
+            NSArray *diatomics = @[[self sulfurMolecule] ,[self ozoneMolecule] , [self IodineMolecule], [self chlorineMolecule] ,[self oxygenMolecule], [self bromineMolecule] , [self phosphorousMolecule], [self nitrogenMolecule] , [self fluorineMolecule]];
             NSArray *acids =@[  [self nitricAcidMolecule] , [self aceticAcidMolecule], [self sulfuricAcidMolecule], ];
             NSArray *hydroCarbons = @[[self nitrousOxideMolecule] , [self etherMolecule] , [self acetoneMolecule] , [self benzeneMolecule] ,[self pentaneMolecule] ,[self butaneMolecule] , [self propaneMolecule] , [self ethaneMolecule] , [self carbonDioxideMolecule] , [self carbonMonoxideMolecule], [self sulfurTrioxideMolecule], [self sulfurDioxideMolecule] , [self hydrogenChlorideMolecule] , [self hydrogenPeroxideMolecule] , [self waterMolecule], [self ammoniaMolecule] , [self ptfeMolecule] , [self methaneMolecule]];
             [allMolecs addObjectsFromArray:diatomics];
