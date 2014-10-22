@@ -70,7 +70,7 @@
     SCNNode *camNode = [SCNNode node];
     camNode.camera = [SCNCamera camera];
     camNode.name = @"camNode";
-    camNode.position = SCNVector3Make(0, 0, 40);
+    camNode.position = SCNVector3Make(0, 10, 40);
     [scene.rootNode addChildNode:camNode];
     
     scene.rootNode.position = SCNVector3Make(self.view.bounds.size.width/2, self.view.bounds.size.height/2, 0);

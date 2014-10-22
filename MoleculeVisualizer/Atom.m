@@ -66,4 +66,36 @@
     sulfur.name = @"Sulfur";
     return sulfur;
 }
+
++ (SCNGeometry *)iodineAtom {
+    SCNGeometry *iodine = [SCNSphere sphereWithRadius:1.98];
+    iodine.firstMaterial.diffuse.contents = [UIColor cyanColor];
+    iodine.firstMaterial.specular.contents = [UIColor whiteColor];
+    iodine.name = @"Iodine-Atom";
+    return iodine;
+}
+
++ (SCNGeometry *)bromineAtom {
+    SCNGeometry *bromine = [SCNSphere sphereWithRadius:1.9];
+    bromine.firstMaterial.specular.contents = [UIColor whiteColor];
+    bromine.firstMaterial.diffuse.contents = [UIColor magentaColor];
+    bromine.name = @"bromine-atom";
+    return bromine;
+}
+
++ (SCNGeometry *)arsenicAtom {
+    SCNGeometry *arsenic = [SCNSphere sphereWithRadius:2.05];
+    arsenic.firstMaterial.diffuse.contents = [UIColor colorWithRed:156/255 green:204/255 blue:83/255 alpha:1.0];
+    arsenic.firstMaterial.specular.contents = [UIColor whiteColor];
+    arsenic.name = @"Arsenic-atom";
+    return arsenic;
+}
+
++ (SCNGeometry *)phosphorousAtom {
+    SCNGeometry *p = [SCNSphere sphereWithRadius:1.95];
+    p.firstMaterial.specular.contents = [UIColor whiteColor];
+    p.firstMaterial.diffuse.contents = [UIColor brownColor];
+    p.name = @"Phosphorous-Atom";
+    return p;
+}
 @end

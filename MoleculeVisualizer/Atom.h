@@ -18,4 +18,8 @@
 + (SCNGeometry *)nitrogenAtom;
 + (SCNGeometry *)chlorineAtom;
 + (SCNGeometry *)sulfurAtom;
++ (SCNGeometry *)iodineAtom;
++ (SCNGeometry *)bromineAtom;
++ (SCNGeometry *)arsenicAtom;
++ (SCNGeometry *)phosphorousAtom;
 @end

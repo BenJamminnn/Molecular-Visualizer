@@ -17,109 +17,8 @@ static NSArray *molecules = nil;
 @end
 @implementation Molecule
 
-- (SCNNode *)connectorWithPositions:(SCNVector3)positionA and:(SCNVector3)positionB command:(NSString *)command distance:(CGFloat)distance {
-    SCNNode *node = [SCNNode node];
 
-    distance = distance *2;
-    SCNGeometry *cylinder = [SCNCylinder cylinderWithRadius:0.15 height:distance];
-    cylinder.firstMaterial.diffuse.contents = [UIColor darkGrayColor];
-    cylinder.firstMaterial.specular.contents = [UIColor whiteColor];
-    node.geometry = cylinder;
-    
-    
-    //we set the position of the connector half way between the two points
-    node.position = [MathFunctions connectorPositionWithVector:positionA and:positionB];
-    
-    //now we set the angle of the cylinder
-    //CYLINDER APPROACH ===== find the angle the hard way
-    
-    node.pivot = [self rotationWithCommand:command];
-    node.name = @"connector";
-    
-    return node;
-}
-
-
-
-- (SCNNode *)connectorWithPositions:(SCNVector3)positionA and:(SCNVector3)positionB command:(NSString *)command {
-    SCNNode *node = [SCNNode node];
-    
-    //first compute the distance. i.e height
-    CGFloat distance = [MathFunctions distanceFormulaWithVectors:positionA and:positionB];
-    
-    SCNGeometry *cylinder = [SCNCylinder cylinderWithRadius:0.15 height:distance];
-    cylinder.firstMaterial.diffuse.contents = [UIColor darkGrayColor];
-    cylinder.firstMaterial.specular.contents = [UIColor whiteColor];
-    node.geometry = cylinder;
-    
-    
-    //we set the position of the connector half way between the two points
-    node.position = [MathFunctions connectorPositionWithVector:positionA and:positionB];
-    
-    //now we set the angle of the cylinder
-    //CYLINDER APPROACH ===== find the angle the hard way
-    
-    node.pivot = [self rotationWithCommand:command];
-    node.name = @"connector";
-    
-    return node;
-}
-
-- (SCNMatrix4)rotationWithCommand:(NSString *)command {
-    SCNMatrix4 rotation = SCNMatrix4MakeRotation(M_PI_2, 0, 0, 0);
-    
-    //XY
-    if([command isEqualToString:@"90xy"]) {
-        rotation = SCNMatrix4MakeRotation(M_PI_2, 0, 1, 0);
-    } else if([command isEqualToString:@"0xy"]) {
-        rotation = SCNMatrix4MakeRotation(M_PI_2, 0, 0, 1);
-    } else if([command isEqualToString:@"45xy"]) {
-        rotation = SCNMatrix4MakeRotation(M_PI, 1, 2.5, 0);
-    } else if([command isEqualToString:@"135xy"]) {
-        rotation = SCNMatrix4MakeRotation(M_PI, 1, -2.5, 0);
-    }else if ([command isEqualToString:@"345xy"]) {
-        rotation = SCNMatrix4MakeRotation(M_PI, 2.2,-2.5, 0);
-    }else if([command isEqualToString:@"30xy"]) {
-        rotation = SCNMatrix4MakeRotation(M_PI, 1, 1.5, 0);
-    }else if([command isEqualToString:@"-30xy"]) {
-        rotation = SCNMatrix4MakeRotation(M_PI, 1, -1.5, 0);
-    } else if([command isEqualToString:@"40xy"]) {
-        rotation = SCNMatrix4MakeRotation(M_PI, 1, 2, 0);
-    } else if([command isEqualToString:@"-40xy"]) {
-        rotation = SCNMatrix4MakeRotation(M_PI, 1, -2, 0);
-        //YZ
-    } else if([command isEqualToString:@"45yz"]) {
-        rotation = SCNMatrix4MakeRotation(M_PI, 0, -2.5, 1);
-    } else if([command isEqualToString:@"135yz"]) {
-        rotation = SCNMatrix4MakeRotation(M_PI, 0, -2.5, -1);
-    }else if([command isEqualToString:@"-135yz"]) {
-        rotation = SCNMatrix4MakeRotation(M_PI, 0, 2.5, -1);
-    }
-    //XYZ
-    else if([command isEqualToString:@"45xyzWIDE"]){
-        rotation = SCNMatrix4MakeRotation(M_PI, 1, -2.5, -1);
-    } else if([command isEqualToString:@"-45xyzWIDE"]) {
-        rotation = SCNMatrix4MakeRotation(M_PI, 1, -2.5, 1);
-
-    }
-     else if([command isEqualToString:@"-45xyz"]) {
-        rotation = SCNMatrix4MakeRotation(M_PI, 1, -2.5, 0.5);
-    } else if([command isEqualToString:@"45xyz"]) {
-        rotation = SCNMatrix4MakeRotation(M_PI, 1, -2.5, -0.5);
-    } else if([command isEqualToString:@"135xyz"]) {
-        rotation = SCNMatrix4MakeRotation(M_PI, -1, -2.5, -0.5);
-    }  else if([command isEqualToString:@"45-xyz"]) {
-        rotation = SCNMatrix4MakeRotation(M_PI, -1, -2.5, 0.5);
-    }  else if([command isEqualToString:@"-45yz"]) {
-        rotation = SCNMatrix4MakeRotation(M_PI, 0, -2.5, -1);
-    } else if([command isEqualToString:@"45xz"]) {
-        rotation = SCNMatrix4MakeRotation(M_PI, -3, 4, -2.5);
-    } else if([command isEqualToString:@"135xz"]) {
-        rotation = SCNMatrix4MakeRotation(M_PI, 3, 4, -2.5);
-    }
-    
-    return rotation;
-}
+#pragma mark - hydrocarbons
 
 - (SCNNode *)methaneMolecule {
     SCNNode *methane = [SCNNode node];
@@ -259,173 +158,6 @@ static NSArray *molecules = nil;
     [hydroChloride addChildNode:[self connectorWithPositions:chlorinePosition and:hydrogenPosition command:@"0xy"]];
     hydroChloride.name = @"Hydrogen Chloride";
     return hydroChloride;
-}
-
-- (SCNNode *)sulfuricAcidMolecule {
-    
-    SCNNode *H2SO4 = [SCNNode node];
-   
-    //3 sulfur positions for double bonding
-    SCNVector3 sulfurPosition = SCNVector3Make(0, 0, 0);
-    SCNVector3 sulfurPositive = SCNVector3Make(0, 0, 2);
-    SCNVector3 sulfurNegative = SCNVector3Make(0, 0, 1);
-    //oxygens on the yz plane, double bonded at 45 and 135 degrees
-    SCNVector3 oxygenZPositiveA = SCNVector3Make(0, -4, -5);
-    SCNVector3 oxygenZPositiveB = SCNVector3Make(0, -3, -3);
-    SCNVector3 oxygenZPosition = SCNVector3Make(0, -4, -4);
-    
-    SCNVector3 oxygenZPositionNeg = SCNVector3Make(0, 4, -4);
-    SCNVector3 oxygenZNegativeA = SCNVector3Make(0, 4, -4.5);
-    SCNVector3 oxygenZNegativeB = SCNVector3Make(0, 4, -4.5);
-    
-    //oxygens on the xz plane, single bonded 45 and 135 degrees
-    SCNVector3 oxygenXZaxisA = SCNVector3Make(4, 0, 3.5);
-    SCNVector3 oxygenXZaxisB = SCNVector3Make(-4, 0, 3.5);
-    
-    //hydrogens on the yz plane, single bonded
-    SCNVector3 hydrogenPositive = SCNVector3Make(4, 3, 6);
-    SCNVector3 hydrogenNegative = SCNVector3Make(-4, -3, 6);
-    
-    [self nodeWithAtom:[Atom sulfurAtom] molecule:H2SO4 position:sulfurPosition];
-    
-    //adding yz oxygens
-    [self nodeWithAtom:[Atom oxygenAtom] molecule:H2SO4 position:oxygenZPosition];
-    [self nodeWithAtom:[Atom oxygenAtom] molecule:H2SO4 position:oxygenZPositionNeg];
-    
-    //adding xz oxygens
-    [self nodeWithAtom:[Atom oxygenAtom] molecule:H2SO4 position:oxygenXZaxisA];
-    [self nodeWithAtom:[Atom oxygenAtom] molecule:H2SO4 position:oxygenXZaxisB];
-    
-    //adding hydrogens
-    [self nodeWithAtom:[Atom hydrogenAtom] molecule:H2SO4 position:hydrogenPositive];
-    [self nodeWithAtom:[Atom hydrogenAtom] molecule:H2SO4 position:hydrogenNegative];
-    
-    //+Z double bond
-    [H2SO4 addChildNode:[self connectorWithPositions:sulfurPositive and:oxygenZPositiveA command:@"-45yz"]];
-    [H2SO4 addChildNode:[self connectorWithPositions:sulfurPosition and:oxygenZPositiveB command:@"-45yz"]];
-    
-    //-Z double bond
-    [H2SO4 addChildNode:[self connectorWithPositions:sulfurPosition and:oxygenZNegativeA command:@"45yz"]];
-    [H2SO4 addChildNode:[self connectorWithPositions:sulfurNegative and:oxygenZNegativeB command:@"45yz"]];
-
-    //other 2 oxygens bonds xz plane
-    [H2SO4 addChildNode:[self connectorWithPositions:sulfurPosition and:oxygenXZaxisA command:@"45xz"]];
-    [H2SO4 addChildNode:[self connectorWithPositions:sulfurPosition and:oxygenXZaxisB command:@"135xz"]];
-    
-    //hydrogen connectors
-    [H2SO4 addChildNode:[self connectorWithPositions:oxygenXZaxisB and:hydrogenNegative command:@"-135yz"]];
-    [H2SO4 addChildNode:[self connectorWithPositions:oxygenXZaxisA and:hydrogenPositive command:@"135yz"]];
-
-    
-    H2SO4.name = @"Sulfuric Acid";
-    return H2SO4;
-}
-
-- (SCNNode *)nitricAcidMolecule {
-    SCNNode *nitricAcid = [SCNNode node];
-    
-    SCNVector3 nitrogenPosition = SCNVector3Make(0, 0, 0);
-    //double bond locations
-    SCNVector3 nitrogenPositionA = SCNVector3Make(0, 1, 0);
-    SCNVector3 nitrogenPositionB = SCNVector3Make(0, -1, 0);
-    
-    SCNVector3 oxygen45A = SCNVector3Make(4.5, 4, 0);
-    SCNVector3 oxygen45B = SCNVector3Make(4.5, 5, 0);
-    
-    SCNVector3 oxygen45 = SCNVector3Make(4.5, 4.5, 0);
-    
-    SCNVector3 oxygen135 = SCNVector3Make(-4.5, 4.5, 0);
-    
-    SCNVector3 oxygen90 = SCNVector3Make(0, -5, 0);
-    
-    SCNVector3 hydrogen = SCNVector3Make(4, -5.5, 0);
-    
-    [self nodeWithAtom:[Atom nitrogenAtom] molecule:nitricAcid position:nitrogenPosition];
-    
-    [self nodeWithAtom:[Atom oxygenAtom] molecule:nitricAcid position:oxygen45];
-    [self nodeWithAtom:[Atom oxygenAtom] molecule:nitricAcid position:oxygen135];
-    [self nodeWithAtom:[Atom oxygenAtom] molecule:nitricAcid position:oxygen90];
-    
-    [self nodeWithAtom:[Atom hydrogenAtom] molecule:nitricAcid position:hydrogen];
-    
-    //adding bonds - oxygen
-    [nitricAcid addChildNode:[self connectorWithPositions:oxygen90 and:nitrogenPosition command:@"90xy"]];
-    [nitricAcid addChildNode:[self connectorWithPositions:oxygen135 and:nitrogenPosition command:@"135xy"]];
-    
-    //double bond
-    [nitricAcid addChildNode:[self connectorWithPositions:oxygen45A and:nitrogenPositionA command:@"45xy"]];
-    [nitricAcid addChildNode:[self connectorWithPositions:oxygen45B and:nitrogenPositionB command:@"45xy"]];
-
-    //adding hydrogen bond
-    [nitricAcid addChildNode:[self connectorWithPositions:oxygen90 and:hydrogen command:@"345xy"]];
-    
-    nitricAcid.name = @"Nitric Acid";
-    return nitricAcid;
-}
-
-- (SCNNode *)aceticAcidMolecule {
-    //C4H2O2
-    SCNNode *aceticAcid = [SCNNode node];
-    
-    //right carbon with double bond
-    SCNVector3 carbonRight = SCNVector3Make(3, 0, 0);
-    SCNVector3 carbonRightA = SCNVector3Make(3, 1, 0);
-    SCNVector3 carbonRightB = SCNVector3Make(3, -1, 0);
-    
-    //left carbon
-    SCNVector3 carbonLeft = SCNVector3Make(-3, 0, 0);
-    
-    //oxygen45
-    SCNVector3 oxygen45 = SCNVector3Make(7, 4.5, 0);
-    SCNVector3 oxygen45A = SCNVector3Make(7, 4, 0);
-    SCNVector3 oxygen45B = SCNVector3Make(7, 5, 0);
-    
-    //oxygen135
-    SCNVector3 oxygen135 = SCNVector3Make(7, -4.5, 0);
-    
-    //hydrogens
-    SCNVector3 hydrogenRightMost = SCNVector3Make(11, -3.8, 0);
-    SCNVector3 hydrogenZ = SCNVector3Make(carbonLeft.x -1.75, carbonLeft.y - 2.5, 3);
-    SCNVector3 hydrogenZNeg = SCNVector3Make(carbonLeft.x -1.75, carbonLeft.y - 2.5, -3);
-    SCNVector3 hydrogenSouthMost = SCNVector3Make(carbonLeft.x -1.75, carbonLeft.y +3.5, 0);
-    
-    //adding atoms
-    [self nodeWithAtom:[Atom carbonAtom] molecule:aceticAcid position:carbonRight];
-    [self nodeWithAtom:[Atom carbonAtom] molecule:aceticAcid position:carbonLeft];
-    
-    [self nodeWithAtom:[Atom oxygenAtom] molecule:aceticAcid position:oxygen45];
-    [self nodeWithAtom:[Atom oxygenAtom] molecule:aceticAcid position:oxygen135];
-    
-    [self nodeWithAtom:[Atom hydrogenAtom] molecule:aceticAcid position:hydrogenRightMost];
-    
-    [self nodeWithAtom:[Atom hydrogenAtom] molecule:aceticAcid position:hydrogenZ];
-    [self nodeWithAtom:[Atom hydrogenAtom] molecule:aceticAcid position:hydrogenZNeg];
-    [self nodeWithAtom:[Atom hydrogenAtom] molecule:aceticAcid position:hydrogenSouthMost];
-    
-    //adding connectors
-    [aceticAcid addChildNode:[self connectorWithPositions:carbonRightA and:oxygen45A command:@"45xy"]];
-    [aceticAcid addChildNode:[self connectorWithPositions:carbonRightB and:oxygen45B command:@"45xy"]];
-
-    [aceticAcid addChildNode:[self connectorWithPositions:oxygen135 and:carbonRight command:@"135xy"]];
-    
-    SCNNode *hydroRightMost = [self connectorWithPositions:oxygen135 and:hydrogenRightMost command:@"0xy"];
-    hydroRightMost.pivot = SCNMatrix4MakeRotation(M_PI, 1, 1.2, 0);
-    [aceticAcid addChildNode:hydroRightMost];
-    
-    [aceticAcid addChildNode:[self connectorWithPositions:carbonLeft and:carbonRight command:@"0xy"]];
-    
-    SCNNode *leftHydro = [self connectorWithPositions:carbonLeft and:hydrogenZ command:@"45xyz"];
-    SCNNode *rightHydro = [self connectorWithPositions:carbonLeft and:hydrogenZNeg command:@"45xyz"];
-    SCNNode *southHydro = [self connectorWithPositions:carbonLeft and:hydrogenSouthMost command:@"45xy"];
-    leftHydro.pivot = SCNMatrix4MakeRotation(M_PI, -4, -14, 6);
-    rightHydro.pivot = SCNMatrix4MakeRotation(M_PI, -4, -14, -6);
-    southHydro.pivot = SCNMatrix4MakeRotation(M_PI, -2, 8, 0);
-    [aceticAcid addChildNode:rightHydro];
-    [aceticAcid addChildNode:leftHydro];
-    [aceticAcid addChildNode:southHydro];
-    
-    aceticAcid.name = @"Acetic Acid";
-    return aceticAcid;
 }
 
 - (SCNNode *)sulfurDioxideMolecule {
@@ -793,7 +525,6 @@ static NSArray *molecules = nil;
     [self nodeWithAtom:[Atom nitrogenAtom] molecule:nitrousOxide position:nitrogenLeft];
     [self nodeWithAtom:[Atom oxygenAtom] molecule:nitrousOxide position:oxygenRight];
     
-    
     SCNNode *connector = [self tripleBondConnectorPositionA:nitrogenCenter b:nitrogenLeft YBased:YES command:@"0xy"];
     
     [nitrousOxide addChildNode:[self connectorWithPositions:nitrogenLeft and:nitrogenCenter command:@"0xy"]];
@@ -805,19 +536,418 @@ static NSArray *molecules = nil;
     return nitrousOxide;
 }
 
+#pragma mark - acids
+
+- (SCNNode *)sulfuricAcidMolecule {
+    
+    SCNNode *H2SO4 = [SCNNode node];
+    
+    //3 sulfur positions for double bonding
+    SCNVector3 sulfurPosition = SCNVector3Make(0, 0, 0);
+    SCNVector3 sulfurPositive = SCNVector3Make(0, 0, 2);
+    SCNVector3 sulfurNegative = SCNVector3Make(0, 0, 1);
+    //oxygens on the yz plane, double bonded at 45 and 135 degrees
+    SCNVector3 oxygenZPositiveA = SCNVector3Make(0, -4, -5);
+    SCNVector3 oxygenZPositiveB = SCNVector3Make(0, -3, -3);
+    SCNVector3 oxygenZPosition = SCNVector3Make(0, -4, -4);
+    
+    SCNVector3 oxygenZPositionNeg = SCNVector3Make(0, 4, -4);
+    SCNVector3 oxygenZNegativeA = SCNVector3Make(0, 4, -4.5);
+    SCNVector3 oxygenZNegativeB = SCNVector3Make(0, 4, -4.5);
+    
+    //oxygens on the xz plane, single bonded 45 and 135 degrees
+    SCNVector3 oxygenXZaxisA = SCNVector3Make(4, 0, 3.5);
+    SCNVector3 oxygenXZaxisB = SCNVector3Make(-4, 0, 3.5);
+    
+    //hydrogens on the yz plane, single bonded
+    SCNVector3 hydrogenPositive = SCNVector3Make(4, 3, 6);
+    SCNVector3 hydrogenNegative = SCNVector3Make(-4, -3, 6);
+    
+    [self nodeWithAtom:[Atom sulfurAtom] molecule:H2SO4 position:sulfurPosition];
+    
+    //adding yz oxygens
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:H2SO4 position:oxygenZPosition];
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:H2SO4 position:oxygenZPositionNeg];
+    
+    //adding xz oxygens
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:H2SO4 position:oxygenXZaxisA];
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:H2SO4 position:oxygenXZaxisB];
+    
+    //adding hydrogens
+    [self nodeWithAtom:[Atom hydrogenAtom] molecule:H2SO4 position:hydrogenPositive];
+    [self nodeWithAtom:[Atom hydrogenAtom] molecule:H2SO4 position:hydrogenNegative];
+    
+    //+Z double bond
+    [H2SO4 addChildNode:[self connectorWithPositions:sulfurPositive and:oxygenZPositiveA command:@"-45yz"]];
+    [H2SO4 addChildNode:[self connectorWithPositions:sulfurPosition and:oxygenZPositiveB command:@"-45yz"]];
+    
+    //-Z double bond
+    [H2SO4 addChildNode:[self connectorWithPositions:sulfurPosition and:oxygenZNegativeA command:@"45yz"]];
+    [H2SO4 addChildNode:[self connectorWithPositions:sulfurNegative and:oxygenZNegativeB command:@"45yz"]];
+    
+    //other 2 oxygens bonds xz plane
+    [H2SO4 addChildNode:[self connectorWithPositions:sulfurPosition and:oxygenXZaxisA command:@"45xz"]];
+    [H2SO4 addChildNode:[self connectorWithPositions:sulfurPosition and:oxygenXZaxisB command:@"135xz"]];
+    
+    //hydrogen connectors
+    [H2SO4 addChildNode:[self connectorWithPositions:oxygenXZaxisB and:hydrogenNegative command:@"-135yz"]];
+    [H2SO4 addChildNode:[self connectorWithPositions:oxygenXZaxisA and:hydrogenPositive command:@"135yz"]];
+    
+    
+    H2SO4.name = @"Sulfuric Acid";
+    return H2SO4;
+}
+
+- (SCNNode *)nitricAcidMolecule {
+    SCNNode *nitricAcid = [SCNNode node];
+    
+    SCNVector3 nitrogenPosition = SCNVector3Make(0, 0, 0);
+    //double bond locations
+    SCNVector3 nitrogenPositionA = SCNVector3Make(0, 1, 0);
+    SCNVector3 nitrogenPositionB = SCNVector3Make(0, -1, 0);
+    
+    SCNVector3 oxygen45A = SCNVector3Make(4.5, 4, 0);
+    SCNVector3 oxygen45B = SCNVector3Make(4.5, 5, 0);
+    
+    SCNVector3 oxygen45 = SCNVector3Make(4.5, 4.5, 0);
+    
+    SCNVector3 oxygen135 = SCNVector3Make(-4.5, 4.5, 0);
+    
+    SCNVector3 oxygen90 = SCNVector3Make(0, -5, 0);
+    
+    SCNVector3 hydrogen = SCNVector3Make(4, -5.5, 0);
+    
+    [self nodeWithAtom:[Atom nitrogenAtom] molecule:nitricAcid position:nitrogenPosition];
+    
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:nitricAcid position:oxygen45];
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:nitricAcid position:oxygen135];
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:nitricAcid position:oxygen90];
+    
+    [self nodeWithAtom:[Atom hydrogenAtom] molecule:nitricAcid position:hydrogen];
+    
+    //adding bonds - oxygen
+    [nitricAcid addChildNode:[self connectorWithPositions:oxygen90 and:nitrogenPosition command:@"90xy"]];
+    [nitricAcid addChildNode:[self connectorWithPositions:oxygen135 and:nitrogenPosition command:@"135xy"]];
+    
+    //double bond
+    [nitricAcid addChildNode:[self connectorWithPositions:oxygen45A and:nitrogenPositionA command:@"45xy"]];
+    [nitricAcid addChildNode:[self connectorWithPositions:oxygen45B and:nitrogenPositionB command:@"45xy"]];
+    
+    //adding hydrogen bond
+    [nitricAcid addChildNode:[self connectorWithPositions:oxygen90 and:hydrogen command:@"345xy"]];
+    
+    nitricAcid.name = @"Nitric Acid";
+    return nitricAcid;
+}
+
+- (SCNNode *)aceticAcidMolecule {
+    //C4H2O2
+    SCNNode *aceticAcid = [SCNNode node];
+    
+    //right carbon with double bond
+    SCNVector3 carbonRight = SCNVector3Make(3, 0, 0);
+    SCNVector3 carbonRightA = SCNVector3Make(3, 1, 0);
+    SCNVector3 carbonRightB = SCNVector3Make(3, -1, 0);
+    
+    //left carbon
+    SCNVector3 carbonLeft = SCNVector3Make(-3, 0, 0);
+    
+    //oxygen45
+    SCNVector3 oxygen45 = SCNVector3Make(7, 4.5, 0);
+    SCNVector3 oxygen45A = SCNVector3Make(7, 4, 0);
+    SCNVector3 oxygen45B = SCNVector3Make(7, 5, 0);
+    
+    //oxygen135
+    SCNVector3 oxygen135 = SCNVector3Make(7, -4.5, 0);
+    
+    //hydrogens
+    SCNVector3 hydrogenRightMost = SCNVector3Make(11, -3.8, 0);
+    SCNVector3 hydrogenZ = SCNVector3Make(carbonLeft.x -1.75, carbonLeft.y - 2.5, 3);
+    SCNVector3 hydrogenZNeg = SCNVector3Make(carbonLeft.x -1.75, carbonLeft.y - 2.5, -3);
+    SCNVector3 hydrogenSouthMost = SCNVector3Make(carbonLeft.x -1.75, carbonLeft.y +3.5, 0);
+    
+    //adding atoms
+    [self nodeWithAtom:[Atom carbonAtom] molecule:aceticAcid position:carbonRight];
+    [self nodeWithAtom:[Atom carbonAtom] molecule:aceticAcid position:carbonLeft];
+    
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:aceticAcid position:oxygen45];
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:aceticAcid position:oxygen135];
+    
+    [self nodeWithAtom:[Atom hydrogenAtom] molecule:aceticAcid position:hydrogenRightMost];
+    
+    [self nodeWithAtom:[Atom hydrogenAtom] molecule:aceticAcid position:hydrogenZ];
+    [self nodeWithAtom:[Atom hydrogenAtom] molecule:aceticAcid position:hydrogenZNeg];
+    [self nodeWithAtom:[Atom hydrogenAtom] molecule:aceticAcid position:hydrogenSouthMost];
+    
+    //adding connectors
+    [aceticAcid addChildNode:[self connectorWithPositions:carbonRightA and:oxygen45A command:@"45xy"]];
+    [aceticAcid addChildNode:[self connectorWithPositions:carbonRightB and:oxygen45B command:@"45xy"]];
+    
+    [aceticAcid addChildNode:[self connectorWithPositions:oxygen135 and:carbonRight command:@"135xy"]];
+    
+    SCNNode *hydroRightMost = [self connectorWithPositions:oxygen135 and:hydrogenRightMost command:@"0xy"];
+    hydroRightMost.pivot = SCNMatrix4MakeRotation(M_PI, 1, 1.2, 0);
+    [aceticAcid addChildNode:hydroRightMost];
+    
+    [aceticAcid addChildNode:[self connectorWithPositions:carbonLeft and:carbonRight command:@"0xy"]];
+    
+    SCNNode *leftHydro = [self connectorWithPositions:carbonLeft and:hydrogenZ command:@"45xyz"];
+    SCNNode *rightHydro = [self connectorWithPositions:carbonLeft and:hydrogenZNeg command:@"45xyz"];
+    SCNNode *southHydro = [self connectorWithPositions:carbonLeft and:hydrogenSouthMost command:@"45xy"];
+    leftHydro.pivot = SCNMatrix4MakeRotation(M_PI, -4, -14, 6);
+    rightHydro.pivot = SCNMatrix4MakeRotation(M_PI, -4, -14, -6);
+    southHydro.pivot = SCNMatrix4MakeRotation(M_PI, -2, 8, 0);
+    [aceticAcid addChildNode:rightHydro];
+    [aceticAcid addChildNode:leftHydro];
+    [aceticAcid addChildNode:southHydro];
+    
+    aceticAcid.name = @"Acetic Acid";
+    return aceticAcid;
+}
+
+#pragma mark - diatomics
+
+- (SCNNode *)oxygenMolecule {
+    SCNNode *oxygen = [SCNNode node];
+    oxygen.position = SCNVector3Make(0, 0, 0);
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:oxygen position:SCNVector3Make(-2.5, 0, 0)];
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:oxygen position:SCNVector3Make(2.5, 0, 0)];
+    
+    SCNNode *connector = [self doubleBondConnectorPositionA:SCNVector3Make(-2.5, 0, 0) b:SCNVector3Make(2.5, 0, 0) YBased:YES command:@"0xy"];
+    
+    [oxygen addChildNode:connector];
+    
+    oxygen.name = @"Oxygen";
+    return oxygen;
+}
+
+- (SCNNode *)chlorineMolecule {
+    SCNNode *chlorine = [SCNNode node];
+    chlorine.position = SCNVector3Make(0, 0, 0);
+    [self nodeWithAtom:[Atom chlorineAtom] molecule:chlorine position:SCNVector3Make(-2.5, 0, 0)];
+    [self nodeWithAtom:[Atom chlorineAtom] molecule:chlorine position:SCNVector3Make(+2.5, 0, 0)];
+    
+    [chlorine addChildNode:[self connectorWithPositions:SCNVector3Make(-2.5, 0, 0) and:SCNVector3Make(+2.5, 0, 0) command:@"0xy"]];
+    
+    chlorine.name = @"Chlorine";
+    return chlorine;
+}
+
+- (SCNNode *)IodineMolecule {
+    SCNNode *iodine = [SCNNode node];
+    iodine.position = SCNVector3Make(0, 0, 0);
+    [self nodeWithAtom:[Atom iodineAtom] molecule:iodine position:SCNVector3Make(-2.5, 0, 0)];
+    [self nodeWithAtom:[Atom iodineAtom] molecule:iodine position:SCNVector3Make(+2.5, 0, 0)];
+    
+    [iodine addChildNode:[self connectorWithPositions:SCNVector3Make(-2.5, 0, 0) and:SCNVector3Make(+2.5, 0, 0) command:@"0xy"]];
+    
+    iodine.name = @"Iodine";
+    return iodine;
+}
+
+- (SCNNode *)hydrogenMolecule {
+    SCNNode *hydro = [SCNNode node];
+    hydro.position =SCNVector3Make(0, 0, 0);
+    [self nodeWithAtom:[Atom hydrogenAtom] molecule:hydro position:SCNVector3Make(-2.5, 0, 0)];
+    [self nodeWithAtom:[Atom hydrogenAtom] molecule:hydro position:SCNVector3Make(+2.5, 0, 0)];
+
+    [hydro addChildNode:[self connectorWithPositions:SCNVector3Make(+2.5, 0, 0) and:SCNVector3Make(-2.5, 0, 0) command:@"0xy"]];
+    
+    hydro.name = @"Hydrogen";
+    return hydro;
+}
+
+- (SCNNode *)fluorineMolecule {
+    SCNNode *fluorine = [SCNNode node];
+    fluorine.position = SCNVector3Make(0, 0, 0);
+    [self nodeWithAtom:[Atom fluorineAtom] molecule:fluorine position:SCNVector3Make(-2.5, 0, 0)];
+    [self nodeWithAtom:[Atom fluorineAtom] molecule:fluorine position:SCNVector3Make(+2.5, 0, 0)];
+    
+    [fluorine addChildNode:[self connectorWithPositions:SCNVector3Make(2.5, 0, 0) and:SCNVector3Make(-2.5, 0, 0) command:@"0xy"]];
+    
+    fluorine.name = @"Fluorine";
+    return fluorine;
+}
+
+- (SCNNode *)nitrogenMolecule {
+    SCNNode *nitrogen = [SCNNode node];
+    nitrogen.position =SCNVector3Make(0, 0, 0);
+    
+    [self nodeWithAtom:[Atom nitrogenAtom] molecule:nitrogen position:SCNVector3Make(-2.5, 0, 0)];
+    [self nodeWithAtom:[Atom nitrogenAtom] molecule:nitrogen position:SCNVector3Make(2.5, 0, 0)];
+    
+    SCNNode *connector = [self tripleBondConnectorPositionA:SCNVector3Make(-2.5, 0, 0) b:SCNVector3Make(+2.5, 0, 0) YBased:YES command:@"0xy"];
+    [nitrogen addChildNode:connector];
+    
+    nitrogen.name = @"Nitrogen";
+    return nitrogen;
+}
+
+- (SCNNode *)bromineMolecule {
+    SCNNode *bromine = [SCNNode node];
+    bromine.position = SCNVector3Make(0, 0, 0);
+    
+    [self nodeWithAtom:[Atom bromineAtom] molecule:bromine position:SCNVector3Make(-3, 0, 0)];
+    [self nodeWithAtom:[Atom bromineAtom] molecule:bromine position:SCNVector3Make(+3, 0, 0)];
+    
+    [bromine addChildNode:[self connectorWithPositions:SCNVector3Make(+3, 0, 0) and:SCNVector3Make(-3, 0, 0) command:@"0xy"]];
+    bromine.name = @"Bromine";
+    return bromine;
+}
+
+- (SCNNode *)phosphorousMolecule {
+    SCNNode *phos = [SCNNode node];
+    
+    SCNVector3 phosTop = SCNVector3Make(0, 8, 3);
+    SCNVector3 phosLeft = SCNVector3Make(-4, 0, 0);
+    SCNVector3 phosRight = SCNVector3Make(+4, 0, 0);
+    SCNVector3 phosProtruding = SCNVector3Make(0, 0, 8);
+    
+    [self nodeWithAtom:[Atom phosphorousAtom] molecule:phos position:phosLeft];
+    [self nodeWithAtom:[Atom phosphorousAtom] molecule:phos position:phosRight];
+    [self nodeWithAtom:[Atom phosphorousAtom] molecule:phos position:phosProtruding];
+    [self nodeWithAtom:[Atom phosphorousAtom] molecule:phos position:phosTop];
+
+    SCNNode *connectorXY = [self connectorWithPositions:phosLeft and:phosRight command:@"0xy"];
+    SCNNode *connectorXZLeft = [self connectorWithPositions:phosLeft and:phosProtruding command:@"30xz"];
+    SCNNode *connectorXZRight = [self connectorWithPositions:phosProtruding and:phosRight command:@"-30xz"];
+
+    [phos addChildNode:connectorXY];
+    [phos addChildNode:connectorXZLeft];
+    [phos addChildNode:connectorXZRight];
+    
+    phos.name = @"Phosphorous";
+    return phos;
+}
+
+#pragma mark - convienience 
+
 - (void)nodeWithAtom:(SCNGeometry *)atom molecule:(SCNNode *)molecule position:(SCNVector3)position {
     SCNNode *node = [SCNNode nodeWithGeometry:atom];
     node.position = position;
     [molecule addChildNode:node];
 }
 
+- (SCNNode *)connectorWithPositions:(SCNVector3)positionA and:(SCNVector3)positionB command:(NSString *)command distance:(CGFloat)distance {
+    SCNNode *node = [SCNNode node];
+    
+    distance = distance *2;
+    SCNGeometry *cylinder = [SCNCylinder cylinderWithRadius:0.15 height:distance];
+    cylinder.firstMaterial.diffuse.contents = [UIColor darkGrayColor];
+    cylinder.firstMaterial.specular.contents = [UIColor whiteColor];
+    node.geometry = cylinder;
+    
+    
+    //we set the position of the connector half way between the two points
+    node.position = [MathFunctions connectorPositionWithVector:positionA and:positionB];
+    
+    //now we set the angle of the cylinder
+    //CYLINDER APPROACH ===== find the angle the hard way
+    
+    node.pivot = [self rotationWithCommand:command];
+    node.name = @"connector";
+    
+    return node;
+}
+
+- (SCNNode *)connectorWithPositions:(SCNVector3)positionA and:(SCNVector3)positionB command:(NSString *)command {
+    SCNNode *node = [SCNNode node];
+    
+    //first compute the distance. i.e height
+    CGFloat distance = [MathFunctions distanceFormulaWithVectors:positionA and:positionB];
+    
+    SCNGeometry *cylinder = [SCNCylinder cylinderWithRadius:0.15 height:distance];
+    cylinder.firstMaterial.diffuse.contents = [UIColor darkGrayColor];
+    cylinder.firstMaterial.specular.contents = [UIColor whiteColor];
+    node.geometry = cylinder;
+    
+    
+    //we set the position of the connector half way between the two points
+    node.position = [MathFunctions connectorPositionWithVector:positionA and:positionB];
+    
+    //now we set the angle of the cylinder
+    //CYLINDER APPROACH ===== find the angle the hard way
+    
+    node.pivot = [self rotationWithCommand:command];
+    node.name = @"connector";
+    
+    return node;
+}
+
+- (SCNMatrix4)rotationWithCommand:(NSString *)command {
+    SCNMatrix4 rotation = SCNMatrix4MakeRotation(M_PI_2, 0, 0, 0);
+    
+    //XY
+    if([command isEqualToString:@"90xy"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI_2, 0, 1, 0);
+    } else if([command isEqualToString:@"0xy"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI_2, 0, 0, 1);
+    } else if([command isEqualToString:@"45xy"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, 1, 2.5, 0);
+    } else if([command isEqualToString:@"135xy"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, 1, -2.5, 0);
+    }else if ([command isEqualToString:@"345xy"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, 2.2,-2.5, 0);
+    }else if([command isEqualToString:@"30xy"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, 1, 1.5, 0);
+    }else if([command isEqualToString:@"-30xy"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, 1, -1.5, 0);
+    } else if([command isEqualToString:@"40xy"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, 1, 2, 0);
+    } else if([command isEqualToString:@"-40xy"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, 1, -2, 0);
+        //YZ
+    } else if([command isEqualToString:@"45yz"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, 0, -2.5, 1);
+    } else if([command isEqualToString:@"135yz"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, 0, -2.5, -1);
+    }else if([command isEqualToString:@"-135yz"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, 0, 2.5, -1);
+    }
+    //XYZ
+    else if([command isEqualToString:@"45xyzWIDE"]){
+        rotation = SCNMatrix4MakeRotation(M_PI, 1, -2.5, -1);
+    } else if([command isEqualToString:@"-45xyzWIDE"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, 1, -2.5, 1);
+        
+    }
+    else if([command isEqualToString:@"-45xyz"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, 1, -2.5, 0.5);
+    } else if([command isEqualToString:@"45xyz"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, 1, -2.5, -0.5);
+    } else if([command isEqualToString:@"135xyz"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, -1, -2.5, -0.5);
+    }  else if([command isEqualToString:@"45-xyz"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, -1, -2.5, 0.5);
+    }  else if([command isEqualToString:@"-45yz"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, 0, -2.5, -1);
+    } else if([command isEqualToString:@"45xz"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, -3, 4, -2.5);
+    } else if([command isEqualToString:@"135xz"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, 3, 4, -2.5);
+    } else if([command isEqualToString:@"30xz"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI_2, 10, 0, -4);
+    } else if([command isEqualToString:@"-30xz"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI_2, 10, 0, 4);
+    }
+    
+    return rotation;
+}
+
+#pragma mark - all exposed molecules
+
 - (NSArray *)allMolecules {
     if(!_allMolecules) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            molecules = @[[self nitrousOxideMolecule] , [self etherMolecule] , [self acetoneMolecule] , [self benzeneMolecule] ,[self pentaneMolecule] ,[self butaneMolecule] , [self propaneMolecule] , [self ethaneMolecule] , [self carbonDioxideMolecule] , [self carbonMonoxideMolecule], [self sulfurTrioxideMolecule],
-                          [self sulfurDioxideMolecule], [self aceticAcidMolecule] , [self nitricAcidMolecule] , [self sulfuricAcidMolecule] , [self hydrogenChlorideMolecule] , [self hydrogenPeroxideMolecule] , [self waterMolecule], [self ammoniaMolecule] ,
-                          [self ptfeMolecule] , [self methaneMolecule]];
+            NSMutableArray *allMolecs = [NSMutableArray array];
+            NSArray *diatomics = @[[self IodineMolecule], [self chlorineMolecule] ,[self oxygenMolecule], [self bromineMolecule] , [self phosphorousMolecule], [self nitrogenMolecule] , [self fluorineMolecule]];
+            NSArray *acids =@[  [self nitricAcidMolecule] , [self aceticAcidMolecule], [self sulfuricAcidMolecule], ];
+            NSArray *hydroCarbons = @[[self nitrousOxideMolecule] , [self etherMolecule] , [self acetoneMolecule] , [self benzeneMolecule] ,[self pentaneMolecule] ,[self butaneMolecule] , [self propaneMolecule] , [self ethaneMolecule] , [self carbonDioxideMolecule] , [self carbonMonoxideMolecule], [self sulfurTrioxideMolecule], [self sulfurDioxideMolecule] , [self hydrogenChlorideMolecule] , [self hydrogenPeroxideMolecule] , [self waterMolecule], [self ammoniaMolecule] , [self ptfeMolecule] , [self methaneMolecule]];
+            [allMolecs addObjectsFromArray:diatomics];
+            [allMolecs addObjectsFromArray:acids];
+            [allMolecs addObjectsFromArray:hydroCarbons];
+            molecules = (NSArray *)allMolecs;
         });
         _allMolecules = molecules;
     }
