@@ -705,7 +705,7 @@ static NSArray *molecules = nil;
     return aceticAcid;
 }
 
-#pragma mark - diatomics
+#pragma mark - diatomics and polyatomics
 
 - (SCNNode *)oxygenMolecule {
     SCNNode *oxygen = [SCNNode node];
@@ -795,10 +795,31 @@ static NSArray *molecules = nil;
     return bromine;
 }
 
+- (SCNNode *)ozoneMolecule {
+    SCNNode *ozone = [SCNNode node];
+    SCNVector3 oxygenLeft = SCNVector3Make(4, 3, 0);
+    SCNVector3 oxygenCenter = SCNVector3Make(0, 0, 0);
+    SCNVector3 oxygenRight = SCNVector3Make(-4, 3, 0);
+    
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:ozone position:oxygenCenter];
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:ozone position:oxygenRight];
+    [self nodeWithAtom:[Atom oxygenAtom] molecule:ozone position:oxygenLeft];
+    
+    SCNNode *rightConnector = [self connectorWithPositions:oxygenRight and:oxygenCenter command:@"-40xy"];
+    SCNNode *leftConnector = [self doubleBondConnectorPositionA:oxygenCenter b:oxygenLeft YBased:YES command:@"40xy"];
+    
+    [ozone addChildNode:rightConnector];
+    [ozone addChildNode:leftConnector];
+    
+    
+    ozone.name = @"Ozone";
+    return ozone;
+}
+
 - (SCNNode *)phosphorousMolecule {
     SCNNode *phos = [SCNNode node];
     
-    SCNVector3 phosTop = SCNVector3Make(0, 8, 3);
+    SCNVector3 phosTop = SCNVector3Make(0, 8, 4);
     SCNVector3 phosLeft = SCNVector3Make(-4, 0, 0);
     SCNVector3 phosRight = SCNVector3Make(+4, 0, 0);
     SCNVector3 phosProtruding = SCNVector3Make(0, 0, 8);
@@ -816,9 +837,15 @@ static NSArray *molecules = nil;
     [phos addChildNode:connectorXZLeft];
     [phos addChildNode:connectorXZRight];
     
+    [phos addChildNode:[self connectorWithPositions:phosTop and:phosLeft command:@"60xyz"]];
+    [phos addChildNode:[self connectorWithPositions:phosTop and:phosRight command:@"-60xyz"]];
+    [phos addChildNode:[self connectorWithPositions:phosTop and:phosProtruding command:@"zPosyPos"]];
+    
     phos.name = @"Phosphorous";
     return phos;
 }
+
+
 
 #pragma mark - convienience 
 
@@ -909,7 +936,12 @@ static NSArray *molecules = nil;
         rotation = SCNMatrix4MakeRotation(M_PI, 1, -2.5, -1);
     } else if([command isEqualToString:@"-45xyzWIDE"]) {
         rotation = SCNMatrix4MakeRotation(M_PI, 1, -2.5, 1);
-        
+    } else if([command isEqualToString:@"60xyz"]) { //phosphorous
+        rotation = SCNMatrix4MakeRotation(M_PI, 2, 10, 2);
+    } else if([command isEqualToString:@"-60xyz"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI, -2, 10, 2);
+    } else if([command isEqualToString:@"zPosyPos"]) {
+        rotation = SCNMatrix4MakeRotation(M_PI_2, 2, -10, 2);
     }
     else if([command isEqualToString:@"-45xyz"]) {
         rotation = SCNMatrix4MakeRotation(M_PI, 1, -2.5, 0.5);
@@ -941,7 +973,7 @@ static NSArray *molecules = nil;
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             NSMutableArray *allMolecs = [NSMutableArray array];
-            NSArray *diatomics = @[[self IodineMolecule], [self chlorineMolecule] ,[self oxygenMolecule], [self bromineMolecule] , [self phosphorousMolecule], [self nitrogenMolecule] , [self fluorineMolecule]];
+            NSArray *diatomics = @[[self ozoneMolecule] , [self IodineMolecule], [self chlorineMolecule] ,[self oxygenMolecule], [self bromineMolecule] , [self phosphorousMolecule], [self nitrogenMolecule] , [self fluorineMolecule]];
             NSArray *acids =@[  [self nitricAcidMolecule] , [self aceticAcidMolecule], [self sulfuricAcidMolecule], ];
             NSArray *hydroCarbons = @[[self nitrousOxideMolecule] , [self etherMolecule] , [self acetoneMolecule] , [self benzeneMolecule] ,[self pentaneMolecule] ,[self butaneMolecule] , [self propaneMolecule] , [self ethaneMolecule] , [self carbonDioxideMolecule] , [self carbonMonoxideMolecule], [self sulfurTrioxideMolecule], [self sulfurDioxideMolecule] , [self hydrogenChlorideMolecule] , [self hydrogenPeroxideMolecule] , [self waterMolecule], [self ammoniaMolecule] , [self ptfeMolecule] , [self methaneMolecule]];
             [allMolecs addObjectsFromArray:diatomics];
