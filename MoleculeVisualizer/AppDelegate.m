@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
+#import "WolframAlpha.h"
 @interface AppDelegate ()
 
 @end

@@ -1037,11 +1037,9 @@ static NSArray *molecules = nil;
         connectorPointD = SCNVector3Make(positionB.x - 0.3, positionB.y, positionB.z);
     }
     
-    
     [connectors addChildNode:[self connectorWithPositions:connectorPointB and:connectorPointC command:command]];
     [connectors addChildNode:[self connectorWithPositions:connectorPointA and:connectorPointD command:command]];
 
-    
     return connectors;
 }
 

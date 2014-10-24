@@ -22,4 +22,5 @@
 + (SCNGeometry *)bromineAtom;
 + (SCNGeometry *)arsenicAtom;
 + (SCNGeometry *)phosphorousAtom;
+
 @end
