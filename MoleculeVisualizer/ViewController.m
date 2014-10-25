@@ -77,13 +77,21 @@
     
     scene.rootNode.position = SCNVector3Make(self.view.bounds.size.width/2, self.view.bounds.size.height/2, 0);
 
+    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doubleTap:)];
+    doubleTap.numberOfTapsRequired = 2;
+    
     UIGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(pinchGesture:)];
     UIGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panGesture:)];
     self.sceneView.scene = scene;
+    [self.sceneView addGestureRecognizer:doubleTap];
     [self.sceneView addGestureRecognizer:pan];
     [self.sceneView addGestureRecognizer:pinch];
 
     [self.sceneView.scene.rootNode addChildNode:self.geometryNode];
+}
+
+- (void)doubleTap:(UITapGestureRecognizer *)sender {
+    [self.geometryNode runAction:[SCNAction scaleTo:1.5 duration:0.5]];
 }
 
 - (void)pinchGesture:(UIPinchGestureRecognizer *)sender {
