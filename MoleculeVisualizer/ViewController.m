@@ -22,6 +22,15 @@
     CGFloat _scaleEnd;
 }
 
+#pragma mark - lifecycle
+
+- (instancetype)initWithMolecule:(SCNNode *)molecule {
+    if(self = [super init]) {
+        self.geometryNode = molecule;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     UIBarButtonItem* backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self
@@ -34,6 +43,14 @@
     [self sceneSetup];
 
 }
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [self.sceneView stop:nil];
+    [self.sceneView play:nil];
+}
+
+#pragma mark - UINavigationBar actions
+
 - (void)details {
     DetailsViewController *vc = [[DetailsViewController alloc]initWithMolecule:self.geometryNode.name];
     [self.navigationController pushViewController:vc animated:YES];
@@ -42,15 +59,6 @@
 - (void)done {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
-
-
-- (instancetype)initWithMolecule:(SCNNode *)molecule {
-    if(self = [super init]) {
-        self.geometryNode = molecule;
-    }
-    return self;
-}
-
 
 - (void)sceneSetup {
     _scaleStart = 1.0;
@@ -90,7 +98,16 @@
     [self.sceneView.scene.rootNode addChildNode:self.geometryNode];
 }
 
+#pragma mark - gesture recognizers
+
 - (void)doubleTap:(UITapGestureRecognizer *)sender {
+    SCNNode *cam = [self.sceneView.scene.rootNode childNodeWithName:@"camNode" recursively:NO];
+    
+    if(cam.position.z < 50) {   //zoom out to 80
+        
+    } else {                //zoom in to 20
+        
+    }
     [self.geometryNode runAction:[SCNAction scaleTo:1.5 duration:0.5]];
 }
 
@@ -117,9 +134,17 @@
 
 }
 
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    [self.sceneView stop:nil];
-    [self.sceneView play:nil];
+#pragma mark - convienience 
+
+- (void)zoomCameraToPosition:(NSUInteger)zPosition {
+    SCNNode *cam = [self.sceneView.scene.rootNode childNodeWithName:@"camNode" recursively:NO];
+    NSUInteger camStarting = cam.position.z;
+    NSUInteger camEnding = zPosition;
+    
+    for(int i = 10; i > 0; i++) {
+        cam.position = SCNVector3Make(cam.position.z, cam.position.y,cam.position.z + 1 );
+    }
+
 }
 
 @end
