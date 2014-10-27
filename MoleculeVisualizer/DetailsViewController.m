@@ -66,7 +66,7 @@
     [vc.view setTransform:CGAffineTransformMakeScale(0.5,0.5)];
     [vc.view setAlpha:1.0];
     
-    [UIView animateWithDuration:0.2
+    [UIView animateWithDuration:0.3
                           delay:0.0
                         options:UIViewAnimationOptionTransitionFlipFromLeft
                      animations:^{

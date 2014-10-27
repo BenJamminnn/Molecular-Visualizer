@@ -1125,8 +1125,7 @@ static NSArray *molecules = nil;
             return node;
         }
     }
-    NSException *e = [NSException exceptionWithName:@"Wrong molecule name" reason:@"no molecule available for given input" userInfo:0];
-    [e raise];
+    [[NSException exceptionWithName:@"Wrong molecule name" reason:@"no molecule available for given input" userInfo:0] raise];
     
     return nil;
 }

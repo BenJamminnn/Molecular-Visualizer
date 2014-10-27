@@ -11,16 +11,14 @@
 #import "MoleculesTableViewController.h"
 #import "DetailsViewController.h"
 
+static CGFloat currentAngle = 0;
+
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet SCNView *sceneView;
 
-@property (nonatomic) CGFloat currentAngle;
 @end
 
-@implementation ViewController {
-    CGFloat _scaleStart;
-    CGFloat _scaleEnd;
-}
+@implementation ViewController
 
 #pragma mark - lifecycle
 
@@ -61,8 +59,6 @@
 }
 
 - (void)sceneSetup {
-    _scaleStart = 1.0;
-    
     SCNScene *scene = [SCNScene scene];
     
     SCNNode *ambientLight = [SCNNode node];
@@ -91,10 +87,16 @@
     UIGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(pinchGesture:)];
     UIGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panGesture:)];
     self.sceneView.scene = scene;
-    [self.sceneView addGestureRecognizer:doubleTap];
+    
+    //transformation is messing up our double tap, look into RW tut for details
+    //[self.sceneView addGestureRecognizer:doubleTap];
+    
+    
     [self.sceneView addGestureRecognizer:pan];
     [self.sceneView addGestureRecognizer:pinch];
 
+
+    
     [self.sceneView.scene.rootNode addChildNode:self.geometryNode];
 }
 
@@ -102,13 +104,12 @@
 
 - (void)doubleTap:(UITapGestureRecognizer *)sender {
     SCNNode *cam = [self.sceneView.scene.rootNode childNodeWithName:@"camNode" recursively:NO];
-    
     if(cam.position.z < 50) {   //zoom out to 80
-        
+        [self zoomCameraToPosition:80];
     } else {                //zoom in to 20
-        
+        [self zoomCameraToPosition:20];
     }
-    [self.geometryNode runAction:[SCNAction scaleTo:1.5 duration:0.5]];
+    //[self.geometryNode runAction:[SCNAction scaleTo:1.5 duration:0.5]];
 }
 
 - (void)pinchGesture:(UIPinchGestureRecognizer *)sender {
@@ -125,26 +126,30 @@
     CGPoint translation = [sender translationInView:sender.view];
     CGFloat newAngle = (float)(translation.x) * (float)(M_PI)/180.0;
     
-    newAngle += self.currentAngle;
+    newAngle += currentAngle;
     
     self.geometryNode.transform = SCNMatrix4MakeRotation(newAngle, 0, 1, 0);
     if(sender.state == UIGestureRecognizerStateEnded) {
-        self.currentAngle = newAngle;
+        currentAngle = newAngle;
     }
 
 }
 
 #pragma mark - convienience 
 
-- (void)zoomCameraToPosition:(NSUInteger)zPosition {
+- (void)zoomCameraToPosition:(int)zPosition {
+    //get a ref to the cam
     SCNNode *cam = [self.sceneView.scene.rootNode childNodeWithName:@"camNode" recursively:NO];
-    NSUInteger camStarting = cam.position.z;
-    NSUInteger camEnding = zPosition;
     
-    for(int i = 10; i > 0; i++) {
-        cam.position = SCNVector3Make(cam.position.z, cam.position.y,cam.position.z + 1 );
+    //find out if we're zooming in or out, get the amount we have to zoom in/out
+    BOOL zoomIn = (cam.position.z > zPosition) ? YES : NO;
+    SCNAction *scale = nil;
+    if(zoomIn) {
+        scale = [SCNAction scaleBy:2.0 duration:0.3];
+    } else {
+        scale = [SCNAction scaleBy:0.5 duration:0.3];
     }
-
+    [self.geometryNode runAction:scale];
 }
 
 @end
