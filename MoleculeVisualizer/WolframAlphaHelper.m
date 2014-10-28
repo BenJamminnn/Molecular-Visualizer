@@ -8,6 +8,21 @@
 
 #import "WolframAlphaHelper.h"
 
+/*
+HOW TO PARSE XML
+ -> call downloadDataFromURL:withCompletionHandler: to get a reference to the data we're getting back
+    >>within the block
+    -> utilize an instance of NSXMLParser {
+        xmlParser initWithData:data     ---data from calling downloadDataFromURL:
+        initialize any other properties to hold temp data
+        [xmlParser parse] -- to begin
+       }
+ 
+ 
+  
+*/
+
+
 static NSXMLParser *parser = nil;
 
 @implementation WolframAlphaHelper 
@@ -51,4 +66,38 @@ static NSXMLParser *parser = nil;
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
     //here we get the info
 }
+
+#pragma mark - making requests
+
++ (void)downloadDataFromURL:(NSURL *)url withCompletionHandler:(void (^)(NSData *))completionHandler {
+    //init a session config object
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    //init a session object
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
+    
+    //create a data task object to perform the downloading
+    NSURLSessionDataTask *task = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if(error) {
+            //if an error occurred, log it
+            NSLog(@"%@" , [error localizedDescription]);
+        } else {
+            //no error occurred, check the HTTP status code
+            NSInteger httpStatusCode = [(NSHTTPURLResponse *)response statusCode];
+            //if its other than 200, log it
+            if(httpStatusCode != 200) {
+                NSLog(@"Http status code: %li" , (long)httpStatusCode);
+            }
+            
+            // Call the completion handler with the returned data on the main thread.
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                completionHandler(data);
+            }];
+        }
+        
+    }];
+    //makes the task start working for us
+    [task resume];
+}
+
+
 @end

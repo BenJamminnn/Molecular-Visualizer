@@ -16,4 +16,5 @@
 
 - (instancetype)initWithQuery:(NSString *)query;
 
++ (void)downloadDataFromURL:(NSURL *)url withCompletionHandler:(void (^)(NSData *))completionHandler;
 @end

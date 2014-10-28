@@ -10,11 +10,13 @@
 #import "Molecule.h"
 #import "ViewController.h"
 #import "WolframAlpha.h"
+#import "WolframAlphaHelper.h"
 
 
 @interface DetailsViewController ()
 @property (strong, nonatomic) UIScrollView *scrollView;
-@property (strong, nonatomic) NSString *molecule;   //will use the name of the molecule to query
+@property (strong, nonatomic) NSString *moleculeName;
+@property (strong, nonatomic) NSURL *moleculeURL;   //will use the name of the molecule to query
 @end
 
 @implementation DetailsViewController
@@ -23,17 +25,22 @@
 
 - (instancetype)initWithMolecule:(NSString *)molecule {
     if(self = [super init]) {
-        self.view.backgroundColor = [UIColor orangeColor];
-        self.molecule = molecule;
         UIBarButtonItem* backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self
-                                                                      action:@selector(performRevised)];
+                                                                    action:@selector(performRevised)];
+        self.moleculeName = molecule;
         self.navigationItem.leftBarButtonItem = backButton;
+        NSString *urlString = kQuery;
+        [urlString stringByAppendingString:molecule];
+        [urlString stringByAppendingString:kQueryEnd];
+        self.moleculeURL = [NSURL URLWithString:urlString];
+        
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self loadMolecule];
 }
 
 #pragma mark - back button
@@ -41,7 +48,7 @@
 - (void)performRevised {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main2" bundle:[NSBundle mainBundle]];
     ViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"Molecule"];
-    vc.geometryNode = [Molecule moleculeForName:self.molecule];
+    vc.geometryNode = [Molecule moleculeForName:self.moleculeName];
 
     
     
@@ -66,6 +73,16 @@
 
 #pragma mark - querying Wolfram Alpha
 
+- (void)loadMolecule {
+    [WolframAlphaHelper downloadDataFromURL:self.moleculeURL withCompletionHandler:^(NSData *data) {
+        if(data) {
+            NSLog(@"data: %@" , data);
+            
+        } else {
+            NSLog(@"data is nil");
+        }
+    }];
+}
 
 
 
