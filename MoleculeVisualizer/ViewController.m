@@ -15,7 +15,6 @@ static CGFloat currentAngle = 0;
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet SCNView *sceneView;
-
 @end
 
 @implementation ViewController

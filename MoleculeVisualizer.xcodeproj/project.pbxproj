@@ -20,6 +20,7 @@
 		46D71A1A19EB97AF00053A5E /* Atom.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D71A1919EB97AF00053A5E /* Atom.m */; };
 		46D71A1D19EB9F8600053A5E /* MoleculesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D71A1C19EB9F8600053A5E /* MoleculesTableViewController.m */; };
 		46DDE49419F8B20300F5CDB6 /* WolframAlpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 46DDE49319F8B20300F5CDB6 /* WolframAlpha.m */; };
+		46DDE4C819FEF28B00F5CDB6 /* WolframAlphaHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 46DDE4C719FEF28B00F5CDB6 /* WolframAlphaHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,9 @@
 		46D71A1C19EB9F8600053A5E /* MoleculesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoleculesTableViewController.m; sourceTree = "<group>"; };
 		46DDE49219F8B20300F5CDB6 /* WolframAlpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WolframAlpha.h; sourceTree = "<group>"; };
 		46DDE49319F8B20300F5CDB6 /* WolframAlpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WolframAlpha.m; sourceTree = "<group>"; };
+		46DDE4C619FEF28B00F5CDB6 /* WolframAlphaHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WolframAlphaHelper.h; sourceTree = "<group>"; };
+		46DDE4C719FEF28B00F5CDB6 /* WolframAlphaHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WolframAlphaHelper.m; sourceTree = "<group>"; };
+		46DDE4C919FEF69E00F5CDB6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +85,7 @@
 		468928EC19EB592700308E42 = {
 			isa = PBXGroup;
 			children = (
+				46DDE4C919FEF69E00F5CDB6 /* Foundation.framework */,
 				468928F719EB592700308E42 /* MoleculeVisualizer */,
 				4689291119EB592700308E42 /* MoleculeVisualizerTests */,
 				468928F619EB592700308E42 /* Products */,
@@ -142,6 +147,8 @@
 			children = (
 				46DDE49219F8B20300F5CDB6 /* WolframAlpha.h */,
 				46DDE49319F8B20300F5CDB6 /* WolframAlpha.m */,
+				46DDE4C619FEF28B00F5CDB6 /* WolframAlphaHelper.h */,
+				46DDE4C719FEF28B00F5CDB6 /* WolframAlphaHelper.m */,
 				46D71A1519EB977900053A5E /* Molecule.h */,
 				46D71A1619EB977900053A5E /* Molecule.m */,
 				46D71A1819EB97AF00053A5E /* Atom.h */,
@@ -270,6 +277,7 @@
 				46D71A1D19EB9F8600053A5E /* MoleculesTableViewController.m in Sources */,
 				4689290119EB592700308E42 /* ViewController.m in Sources */,
 				468755AA19EC993100AC4503 /* MathFunctions.m in Sources */,
+				46DDE4C819FEF28B00F5CDB6 /* WolframAlphaHelper.m in Sources */,
 				468928FE19EB592700308E42 /* AppDelegate.m in Sources */,
 				468928FB19EB592700308E42 /* main.m in Sources */,
 				46D71A1719EB977900053A5E /* Molecule.m in Sources */,

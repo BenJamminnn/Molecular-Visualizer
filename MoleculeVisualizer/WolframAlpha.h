@@ -22,5 +22,7 @@
 
 + (NSDictionary *)parameterDictonaryFromKeys:(NSArray *)keys values:(NSArray *)vals;
 
+- (id)initWithAppid:(NSString *)argAppid;
+
 
 @end

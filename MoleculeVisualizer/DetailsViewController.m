@@ -9,6 +9,8 @@
 #import "DetailsViewController.h"
 #import "Molecule.h"
 #import "ViewController.h"
+#import "WolframAlpha.h"
+
 
 @interface DetailsViewController ()
 @property (strong, nonatomic) UIScrollView *scrollView;
@@ -16,6 +18,8 @@
 @end
 
 @implementation DetailsViewController
+
+#pragma mark - lifecycle
 
 - (instancetype)initWithMolecule:(NSString *)molecule {
     if(self = [super init]) {
@@ -28,33 +32,13 @@
     return self;
 }
 
-
-- (void)done {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main2" bundle:[NSBundle mainBundle]];
-    ViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"Molecule"];
-    vc.geometryNode = [Molecule moleculeForName:self.molecule];
-    [self.navigationController pushViewController:vc animated:YES];
+- (void)viewDidLoad {
+    [super viewDidLoad];
 }
 
--(void)perform {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main2" bundle:[NSBundle mainBundle]];
-    ViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"Molecule"];
-    vc.geometryNode = [Molecule moleculeForName:self.molecule];
-    
-    
-    
-    CATransition* transition = [CATransition animation];
-    transition.duration = .4;
-    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
-    transition.type = kCATransitionPush;
-    transition.subtype = kCATransitionFromLeft;
-    
-    [self.navigationController.view.layer addAnimation:transition forKey:@"transition"];
-    [self.navigationController pushViewController:vc animated:NO];
-}
+#pragma mark - back button
 
-
--(void)performRevised {
+- (void)performRevised {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main2" bundle:[NSBundle mainBundle]];
     ViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"Molecule"];
     vc.geometryNode = [Molecule moleculeForName:self.molecule];
@@ -80,10 +64,8 @@
     
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
+#pragma mark - querying Wolfram Alpha
+
 
 
 

@@ -12,6 +12,14 @@
 
 #pragma mark - lifecycle
 
+- (id) initWithAppid:(NSString *)argAppid
+{
+    if(self = [super init]) {
+        self.appid = argAppid;
+    }
+    return self;
+}
+
 - (instancetype)init {
     if(self = [super init]) {
         _appid = @"RVQ28W-KTEAXGTYG";
