@@ -29,8 +29,8 @@
             <objects>
                 <viewController storyboardIdentifier="Molecule" id="mCJ-fC-1vu" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="HCC-GP-lOE"/>
-                        <viewControllerLayoutGuide type="bottom" id="UxR-C0-jYa"/>
+                        <viewControllerLayoutGuide type="top" id="w12-32-LI8"/>
+                        <viewControllerLayoutGuide type="bottom" id="7vh-3e-VtN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="2ue-2X-utl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -56,8 +56,8 @@
             <objects>
                 <viewController storyboardIdentifier="DetailsVC" id="cll-9c-Oh0" customClass="DetailsViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="pxf-Hj-dsw"/>
-                        <viewControllerLayoutGuide type="bottom" id="M9y-gK-DY7"/>
+                        <viewControllerLayoutGuide type="top" id="LIb-5m-vMb"/>
+                        <viewControllerLayoutGuide type="bottom" id="HWC-RF-820"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Qzc-mJ-CIT">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>

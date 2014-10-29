@@ -14,7 +14,6 @@
 
 @interface DetailsViewController ()
 @property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
-
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) NSString *moleculeName;
 @property (strong, nonatomic) NSURL *moleculeURL;   //will use the name of the molecule to query
@@ -78,15 +77,16 @@
 #pragma mark - querying Wolfram Alpha
 
 - (void)loadMolecule {
+    [self setUpScrollView];
     [self activityIndicatorStart];
     [WolframAlphaHelper downloadDataFromURL:self.moleculeURL withCompletionHandler:^(NSData *data) {
         if(data) {
             WolframAlphaHelper *helper = [[WolframAlphaHelper alloc]initWithData:data];
-            [self.activityIndicator stopAnimating];
             [self displayImages:helper.images];
         } else {
             NSLog(@"data is nil");
         }
+        [self.activityIndicator stopAnimating];
     }];
 }
 
@@ -100,17 +100,26 @@
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:rect];
         imageView.image = img;
         imageView.contentMode = UIViewContentModeCenter;
-        [self.view addSubview:imageView];
+        [self.scrollView addSubview:imageView];
     }
 }
 
 - (void)activityIndicatorStart {
     self.activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    [self.view addSubview:self.activityIndicator];
+    [self.scrollView addSubview:self.activityIndicator];
 
     self.activityIndicator.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2);
     
     [self.activityIndicator startAnimating];
+}
+
+- (void)setUpScrollView {
+    self.scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 560, 10000)];
+    self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height * 70);
+    self.scrollView.backgroundColor = [UIColor lightGrayColor];
+    self.scrollView.scrollEnabled = YES;
+    self.scrollView.showsVerticalScrollIndicator = YES;
+    [self.view addSubview:self.scrollView];
 }
 
 @end

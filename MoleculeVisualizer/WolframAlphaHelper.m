@@ -132,6 +132,11 @@ HOW TO PARSE XML
     NSLog(@"%@" , [parseError localizedDescription]);
 }
 
+
+- (void)parser:(NSXMLParser *)parser foundElementDeclarationWithName:(NSString *)elementName model:(NSString *)model {
+    NSLog(@"element Name: %@" , elementName);
+}
+
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
     //here we get the info
 
