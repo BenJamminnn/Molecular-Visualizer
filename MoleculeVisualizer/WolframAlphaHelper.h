@@ -8,13 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
-#define kQuery @"http://api.wolframalpha.com/v2/query?input="
-#define kQueryEnd @"&appid=RVQ28W-KTEAXGTYG"
+#define kQueryURL @"http://api.wolframalpha.com/v2/query?"
+#define kAppID @"RVQ28W-KTEAXGTYGT"
 
 @interface WolframAlphaHelper : NSObject <NSXMLParserDelegate>
+@property (strong, nonatomic, readonly) NSMutableArray *images;
 
 
-- (instancetype)initWithQuery:(NSString *)query;
+- (instancetype)initWithData:(NSData *)data;
+
+- (NSDictionary *)elementsForMolecule;
 
 + (void)downloadDataFromURL:(NSURL *)url withCompletionHandler:(void (^)(NSData *))completionHandler;
+
 @end

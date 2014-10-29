@@ -5,9 +5,15 @@
 //  Created by Mac Admin on 10/27/14.
 //  Copyright (c) 2014 Ben Gabay. All rights reserved.
 //
+#ifdef DEBUG
+#define NSLog(FORMAT, ...) fprintf(stderr,"%s\n", [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
+#else
+#define NSLog(...) {}
+#endif
+
 
 #import "WolframAlphaHelper.h"
-
+@import UIKit;
 /*
 HOW TO PARSE XML
  -> call downloadDataFromURL:withCompletionHandler: to get a reference to the data we're getting back
@@ -22,50 +28,126 @@ HOW TO PARSE XML
   
 */
 
-
-static NSXMLParser *parser = nil;
-
+@interface WolframAlphaHelper()
+@property (strong, nonatomic) NSXMLParser *parser;
+@property (strong, nonatomic, readwrite) NSMutableArray *images;
+@property (strong, nonatomic) NSMutableDictionary *elements;
+@end
 @implementation WolframAlphaHelper 
+
+
 
 #pragma mark - lifecycle
 
-- (instancetype)initWithQuery:(NSString *)query {
+- (instancetype)initWithData:(NSData *)data {
     if(self = [super init]) {
-        NSString *removedSpaces = [self replaceSpaces:query];
-        NSString *fullQuery = kQuery;
-        [fullQuery stringByAppendingString:removedSpaces];
-        [fullQuery stringByAppendingString:kQueryEnd];
-        NSURL *url = [NSURL URLWithString:fullQuery];
-        parser = [[NSXMLParser alloc]initWithContentsOfURL:url];
-        parser.delegate = self;
+        self.parser = [[NSXMLParser alloc]initWithData:data];
+        self.parser.delegate = self;
+        [self.parser parse];
+        
     }
     return self;
 }
 
+- (NSDictionary *)elementsForMolecule {
+    return self.elements;
+}
+
+- (void)setUpElementsDict {
+    NSMutableArray *images = [NSMutableArray new];
+    NSDictionary *tempDict = @{
+                               //basic properties
+                               @"images" : images ,
+                               @"Formula" : @"" ,
+                               @"Molar Mass" : @"" ,
+                               @"Phase" : @"" ,
+                               @"Melting Point" : @"" ,
+                               @"Boiling Point" : @"" ,
+                               @"Density" : @"" ,
+                               
+                               //gas properties at STP
+                               @"Molar Volume" : @"" ,
+                               @"Vapor Density" : @"" ,
+                               
+                               //thermodynamic properties
+                               @"Specific Heat Capacity" : @"" ,
+                               @"Molar Heat Capacity" : @"" ,
+                               @"Specific Free Energy of Formation" : @"" ,
+                               @"Molar Free Energy of Formation" : @""  ,
+                               @"Specific Heat of Formation" : @"",
+                               @"Molar Heat of Formation" : @"" ,
+                               @"Specific Entropy" : @"" ,
+                               @"Molar Entropy" : @"" ,
+                               @"Critical Temperature" : @"",
+                               @"Critical Pressure" : @""
+                               };
+    self.elements = [NSMutableDictionary dictionaryWithDictionary:tempDict];
+}
+
 #pragma mark - convieniece
 
-- (NSString *)replaceSpaces:(NSString *)string {
-    return [string stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+- (UIImage *)imageFromURLString:(NSString *)url {
+    NSURL *imageURL = [NSURL URLWithString:url];
+    NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+    return [UIImage imageWithData:imageData];
+}
+
+- (NSMutableArray *)images {
+    if(!_images) {
+        _images = [NSMutableArray new];
+    }
+    return _images;
+}
+
+- (void)performActionWithElement:(NSString *)element attributes:(NSDictionary *)attributes {
+    if([element isEqualToString:@"plaintext"]) {
+        
+    } else if([element isEqualToString:@"img"]) {
+        NSString *imageURLString = [attributes valueForKey:@"src"];
+        UIImage *image = [self imageFromURLString:imageURLString];
+        [self.images addObject:image];
+        
+    } else if([element isEqualToString:@"source"]) {
+        return;
+    } else if([element isEqualToString:@"pod"]) {
+        
+    }
 }
 
 #pragma mark - XML Parser Delegate
 
 - (void)parserDidStartDocument:(NSXMLParser *)parser {
     //here is where parsing begins, we will initialize some data structure to hold all the necessary data
+    NSLog(@"Parsing begins");
 }
 
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
     //here is where parsing ends, we'll send the info back to the caller
+    NSLog(@"Parsing Ends");
+    [self.elements setValue:_images forKey:@"images"];
 }
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
     //an error occurred, lets raise an exception if this happens
-    [[NSException exceptionWithName:@"Error parsing" reason:@"" userInfo:0]raise];
+    NSLog(@"%@" , [parseError localizedDescription]);
 }
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
     //here we get the info
+
 }
+
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict {
+    NSLog(@"Element Name: %@" , elementName);
+    
+    [self performActionWithElement:elementName attributes:attributeDict];
+  
+    if(attributeDict.allKeys.count != 0) {
+        NSLog(@"Attributes: %@" ,attributeDict );
+
+    }
+}
+
 
 #pragma mark - making requests
 

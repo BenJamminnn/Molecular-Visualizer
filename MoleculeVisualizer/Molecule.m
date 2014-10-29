@@ -81,8 +81,7 @@ static NSArray *molecules = nil;
     [self nodeWithAtom:[Atom fluorineAtom] molecule: ptfe position:fluorineBottomRight];
     [ptfe addChildNode:[self connectorWithPositions:carbonRight and:fluorineTopRight command:@"45xy"]];
     [ptfe addChildNode:[self connectorWithPositions:carbonRight and:fluorineBottomRight command:@"135xy"]];
-    ptfe.name = @"Polytetraflueroethalyne (Teflon)";
-    
+    ptfe.name = @"Polytetraflueroethalyne";
     return ptfe;
 }
 

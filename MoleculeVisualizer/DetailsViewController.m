@@ -9,7 +9,6 @@
 #import "DetailsViewController.h"
 #import "Molecule.h"
 #import "ViewController.h"
-#import "WolframAlpha.h"
 #import "WolframAlphaHelper.h"
 
 
@@ -27,11 +26,13 @@
     if(self = [super init]) {
         UIBarButtonItem* backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self
                                                                     action:@selector(performRevised)];
+
+        self.view.backgroundColor = [UIColor orangeColor];
         self.moleculeName = molecule;
         self.navigationItem.leftBarButtonItem = backButton;
-        NSString *urlString = kQuery;
-        [urlString stringByAppendingString:molecule];
-        [urlString stringByAppendingString:kQueryEnd];
+        
+        NSString *urlString = [NSString stringWithFormat:@"%@appid=%@&input=%@" , kQueryURL , kAppID , molecule];
+
         self.moleculeURL = [NSURL URLWithString:urlString];
         
     }
@@ -76,25 +77,18 @@
 - (void)loadMolecule {
     [WolframAlphaHelper downloadDataFromURL:self.moleculeURL withCompletionHandler:^(NSData *data) {
         if(data) {
-            NSLog(@"data: %@" , data);
-            
+            WolframAlphaHelper *helper = [[WolframAlphaHelper alloc]initWithData:data];
+            [self displayImages:helper.images];
         } else {
             NSLog(@"data is nil");
         }
     }];
 }
 
+#pragma mark - convienience
 
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)displayImages:(NSArray *)images {
+    
 }
-*/
 
 @end
