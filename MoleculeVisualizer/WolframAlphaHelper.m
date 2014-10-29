@@ -101,7 +101,7 @@ HOW TO PARSE XML
 
 - (void)performActionWithElement:(NSString *)element attributes:(NSDictionary *)attributes {
     if([element isEqualToString:@"plaintext"]) {
-        
+        NSLog(@"%@" , attributes);
     } else if([element isEqualToString:@"img"]) {
         NSString *imageURLString = [attributes valueForKey:@"src"];
         UIImage *image = [self imageFromURLString:imageURLString];

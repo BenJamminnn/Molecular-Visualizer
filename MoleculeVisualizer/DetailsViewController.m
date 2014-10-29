@@ -13,6 +13,8 @@
 
 
 @interface DetailsViewController ()
+@property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
+
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) NSString *moleculeName;
 @property (strong, nonatomic) NSURL *moleculeURL;   //will use the name of the molecule to query
@@ -27,21 +29,22 @@
         UIBarButtonItem* backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self
                                                                     action:@selector(performRevised)];
 
-        self.view.backgroundColor = [UIColor orangeColor];
+        self.view.backgroundColor = [UIColor whiteColor];
         self.moleculeName = molecule;
         self.navigationItem.leftBarButtonItem = backButton;
         
         NSString *urlString = [NSString stringWithFormat:@"%@appid=%@&input=%@" , kQueryURL , kAppID , molecule];
 
         self.moleculeURL = [NSURL URLWithString:urlString];
+        [self loadMolecule];
         
+
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self loadMolecule];
 }
 
 #pragma mark - back button
@@ -75,9 +78,11 @@
 #pragma mark - querying Wolfram Alpha
 
 - (void)loadMolecule {
+    [self activityIndicatorStart];
     [WolframAlphaHelper downloadDataFromURL:self.moleculeURL withCompletionHandler:^(NSData *data) {
         if(data) {
             WolframAlphaHelper *helper = [[WolframAlphaHelper alloc]initWithData:data];
+            [self.activityIndicator stopAnimating];
             [self displayImages:helper.images];
         } else {
             NSLog(@"data is nil");
@@ -88,7 +93,24 @@
 #pragma mark - convienience
 
 - (void)displayImages:(NSArray *)images {
+    CGFloat height = 0;
+    for(UIImage *img in images) {
+        CGRect rect = CGRectMake(self.view.frame.size.width/2,height , 10, self.view.frame.size.width);
+        height += img.size.height;
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:rect];
+        imageView.image = img;
+        imageView.contentMode = UIViewContentModeCenter;
+        [self.view addSubview:imageView];
+    }
+}
+
+- (void)activityIndicatorStart {
+    self.activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [self.view addSubview:self.activityIndicator];
+
+    self.activityIndicator.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2);
     
+    [self.activityIndicator startAnimating];
 }
 
 @end
