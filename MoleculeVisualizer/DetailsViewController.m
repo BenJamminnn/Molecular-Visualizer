@@ -11,6 +11,7 @@
 #import "ViewController.h"
 #import "WolframAlphaHelper.h"
 
+static const NSCache *cache;
 
 @interface DetailsViewController ()
 @property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
@@ -44,6 +45,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        cache = [[NSCache alloc]init];
+    });
+    
 }
 
 #pragma mark - back button
@@ -79,15 +85,25 @@
 - (void)loadMolecule {
     [self setUpScrollView];
     [self activityIndicatorStart];
+    
+    NSArray *images = [cache objectForKey:self.moleculeName];
+    if(images) {
+        [self displayImages:images];
+        return;
+    }
     [WolframAlphaHelper downloadDataFromURL:self.moleculeURL withCompletionHandler:^(NSData *data) {
         if(data) {
             WolframAlphaHelper *helper = [[WolframAlphaHelper alloc]initWithData:data];
             [self displayImages:helper.images];
+            
+            [cache setObject:helper.images forKey:self.moleculeName];
+            
         } else {
             NSLog(@"data is nil");
         }
-        [self.activityIndicator stopAnimating];
     }];
+    [self.activityIndicator stopAnimating];
+
 }
 
 #pragma mark - convienience
@@ -95,11 +111,11 @@
 - (void)displayImages:(NSArray *)images {
     CGFloat height = 0;
     for(UIImage *img in images) {
-        CGRect rect = CGRectMake(self.view.frame.size.width/2,height , 10, self.view.frame.size.width);
+        CGRect rect = CGRectMake(0,height , 10, self.view.frame.size.width);
         height += img.size.height;
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:rect];
         imageView.image = img;
-        imageView.contentMode = UIViewContentModeCenter;
+        imageView.contentMode = UIViewContentModeBottomLeft;
         [self.scrollView addSubview:imageView];
     }
 }
@@ -116,7 +132,7 @@
 - (void)setUpScrollView {
     self.scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 560, 10000)];
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height * 70);
-    self.scrollView.backgroundColor = [UIColor lightGrayColor];
+    self.scrollView.backgroundColor = [UIColor whiteColor];
     self.scrollView.scrollEnabled = YES;
     self.scrollView.showsVerticalScrollIndicator = YES;
     [self.view addSubview:self.scrollView];
