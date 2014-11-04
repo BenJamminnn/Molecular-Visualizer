@@ -9,15 +9,11 @@
 #import "DetailsViewController.h"
 #import "Molecule.h"
 #import "ViewController.h"
-#import "WolframAlphaHelper.h"
 
-static const NSCache *cache;
 
 @interface DetailsViewController ()
-@property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) NSString *moleculeName;
-@property (strong, nonatomic) NSURL *moleculeURL;   //will use the name of the molecule to query
 @end
 
 @implementation DetailsViewController
@@ -30,25 +26,14 @@ static const NSCache *cache;
                                                                     action:@selector(performRevised)];
 
         self.view.backgroundColor = [UIColor whiteColor];
-        self.moleculeName = molecule;
         self.navigationItem.leftBarButtonItem = backButton;
-        
-        NSString *urlString = [NSString stringWithFormat:@"%@appid=%@&input=%@" , kQueryURL , kAppID , molecule];
-
-        self.moleculeURL = [NSURL URLWithString:urlString];
-        [self loadMolecule];
-        
-
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        cache = [[NSCache alloc]init];
-    });
+
     
 }
 
@@ -80,31 +65,10 @@ static const NSCache *cache;
     
 }
 
-#pragma mark - querying Wolfram Alpha
 
-- (void)loadMolecule {
-    [self setUpScrollView];
-    [self activityIndicatorStart];
-    
-    NSArray *images = [cache objectForKey:self.moleculeName];
-    if(images) {
-        [self displayImages:images];
-        return;
-    }
-    [WolframAlphaHelper downloadDataFromURL:self.moleculeURL withCompletionHandler:^(NSData *data) {
-        if(data) {
-            WolframAlphaHelper *helper = [[WolframAlphaHelper alloc]initWithData:data];
-            [self displayImages:helper.images];
-            
-            [cache setObject:helper.images forKey:self.moleculeName];
-            
-        } else {
-            NSLog(@"data is nil");
-        }
-    }];
-    [self.activityIndicator stopAnimating];
 
-}
+
+
 
 #pragma mark - convienience
 
@@ -120,14 +84,6 @@ static const NSCache *cache;
     }
 }
 
-- (void)activityIndicatorStart {
-    self.activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    [self.scrollView addSubview:self.activityIndicator];
-
-    self.activityIndicator.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2);
-    
-    [self.activityIndicator startAnimating];
-}
 
 - (void)setUpScrollView {
     self.scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 560, 10000)];
