@@ -7,7 +7,7 @@
 //
 @import SceneKit;
 #import "ViewController.h"
-#import "Molecule.h"
+#import "MoleculeImage.h"
 #import "MoleculesTableViewController.h"
 #import "DetailsViewController.h"
 

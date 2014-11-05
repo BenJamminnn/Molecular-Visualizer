@@ -1,19 +1,15 @@
 //
-//  Molecule.h
+//  MoleculeData.h
 //  MoleculeVisualizer
 //
-//  Created by Mac Admin on 10/12/14.
+//  Created by Mac Admin on 11/4/14.
 //  Copyright (c) 2014 Ben Gabay. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@import SceneKit;
-
 @interface Molecule : NSObject
 
-@property (nonatomic, readonly, strong) NSArray *allMolecules;
-
-+ (SCNNode *)moleculeForName:(NSString *)name;
++ (NSDictionary *)dataForMoleculeName:(NSString *)name;
 
 @end

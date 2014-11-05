@@ -7,7 +7,7 @@
 //
 
 #import "DetailsViewController.h"
-#import "Molecule.h"
+#import "MoleculeImage.h"
 #import "ViewController.h"
 
 
@@ -24,7 +24,7 @@
     if(self = [super init]) {
         UIBarButtonItem* backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self
                                                                     action:@selector(performRevised)];
-
+        self.moleculeName = molecule;
         self.view.backgroundColor = [UIColor whiteColor];
         self.navigationItem.leftBarButtonItem = backButton;
     }
@@ -42,7 +42,7 @@
 - (void)performRevised {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main2" bundle:[NSBundle mainBundle]];
     ViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"Molecule"];
-    vc.geometryNode = [Molecule moleculeForName:self.moleculeName];
+    vc.geometryNode = [MoleculeImage moleculeForName:self.moleculeName];
 
     
     

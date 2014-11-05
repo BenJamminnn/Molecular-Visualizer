@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class Molecule;
+@class MoleculeImage;
 
 @interface DetailsViewController : UIViewController
 

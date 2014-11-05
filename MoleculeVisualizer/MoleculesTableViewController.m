@@ -8,7 +8,7 @@
 
 #import "MoleculesTableViewController.h"
 #import "ViewController.h"
-#import "Molecule.h"
+#import "MoleculeImage.h"
 
 @interface MoleculesTableViewController ()
 @property (strong, nonatomic) NSArray *molecules;
@@ -104,7 +104,7 @@
 
 - (NSArray *)molecules   {
     if(!_molecules) {
-        Molecule *m = [Molecule new];
+        MoleculeImage *m = [MoleculeImage new];
         _molecules = m.allMolecules;
     }
     return _molecules;
