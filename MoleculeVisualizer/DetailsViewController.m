@@ -9,10 +9,73 @@
 #import "DetailsViewController.h"
 #import "MoleculeImage.h"
 #import "ViewController.h"
+#import "Molecule.h"
+
+/*
+latest plan is to use plists 
+  > good for data such as string and numbers
+
+ DATA ON MOLECS
+    
+ BASICS
+   formula 
+   name
+   structure diagram (not really necessary because of our viewer)
+   molar mass
+   melting point
+   boiling point
+   density
+   phase at STP
+   atomic weight
+ 
+ THERMO PROPERTIES
+   specific heat capacity
+   molar heat capacity
+   specific heat of formation
+   molar head of formation
+   specific entropy
+   molar entropy
+   ....
+  TODO:
+    -pick layout pertinent to above info
+ 
+ 
+ ORDER of elements:
+     BASIC
+        >formula
+        >atomic number (if diatomic)
+        >atomic mass  (if diatomic)
+        >electron config (if diatomic)
+        >group (if diatomic)
+        >period (if diatomic)
+    THERMO
+        >phase at STP
+        >melting point
+        >boiling point
+        >critical temp
+        >critical pressure
+        >molar heat of fusion
+        >molar heat of vaporization
+        >specific heat at STP
+        >molar heat of fusion
+        
+    MATERIAL PROPERTIES (if diatomic)
+        >density
+        >molar volume
+        >sound speed
+        >thermal conductivity
+    ELECTROMAGNETIC 
+        >electrical type
+        >resistivity
+        >electrical conductivity
+        >magnetic type
+        >color
+        
+ 
+*/
 
 
 @interface DetailsViewController ()
-@property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) NSString *moleculeName;
 @end
 
@@ -23,10 +86,18 @@
 - (instancetype)initWithMolecule:(NSString *)molecule {
     if(self = [super init]) {
         UIBarButtonItem* backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self
-                                                                    action:@selector(performRevised)];
+                                                                    action:@selector(back)];
         self.moleculeName = molecule;
         self.view.backgroundColor = [UIColor whiteColor];
         self.navigationItem.leftBarButtonItem = backButton;
+        
+        NSDictionary *dict = [Molecule dataForMoleculeName:@"Chlorine"];
+        NSLog(@"%@" , dict);
+        NSArray *basicInfo = dict[@"Basic Properties"];
+        basicInfo = [self superOrSubscriptStrings:basicInfo];
+        NSLog(@"%@" , basicInfo);
+
+        
     }
     return self;
 }
@@ -39,7 +110,7 @@
 
 #pragma mark - back button
 
-- (void)performRevised {
+- (void)back {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main2" bundle:[NSBundle mainBundle]];
     ViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"Molecule"];
     vc.geometryNode = [MoleculeImage moleculeForName:self.moleculeName];
@@ -66,32 +137,8 @@
 }
 
 
-
-
-
-
 #pragma mark - convienience
 
-- (void)displayImages:(NSArray *)images {
-    CGFloat height = 0;
-    for(UIImage *img in images) {
-        CGRect rect = CGRectMake(0,height , 10, self.view.frame.size.width);
-        height += img.size.height;
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:rect];
-        imageView.image = img;
-        imageView.contentMode = UIViewContentModeBottomLeft;
-        [self.scrollView addSubview:imageView];
-    }
-}
 
-
-- (void)setUpScrollView {
-    self.scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 560, 10000)];
-    self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height * 70);
-    self.scrollView.backgroundColor = [UIColor whiteColor];
-    self.scrollView.scrollEnabled = YES;
-    self.scrollView.showsVerticalScrollIndicator = YES;
-    [self.view addSubview:self.scrollView];
-}
 
 @end

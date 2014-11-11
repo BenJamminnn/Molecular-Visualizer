@@ -20,6 +20,7 @@
 		46D71A1A19EB97AF00053A5E /* Atom.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D71A1919EB97AF00053A5E /* Atom.m */; };
 		46D71A1D19EB9F8600053A5E /* MoleculesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D71A1C19EB9F8600053A5E /* MoleculesTableViewController.m */; };
 		46E06F921A0997FA003CEFC4 /* Molecule.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E06F911A0997FA003CEFC4 /* Molecule.m */; };
+		46E06FC61A1183AC003CEFC4 /* Chlorine.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46E06FC51A1183AC003CEFC4 /* Chlorine.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		46DDE4C919FEF69E00F5CDB6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		46E06F901A0997FA003CEFC4 /* Molecule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Molecule.h; sourceTree = "<group>"; };
 		46E06F911A0997FA003CEFC4 /* Molecule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Molecule.m; sourceTree = "<group>"; };
+		46E06FC51A1183AC003CEFC4 /* Chlorine.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Chlorine.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 		468928F819EB592700308E42 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				46E06FC41A11838D003CEFC4 /* Chemical Plists */,
 				468928F919EB592700308E42 /* Info.plist */,
 				468928FA19EB592700308E42 /* main.m */,
 			);
@@ -165,6 +168,14 @@
 				4689290019EB592700308E42 /* ViewController.m */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		46E06FC41A11838D003CEFC4 /* Chemical Plists */ = {
+			isa = PBXGroup;
+			children = (
+				46E06FC51A1183AC003CEFC4 /* Chlorine.plist */,
+			);
+			name = "Chemical Plists";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -247,6 +258,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46E06FC61A1183AC003CEFC4 /* Chlorine.plist in Resources */,
 				4661D1F319EC8C3C001F819E /* Main2.storyboard in Resources */,
 				4689290919EB592700308E42 /* LaunchScreen.xib in Resources */,
 				4689290619EB592700308E42 /* Images.xcassets in Resources */,

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Thermo Properties</key>
+	<array>
+		<string>Gas</string>
+		<string>-101.5 °C</string>
+		<string>-34.04 °C</string>
+		<string>416.9 K</string>
+		<string>7.991 MPa</string>
+		<string>3.2 Kj/mol</string>
+		<string>10.2 Kj/mol</string>
+		<string>478.2 J/(kgK)</string>
+		<string></string>
+	</array>
+	<key>Basic Properties</key>
+	<array>
+		<string>Cl&#178;</string>
+		<string>17</string>
+		<string>35.453 u</string>
+		<string></string>
+	</array>
+	<key>Material Properties</key>
+	<array>
+		<string>0.003214 g/cm^3</string>
+	</array>
+	<key>Electromagnetic Properties</key>
+	<array/>
+</dict>
+</plist>
