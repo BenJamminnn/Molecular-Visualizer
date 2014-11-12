@@ -77,6 +77,12 @@ latest plan is to use plists
 
 @interface DetailsViewController ()
 @property (strong, nonatomic) NSString *moleculeName;
+@property (strong, nonatomic) NSArray *basicInfo;
+@property (strong, nonatomic) NSArray *thermoInfo;
+@property (strong, nonatomic) NSArray *electroInfo;
+@property (strong, nonatomic) NSArray *materialInfo;
+@property (strong, nonatomic) UITableView *tableView;
+
 @end
 
 @implementation DetailsViewController
@@ -91,20 +97,15 @@ latest plan is to use plists
         self.view.backgroundColor = [UIColor whiteColor];
         self.navigationItem.leftBarButtonItem = backButton;
         
-        NSDictionary *dict = [Molecule dataForMoleculeName:@"Chlorine"];
-        NSLog(@"%@" , dict);
-        NSArray *basicInfo = dict[@"Basic Properties"];
-        basicInfo = [self superOrSubscriptStrings:basicInfo];
-        NSLog(@"%@" , basicInfo);
-
-        
+        [self unpackMoleculeDataWithName:@"Chlorine"];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.tableView = [self setUpTableView];
+    [self.view addSubview:self.tableView];
     
 }
 
@@ -136,9 +137,216 @@ latest plan is to use plists
     
 }
 
-
 #pragma mark - convienience
 
+- (void)unpackMoleculeDataWithName:(NSString *)name {
+    NSDictionary *dict = [Molecule dataForMoleculeName:name];    //unpack a dictionary of data values
+    
+    NSArray *basicInfo = dict[@"Basic Properties"];
+    NSArray *thermoInfo = dict[@"Thermo Properties"];
+    NSArray *electroInfo = dict[@"Electromagnetic Properties"];
+    NSArray *materialInfo = dict[@"Material Properties"];
+    
+    
+    self.basicInfo = [self superOrSubscriptStrings:basicInfo];
+    self.thermoInfo = [self superOrSubscriptStrings:thermoInfo];
+    self.electroInfo = [self superOrSubscriptStrings:electroInfo];
+    self.materialInfo = [self superOrSubscriptStrings:materialInfo];
+}
 
+- (NSArray *)superOrSubscriptStrings:(NSArray *)strings {
+    if(strings.count == 0) {
+        return strings;
+    }
+    NSMutableArray *newStrings = [NSMutableArray array];
+    for(int i = 0; i < strings.count -1; i++) {    //cycle through all strings in the array
+        NSString *temp = [strings objectAtIndex:i];
+        NSArray *characters = [self convertToArray:temp];
+        NSString *revisedString = @"";
+        for(int j = 0; j < characters.count - 1; j++) { //cycle through the characters and replace...
+            BOOL changed = NO;
+            NSString *current = [characters objectAtIndex:j];
+            NSString *next = [characters objectAtIndex:j+1];
+            if([current isEqualToString:@"|"]) {
+                current = [self subSciptOf:next];
+                changed = YES;
+            } else if([current isEqualToString:@"^"]) {
+                current = [self superScriptOf:next];
+                changed = YES;
+            }
+            revisedString = [NSString stringWithFormat:@"%@%@" , revisedString , current];
+            if((j + 1) == characters.count - 1 && !changed) {
+                revisedString = [NSString stringWithFormat:@"%@%@" , revisedString , next];
+                break;
+            }
+        }
+        [newStrings addObject:revisedString];
+    }
+    
+    
+    return newStrings;
+}
+
+- (NSString *)subSciptOf:(NSString *)inputNumber {
+    
+    NSString *outp=@"";
+    for (int i =0; i<[inputNumber length]; i++) {
+        unichar chara=[inputNumber characterAtIndex:i] ;
+        switch (chara) {
+            case '1':
+                outp=[outp stringByAppendingFormat:@"\u2081"];
+                break;
+            case '2':
+                outp=[outp stringByAppendingFormat:@"\u2082"];
+                break;
+            case '3':
+                outp=[outp stringByAppendingFormat:@"\u2083"];
+                break;
+            case '4':
+                outp=[outp stringByAppendingFormat:@"\u2084"];
+                break;
+            case '5':
+                outp=[outp stringByAppendingFormat:@"\u2085"];
+                break;
+            case '6':
+                outp=[outp stringByAppendingFormat:@"\u2086"];
+                break;
+            case '7':
+                outp=[outp stringByAppendingFormat:@"\u2087"];
+                break;
+            case '8':
+                outp=[outp stringByAppendingFormat:@"\u2088"];
+                break;
+            case '9':
+                outp=[outp stringByAppendingFormat:@"\u2089"];
+                break;
+            case '0':
+                outp=[outp stringByAppendingFormat:@"\u2080"];
+                break;
+            default:
+                break;
+        }
+    }
+    return outp;
+}
+
+- (NSString *)superScriptOf:(NSString *)inputNumber{
+    
+    NSString *outp=@"";
+    for (int i =0; i<[inputNumber length]; i++) {
+        unichar chara=[inputNumber characterAtIndex:i] ;
+        switch (chara) {
+            case '1':
+                outp=[outp stringByAppendingFormat:@"\u00B9"];
+                break;
+            case '2':
+                outp=[outp stringByAppendingFormat:@"\u00B2"];
+                break;
+            case '3':
+                outp=[outp stringByAppendingFormat:@"\u00B3"];
+                break;
+            case '4':
+                outp=[outp stringByAppendingFormat:@"\u2074"];
+                break;
+            case '5':
+                outp=[outp stringByAppendingFormat:@"\u2075"];
+                break;
+            case '6':
+                outp=[outp stringByAppendingFormat:@"\u2076"];
+                break;
+            case '7':
+                outp=[outp stringByAppendingFormat:@"\u2077"];
+                break;
+            case '8':
+                outp=[outp stringByAppendingFormat:@"\u2078"];
+                break;
+            case '9':
+                outp=[outp stringByAppendingFormat:@"\u2079"];
+                break;
+            case '0':
+                outp=[outp stringByAppendingFormat:@"\u2070"];
+                break;
+            default:
+                break;
+        }
+    }
+    return outp;   
+}
+
+- (NSArray *)convertToArray:(NSString *)string
+{
+    NSMutableArray *arr = [[NSMutableArray alloc]init];
+    for (int i=0; i < string.length; i++) {
+        NSString *tmp_str = [string substringWithRange:NSMakeRange(i, 1)];
+        [arr addObject:[tmp_str stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    }
+    return arr;
+}
+
+- (UITableView *)setUpTableView {
+    UITableView *tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    tableView.backgroundColor = [UIColor whiteColor];
+    tableView.rowHeight = 45;
+    tableView.sectionFooterHeight = 22;
+    tableView.sectionHeaderHeight = 22;
+    tableView.scrollEnabled = YES;
+    tableView.showsVerticalScrollIndicator = YES;
+    tableView.userInteractionEnabled = YES;
+    tableView.bounces = YES;
+    return tableView;
+}
+
+- (NSString *)textForIndexPath:(NSIndexPath *)indexPath {
+    NSString *text = @"";
+    switch (indexPath.section) {
+        case 0:
+            text = [self.basicInfo objectAtIndex:indexPath.row];
+            break;
+        case 1:
+            text = [self.electroInfo objectAtIndex:indexPath.row];
+            break;
+        case 2:
+            text = [self.thermoInfo objectAtIndex:indexPath.row];
+            break;
+        case 3:
+            text = [self.materialInfo objectAtIndex:indexPath.row];
+        default:
+            break;
+    }
+    return text;
+}
+
+#pragma mark - tableView
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 3;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    switch (section) {
+        case 0:
+            return self.basicInfo.count;
+            break;
+        case 1:
+            return self.electroInfo.count;
+            break;
+        case 2:
+            return self.thermoInfo.count;
+            break;
+        case 3:
+            return self.materialInfo.count;
+        default:
+            return 0;
+            break;
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+    cell.textLabel.text = [self textForIndexPath:indexPath];
+    return cell;
+}
 
 @end

@@ -16,7 +16,7 @@
 	</array>
 	<key>Basic Properties</key>
 	<array>
-		<string>Cl&#178;</string>
+		<string>Cl|2</string>
 		<string>17</string>
 		<string>35.453 u</string>
 		<string></string>
@@ -24,6 +24,7 @@
 	<key>Material Properties</key>
 	<array>
 		<string>0.003214 g/cm^3</string>
+		<string></string>
 	</array>
 	<key>Electromagnetic Properties</key>
 	<array/>
