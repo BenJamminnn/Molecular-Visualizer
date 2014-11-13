@@ -74,15 +74,16 @@ latest plan is to use plists
  
 */
 
+static NSArray *leftTextValues = nil;
 
-@interface DetailsViewController ()
+@interface DetailsViewController ()  <UITableViewDataSource , UITableViewDelegate>
 @property (strong, nonatomic) NSString *moleculeName;
 @property (strong, nonatomic) NSArray *basicInfo;
 @property (strong, nonatomic) NSArray *thermoInfo;
 @property (strong, nonatomic) NSArray *electroInfo;
 @property (strong, nonatomic) NSArray *materialInfo;
 @property (strong, nonatomic) UITableView *tableView;
-
+@property (nonatomic) BOOL isDiatomic;
 @end
 
 @implementation DetailsViewController
@@ -139,6 +140,23 @@ latest plan is to use plists
 
 #pragma mark - convienience
 
+- (void)setUpLeftText {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSArray *basicInfoDiatomic = @[@"Formula" , @"Name" , @"Atomic Number" , @"Electron Configuration" , @"Block" , @"Group" , @"Period", @"Atomic Mass" ];
+        NSArray *thermoInfoDiatomic = @[@"Phase (STP)", @"Melting Point", @"Boiling Point", @"Critical Temperature", @"Critical Pressure", @"Molar Heat of Fusion", @"Molar Heat of Vaporization", @"Specific Heat at STP"];
+        NSArray *materialInfoDiatomic = @[@"Density" , @"Molar Volume", @"Thermal Conductivity"];
+        NSArray *electromageticInfoDiatomic = @[@"Electrical Type" , @"Resistivity" , @"Electrical Conductivity"];
+        
+        NSArray *basicInfoComplex = @[@"Formula" , @"Name", @"Mass Fractions" , @"Molar Mass" , @"Phase (STP)" , @"Melting Point" , @"Boiling Point" , @"Density"];
+        if(self.isDiatomic) {
+            
+        } else {
+            
+        }
+    });
+}
+
 - (void)unpackMoleculeDataWithName:(NSString *)name {
     NSDictionary *dict = [Molecule dataForMoleculeName:name];    //unpack a dictionary of data values
     
@@ -147,12 +165,23 @@ latest plan is to use plists
     NSArray *electroInfo = dict[@"Electromagnetic Properties"];
     NSArray *materialInfo = dict[@"Material Properties"];
     
-    
     self.basicInfo = [self superOrSubscriptStrings:basicInfo];
     self.thermoInfo = [self superOrSubscriptStrings:thermoInfo];
     self.electroInfo = [self superOrSubscriptStrings:electroInfo];
     self.materialInfo = [self superOrSubscriptStrings:materialInfo];
 }
+
+- (BOOL)isDiatomic {
+    NSArray *elements = @[@"Chlorine" , @"Bromine" , @"Fluorine", @"Carbon", @"Phosphorous" , @"Oxygen" , @"Iodine" , @"Hydrogen" , @"Nitrogen" , @"Ozone" , @"Sulfur"];
+    for(NSString *str in elements) {
+        if([self.moleculeName isEqualToString:str]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+#warning not set up for inputs like "^-4"
 
 - (NSArray *)superOrSubscriptStrings:(NSArray *)strings {
     if(strings.count == 0) {
@@ -298,7 +327,7 @@ latest plan is to use plists
     return tableView;
 }
 
-- (NSString *)textForIndexPath:(NSIndexPath *)indexPath {
+- (NSString *)rightTextForIndexPath:(NSIndexPath *)indexPath {
     NSString *text = @"";
     switch (indexPath.section) {
         case 0:
@@ -318,10 +347,36 @@ latest plan is to use plists
     return text;
 }
 
+- (NSString *)leftTextForIndexPath:(NSIndexPath *)indexPath {
+    NSString *leftText = @"";
+    
+    
+    return leftText;
+}
+
 #pragma mark - tableView
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    switch (section) {
+        case 0:
+            return @"Basic Information";
+            break;
+        case 1:
+            return @"Electromagnetic Information";
+            break;
+        case 2:
+            return @"Thermodynamic Information";
+            break;
+        case 3:
+            return @"Material Information";
+        default:
+            return @"";
+            break;
+    }
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -344,9 +399,12 @@ latest plan is to use plists
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
-    cell.textLabel.text = [self textForIndexPath:indexPath];
+    UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
+    cell.detailTextLabel.text = [self rightTextForIndexPath:indexPath];
+    cell.textLabel.text = [self leftTextForIndexPath:indexPath];
     return cell;
 }
+
+
 
 @end

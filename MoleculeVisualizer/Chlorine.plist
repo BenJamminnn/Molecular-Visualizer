@@ -17,9 +17,10 @@
 	<key>Basic Properties</key>
 	<array>
 		<string>Cl|2</string>
+		<string>Chlorine</string>
 		<string>17</string>
 		<string>35.453 u</string>
-		<string></string>
+		<string>[Ne]3s^23p^5</string>
 	</array>
 	<key>Material Properties</key>
 	<array>

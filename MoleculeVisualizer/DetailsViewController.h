@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @class MoleculeImage;
 
-@interface DetailsViewController : UIViewController <UITableViewDataSource , UITableViewDelegate>
+@interface DetailsViewController : UIViewController
 
 - (instancetype)initWithMolecule:(NSString *)molecule;
 
