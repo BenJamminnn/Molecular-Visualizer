@@ -70,7 +70,14 @@ latest plan is to use plists
         >electrical conductivity
         >magnetic type
         >color
-        
+       
+ TODO +++++
+   +didSelectRowAtIndexPath should do nothing
+   +figure out the reason the 3 is getting cut off. contentViewSize?
+   +find unicode for Cp and 'f' (getting turned into aliens)
+    +get picture for app launch
+ +fill info for other compounds.
+ 
  
 */
 
@@ -150,7 +157,7 @@ static NSArray *leftTextValues = nil;
 
         //COMPLEX MOLECULES
     NSArray *basicInfoComplex = @[@"Formula" , @"Name", @"Mass Fractions" , @"Molar Mass" , @"Phase (STP)" , @"Melting Point" , @"Boiling Point" , @"Density"];
-    NSArray *thermoInfoComplex = @[@"Specific Heat Capacity c𝓅" , @"Specific Heat of formation Δ𝑓H°" , @"Specific Entropy S°" , @"Specific Heat of Vaporization" , @"Specific Heat of Combustion" , @"Specific Heat of Fusion" , @"Critical Temperature"  , @"Critical Pressure"];
+    NSArray *thermoInfoComplex = @[@"Specific Heat Capacity c𝓅𝓅𝘱" , @"Specific Heat of formation Δ𝑓H°" , @"Specific Entropy S°" , @"Specific Heat of Vaporization" , @"Specific Heat of Combustion" , @"Specific Heat of Fusion" , @"Critical Temperature"  , @"Critical Pressure"];
     
     
     NSArray *complexInfo = @[basicInfoComplex , thermoInfoComplex];
@@ -292,7 +299,7 @@ static NSArray *leftTextValues = nil;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
-    UIFont *cellFont = [UIFont fontWithName:@"Verdana" size:10];
+    UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:13];
     cell.textLabel.font = cellFont;
     cell.detailTextLabel.font = cellFont;
     cell.detailTextLabel.text = [self rightTextForIndexPath:indexPath];
@@ -300,6 +307,8 @@ static NSArray *leftTextValues = nil;
     return cell;
 }
 
-
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
+}
 
 @end
