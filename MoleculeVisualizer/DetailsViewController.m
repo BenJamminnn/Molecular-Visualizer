@@ -82,6 +82,7 @@ static NSArray *leftTextValues = nil;
 @property (strong, nonatomic) NSArray *thermoInfo;
 @property (strong, nonatomic) NSArray *electroInfo;
 @property (strong, nonatomic) NSArray *materialInfo;
+@property (strong, nonatomic) NSDictionary *leftTextCollection;
 @property (strong, nonatomic) UITableView *tableView;
 @property (nonatomic) BOOL isDiatomic;
 @end
@@ -147,10 +148,19 @@ static NSArray *leftTextValues = nil;
         NSArray *thermoInfoDiatomic = @[@"Phase (STP)", @"Melting Point", @"Boiling Point", @"Critical Temperature", @"Critical Pressure", @"Molar Heat of Fusion", @"Molar Heat of Vaporization", @"Specific Heat at STP"];
         NSArray *materialInfoDiatomic = @[@"Density" , @"Molar Volume", @"Thermal Conductivity"];
         NSArray *electromageticInfoDiatomic = @[@"Electrical Type" , @"Resistivity" , @"Electrical Conductivity"];
-        
+
+        //COMPLEX MOLECULES
         NSArray *basicInfoComplex = @[@"Formula" , @"Name", @"Mass Fractions" , @"Molar Mass" , @"Phase (STP)" , @"Melting Point" , @"Boiling Point" , @"Density"];
+        NSArray *thermoInfoComplex = @[@"Specific Heat Capacity c𝓅" , @"Specific Heat of formation Δ𝑓H°" , @"Specific Entropy S°" , @"Specific Heat of Vaporization" , @"Specific Heat of Combustion" , @"Specific Heat of Fusion" , @"Critical Temperature"  , @"Critical Pressure"];
+        
+        
+        NSArray *complexInfo = @[basicInfoComplex , thermoInfoComplex];
         if(self.isDiatomic) {
-            
+            self.leftTextCollection = @{@"Basic" : basicInfoDiatomic ,
+                                        @"Thermo" : thermoInfoDiatomic,
+                                        @"Electro" : electromageticInfoDiatomic,
+                                        @"Material" : materialInfoDiatomic
+                                        };
         } else {
             
         }
@@ -159,16 +169,10 @@ static NSArray *leftTextValues = nil;
 
 - (void)unpackMoleculeDataWithName:(NSString *)name {
     NSDictionary *dict = [Molecule dataForMoleculeName:name];    //unpack a dictionary of data values
-    
-    NSArray *basicInfo = dict[@"Basic Properties"];
-    NSArray *thermoInfo = dict[@"Thermo Properties"];
-    NSArray *electroInfo = dict[@"Electromagnetic Properties"];
-    NSArray *materialInfo = dict[@"Material Properties"];
-    
-    self.basicInfo = [self superOrSubscriptStrings:basicInfo];
-    self.thermoInfo = [self superOrSubscriptStrings:thermoInfo];
-    self.electroInfo = [self superOrSubscriptStrings:electroInfo];
-    self.materialInfo = [self superOrSubscriptStrings:materialInfo];
+    self.basicInfo = dict[@"Basic Properties"];
+    self.thermoInfo = dict[@"Thermo Properties"];
+    self.electroInfo = dict[@"Electromagnetic Properties"];
+    self.materialInfo = dict[@"Material Properties"];
 }
 
 - (BOOL)isDiatomic {
@@ -179,137 +183,6 @@ static NSArray *leftTextValues = nil;
         }
     }
     return NO;
-}
-
-#warning not set up for inputs like "^-4"
-
-- (NSArray *)superOrSubscriptStrings:(NSArray *)strings {
-    if(strings.count == 0) {
-        return strings;
-    }
-    NSMutableArray *newStrings = [NSMutableArray array];
-    for(int i = 0; i < strings.count -1; i++) {    //cycle through all strings in the array
-        NSString *temp = [strings objectAtIndex:i];
-        NSArray *characters = [self convertToArray:temp];
-        NSString *revisedString = @"";
-        for(int j = 0; j < characters.count - 1; j++) { //cycle through the characters and replace...
-            BOOL changed = NO;
-            NSString *current = [characters objectAtIndex:j];
-            NSString *next = [characters objectAtIndex:j+1];
-            if([current isEqualToString:@"|"]) {
-                current = [self subSciptOf:next];
-                changed = YES;
-            } else if([current isEqualToString:@"^"]) {
-                current = [self superScriptOf:next];
-                changed = YES;
-            }
-            revisedString = [NSString stringWithFormat:@"%@%@" , revisedString , current];
-            if((j + 1) == characters.count - 1 && !changed) {
-                revisedString = [NSString stringWithFormat:@"%@%@" , revisedString , next];
-                break;
-            }
-        }
-        [newStrings addObject:revisedString];
-    }
-    
-    
-    return newStrings;
-}
-
-- (NSString *)subSciptOf:(NSString *)inputNumber {
-    
-    NSString *outp=@"";
-    for (int i =0; i<[inputNumber length]; i++) {
-        unichar chara=[inputNumber characterAtIndex:i] ;
-        switch (chara) {
-            case '1':
-                outp=[outp stringByAppendingFormat:@"\u2081"];
-                break;
-            case '2':
-                outp=[outp stringByAppendingFormat:@"\u2082"];
-                break;
-            case '3':
-                outp=[outp stringByAppendingFormat:@"\u2083"];
-                break;
-            case '4':
-                outp=[outp stringByAppendingFormat:@"\u2084"];
-                break;
-            case '5':
-                outp=[outp stringByAppendingFormat:@"\u2085"];
-                break;
-            case '6':
-                outp=[outp stringByAppendingFormat:@"\u2086"];
-                break;
-            case '7':
-                outp=[outp stringByAppendingFormat:@"\u2087"];
-                break;
-            case '8':
-                outp=[outp stringByAppendingFormat:@"\u2088"];
-                break;
-            case '9':
-                outp=[outp stringByAppendingFormat:@"\u2089"];
-                break;
-            case '0':
-                outp=[outp stringByAppendingFormat:@"\u2080"];
-                break;
-            default:
-                break;
-        }
-    }
-    return outp;
-}
-
-- (NSString *)superScriptOf:(NSString *)inputNumber{
-    
-    NSString *outp=@"";
-    for (int i =0; i<[inputNumber length]; i++) {
-        unichar chara=[inputNumber characterAtIndex:i] ;
-        switch (chara) {
-            case '1':
-                outp=[outp stringByAppendingFormat:@"\u00B9"];
-                break;
-            case '2':
-                outp=[outp stringByAppendingFormat:@"\u00B2"];
-                break;
-            case '3':
-                outp=[outp stringByAppendingFormat:@"\u00B3"];
-                break;
-            case '4':
-                outp=[outp stringByAppendingFormat:@"\u2074"];
-                break;
-            case '5':
-                outp=[outp stringByAppendingFormat:@"\u2075"];
-                break;
-            case '6':
-                outp=[outp stringByAppendingFormat:@"\u2076"];
-                break;
-            case '7':
-                outp=[outp stringByAppendingFormat:@"\u2077"];
-                break;
-            case '8':
-                outp=[outp stringByAppendingFormat:@"\u2078"];
-                break;
-            case '9':
-                outp=[outp stringByAppendingFormat:@"\u2079"];
-                break;
-            case '0':
-                outp=[outp stringByAppendingFormat:@"\u2070"];
-                break;
-            default:
-                break;
-        }
-    }
-    return outp;   
-}
-
-- (NSArray *)convertToArray:(NSString *)string
-{
-    NSMutableArray *arr = [[NSMutableArray alloc]init];
-    for (int i=0; i < string.length; i++) {
-        NSString *tmp_str = [string substringWithRange:NSMakeRange(i, 1)];
-        [arr addObject:[tmp_str stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    }
-    return arr;
 }
 
 - (UITableView *)setUpTableView {
@@ -353,6 +226,7 @@ static NSArray *leftTextValues = nil;
     
     return leftText;
 }
+
 
 #pragma mark - tableView
 

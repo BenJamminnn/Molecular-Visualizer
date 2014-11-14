@@ -16,18 +16,26 @@
 	</array>
 	<key>Basic Properties</key>
 	<array>
-		<string>Cl|2</string>
+		<string>Cl₂</string>
 		<string>Chlorine</string>
 		<string>17</string>
+		<string>[Ne]3s²3p⁵</string>
+		<string>p</string>
+		<string>17</string>
+		<string>3</string>
 		<string>35.453 u</string>
-		<string>[Ne]3s^23p^5</string>
 	</array>
 	<key>Material Properties</key>
 	<array>
-		<string>0.003214 g/cm^3</string>
-		<string></string>
+		<string>0.003214 g/cm³</string>
+		<string>11030 cm³/mol</string>
+		<string>0.0089 W/(mK)</string>
 	</array>
 	<key>Electromagnetic Properties</key>
-	<array/>
+	<array>
+		<string>Insulator</string>
+		<string>100 Ωm</string>
+		<string>0.01 S/m</string>
+	</array>
 </dict>
 </plist>

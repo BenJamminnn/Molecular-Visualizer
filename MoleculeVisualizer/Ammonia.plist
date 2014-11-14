@@ -2,10 +2,27 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Basic Properties</key>
+	<array>
+		<string>NH₃</string>
+		<string>Ammonia</string>
+		<string>hydrogen (17.8%) | nitrogen (82.2%)</string>
+		<string>17.0305 g/mol</string>
+		<string>Gas</string>
+		<string>-77.73 °C</string>
+		<string>-33.3 °C</string>
+		<string>6.96 x 10⁻⁴ g/cm³</string>
+	</array>
 	<key>Thermo Properties</key>
 	<array>
 		<string>2.061 J/(gK)</string>
-		<string></string>
+		<string>-2.695 kJ/g</string>
+		<string>11.33 J/(gK) (gas)</string>
+		<string>1.37 kJ/g</string>
+		<string>18.6 kJ/g</string>
+		<string>0.332 kJ/g</string>
+		<string>405.5 K</string>
+		<string>11.3 MPa</string>
 	</array>
 </dict>
 </plist>
