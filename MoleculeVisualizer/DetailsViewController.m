@@ -10,7 +10,7 @@
 #import "MoleculeImage.h"
 #import "ViewController.h"
 #import "Molecule.h"
-
+#import <CoreText/CoreText.h>
 /*
 latest plan is to use plists 
   > good for data such as string and numbers
@@ -299,10 +299,14 @@ static NSArray *leftTextValues = nil;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
-    UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:13];
+    UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:12];
+    
+    NSDictionary *superscriptAttrs = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCTSuperscriptAttributeName];
+    NSAttributedString *aString = [[NSAttributedString alloc]initWithString:[self rightTextForIndexPath:indexPath] attributes:superscriptAttrs];
+    
     cell.textLabel.font = cellFont;
     cell.detailTextLabel.font = cellFont;
-    cell.detailTextLabel.text = [self rightTextForIndexPath:indexPath];
+    cell.detailTextLabel.attributedText = aString;
     cell.textLabel.text = [self leftTextForIndexPath:indexPath];
     return cell;
 }
