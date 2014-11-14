@@ -99,13 +99,14 @@ static NSArray *leftTextValues = nil;
         self.view.backgroundColor = [UIColor whiteColor];
         self.navigationItem.leftBarButtonItem = backButton;
         
-        [self unpackMoleculeDataWithName:@"Chlorine"];
+        [self unpackMoleculeDataWithName:@"Ammonia"];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setUpLeftText];
     self.tableView = [self setUpTableView];
     [self.view addSubview:self.tableView];
     
@@ -142,29 +143,28 @@ static NSArray *leftTextValues = nil;
 #pragma mark - convienience
 
 - (void)setUpLeftText {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSArray *basicInfoDiatomic = @[@"Formula" , @"Name" , @"Atomic Number" , @"Electron Configuration" , @"Block" , @"Group" , @"Period", @"Atomic Mass" ];
-        NSArray *thermoInfoDiatomic = @[@"Phase (STP)", @"Melting Point", @"Boiling Point", @"Critical Temperature", @"Critical Pressure", @"Molar Heat of Fusion", @"Molar Heat of Vaporization", @"Specific Heat at STP"];
-        NSArray *materialInfoDiatomic = @[@"Density" , @"Molar Volume", @"Thermal Conductivity"];
-        NSArray *electromageticInfoDiatomic = @[@"Electrical Type" , @"Resistivity" , @"Electrical Conductivity"];
+    NSArray *basicInfoDiatomic = @[@"Formula" , @"Name" , @"Atomic Number" , @"Electron Configuration" , @"Block" , @"Group" , @"Period", @"Atomic Mass" ];
+    NSArray *thermoInfoDiatomic = @[@"Phase (STP)", @"Melting Point", @"Boiling Point", @"Critical Temperature", @"Critical Pressure", @"Molar Heat of Fusion", @"Molar Heat of Vaporization", @"Specific Heat at STP"];
+    NSArray *materialInfoDiatomic = @[@"Density" , @"Molar Volume", @"Thermal Conductivity"];
+    NSArray *electromageticInfoDiatomic = @[@"Electrical Type" , @"Resistivity" , @"Electrical Conductivity"];
 
         //COMPLEX MOLECULES
-        NSArray *basicInfoComplex = @[@"Formula" , @"Name", @"Mass Fractions" , @"Molar Mass" , @"Phase (STP)" , @"Melting Point" , @"Boiling Point" , @"Density"];
-        NSArray *thermoInfoComplex = @[@"Specific Heat Capacity c𝓅" , @"Specific Heat of formation Δ𝑓H°" , @"Specific Entropy S°" , @"Specific Heat of Vaporization" , @"Specific Heat of Combustion" , @"Specific Heat of Fusion" , @"Critical Temperature"  , @"Critical Pressure"];
-        
-        
-        NSArray *complexInfo = @[basicInfoComplex , thermoInfoComplex];
-        if(self.isDiatomic) {
-            self.leftTextCollection = @{@"Basic" : basicInfoDiatomic ,
-                                        @"Thermo" : thermoInfoDiatomic,
-                                        @"Electro" : electromageticInfoDiatomic,
-                                        @"Material" : materialInfoDiatomic
-                                        };
-        } else {
-            
-        }
-    });
+    NSArray *basicInfoComplex = @[@"Formula" , @"Name", @"Mass Fractions" , @"Molar Mass" , @"Phase (STP)" , @"Melting Point" , @"Boiling Point" , @"Density"];
+    NSArray *thermoInfoComplex = @[@"Specific Heat Capacity c𝓅" , @"Specific Heat of formation Δ𝑓H°" , @"Specific Entropy S°" , @"Specific Heat of Vaporization" , @"Specific Heat of Combustion" , @"Specific Heat of Fusion" , @"Critical Temperature"  , @"Critical Pressure"];
+    
+    
+    NSArray *complexInfo = @[basicInfoComplex , thermoInfoComplex];
+    if(self.isDiatomic) {
+        self.leftTextCollection = @{@"Basic" : basicInfoDiatomic ,
+                                    @"Thermo" : thermoInfoDiatomic,
+                                    @"Electro" : electromageticInfoDiatomic,
+                                    @"Material" : materialInfoDiatomic
+                                    };
+    } else {
+        self.leftTextCollection = @{@"Basic" : basicInfoComplex ,
+                                    @"Thermo" : thermoInfoComplex
+                                    };
+    }
 }
 
 - (void)unpackMoleculeDataWithName:(NSString *)name {
@@ -222,8 +222,22 @@ static NSArray *leftTextValues = nil;
 
 - (NSString *)leftTextForIndexPath:(NSIndexPath *)indexPath {
     NSString *leftText = @"";
-    
-    
+    switch (indexPath.section) {
+        case 0:
+            leftText = [self.leftTextCollection[@"Basic"] objectAtIndex:indexPath.row];
+            break;
+        case 1:
+            leftText = [self.leftTextCollection[@"Electro"] objectAtIndex:indexPath.row];
+            break;
+        case 2:
+            leftText = [self.leftTextCollection[@"Thermo"] objectAtIndex:indexPath.row];
+            break;
+        case 3:
+            leftText = [self.leftTextCollection[@"Material"] objectAtIndex:indexPath.row];
+            break;
+        default:
+            break;
+    }
     return leftText;
 }
 
