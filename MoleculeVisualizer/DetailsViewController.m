@@ -95,11 +95,11 @@ static NSArray *leftTextValues = nil;
     if(self = [super init]) {
         UIBarButtonItem* backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self
                                                                     action:@selector(back)];
-        self.moleculeName = molecule;
         self.view.backgroundColor = [UIColor whiteColor];
         self.navigationItem.leftBarButtonItem = backButton;
-        
-        [self unpackMoleculeDataWithName:@"Ammonia"];
+
+        self.moleculeName = @"Ammonia";
+        [self unpackMoleculeDataWithName:self.moleculeName];
     }
     return self;
 }
@@ -171,10 +171,13 @@ static NSArray *leftTextValues = nil;
     NSDictionary *dict = [Molecule dataForMoleculeName:name];    //unpack a dictionary of data values
     self.basicInfo = dict[@"Basic Properties"];
     self.thermoInfo = dict[@"Thermo Properties"];
-    self.electroInfo = dict[@"Electromagnetic Properties"];
-    self.materialInfo = dict[@"Material Properties"];
+    if(self.isDiatomic) {
+        self.electroInfo = dict[@"Electromagnetic Properties"];
+        self.materialInfo = dict[@"Material Properties"];
+    }
 }
 
+#warning clean this up
 - (BOOL)isDiatomic {
     NSArray *elements = @[@"Chlorine" , @"Bromine" , @"Fluorine", @"Carbon", @"Phosphorous" , @"Oxygen" , @"Iodine" , @"Hydrogen" , @"Nitrogen" , @"Ozone" , @"Sulfur"];
     for(NSString *str in elements) {
@@ -207,10 +210,11 @@ static NSArray *leftTextValues = nil;
             text = [self.basicInfo objectAtIndex:indexPath.row];
             break;
         case 1:
-            text = [self.electroInfo objectAtIndex:indexPath.row];
+            text = [self.thermoInfo objectAtIndex:indexPath.row];
             break;
         case 2:
-            text = [self.thermoInfo objectAtIndex:indexPath.row];
+            text = [self.electroInfo objectAtIndex:indexPath.row];
+
             break;
         case 3:
             text = [self.materialInfo objectAtIndex:indexPath.row];
@@ -227,10 +231,10 @@ static NSArray *leftTextValues = nil;
             leftText = [self.leftTextCollection[@"Basic"] objectAtIndex:indexPath.row];
             break;
         case 1:
-            leftText = [self.leftTextCollection[@"Electro"] objectAtIndex:indexPath.row];
+            leftText = [self.leftTextCollection[@"Thermo"] objectAtIndex:indexPath.row];
             break;
         case 2:
-            leftText = [self.leftTextCollection[@"Thermo"] objectAtIndex:indexPath.row];
+            leftText = [self.leftTextCollection[@"Electro"] objectAtIndex:indexPath.row];
             break;
         case 3:
             leftText = [self.leftTextCollection[@"Material"] objectAtIndex:indexPath.row];
@@ -250,10 +254,10 @@ static NSArray *leftTextValues = nil;
             return @"Basic Information";
             break;
         case 1:
-            return @"Electromagnetic Information";
+            return @"Thermodynamic Information";
             break;
         case 2:
-            return @"Thermodynamic Information";
+            return @"Electromagnetic Information";
             break;
         case 3:
             return @"Material Information";
@@ -264,7 +268,7 @@ static NSArray *leftTextValues = nil;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 4;
+    return (self.isDiatomic) ? 4 : 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -273,10 +277,10 @@ static NSArray *leftTextValues = nil;
             return self.basicInfo.count;
             break;
         case 1:
-            return self.electroInfo.count;
+            return self.thermoInfo.count;
             break;
         case 2:
-            return self.thermoInfo.count;
+            return self.electroInfo.count;
             break;
         case 3:
             return self.materialInfo.count;
@@ -288,6 +292,9 @@ static NSArray *leftTextValues = nil;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
+    UIFont *cellFont = [UIFont fontWithName:@"Verdana" size:10];
+    cell.textLabel.font = cellFont;
+    cell.detailTextLabel.font = cellFont;
     cell.detailTextLabel.text = [self rightTextForIndexPath:indexPath];
     cell.textLabel.text = [self leftTextForIndexPath:indexPath];
     return cell;
