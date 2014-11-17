@@ -72,8 +72,8 @@ latest plan is to use plists
         >color
        
  TODO +++++
-   +didSelectRowAtIndexPath should do nothing
-   +figure out the reason the 3 is getting cut off. contentViewSize?
+ CHECK  +didSelectRowAtIndexPath should do nothing
+ CHECK  +figure out the reason the 3 is getting cut off. contentViewSize?
    +find unicode for Cp and 'f' (getting turned into aliens)
     +get picture for app launch
  +fill info for other compounds.
@@ -91,6 +91,7 @@ static NSArray *leftTextValues = nil;
 @property (strong, nonatomic) NSArray *materialInfo;
 @property (strong, nonatomic) NSDictionary *leftTextCollection;
 @property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) NSDictionary *attributedStringOptions;
 @property (nonatomic) BOOL isDiatomic;
 @end
 
@@ -104,6 +105,7 @@ static NSArray *leftTextValues = nil;
                                                                     action:@selector(back)];
         self.view.backgroundColor = [UIColor whiteColor];
         self.navigationItem.leftBarButtonItem = backButton;
+        self.attributedStringOptions = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCTSuperscriptAttributeName];
 
         self.moleculeName = @"Ammonia";
         [self unpackMoleculeDataWithName:self.moleculeName];
@@ -149,18 +151,49 @@ static NSArray *leftTextValues = nil;
 
 #pragma mark - convienience
 
+- (NSData *)dataFromHexString:(NSString *)originalHexString
+{
+    NSString *hexString = [originalHexString stringByReplacingOccurrencesOfString:@"[ <>]" withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, [originalHexString length])]; // strip out spaces (between every four bytes), "<" (at the start) and ">" (at the end)
+    NSMutableData *data = [NSMutableData dataWithCapacity:[hexString length] / 2];
+    for (NSInteger i = 0; i < [hexString length]; i += 2)
+    {
+        NSString *hexChar = [hexString substringWithRange: NSMakeRange(i, 2)];
+        int value;
+        sscanf([hexChar cStringUsingEncoding:NSASCIIStringEncoding], "%x", &value);
+        uint8_t byte = value;
+        [data appendBytes:&byte length:1];
+    }
+    
+    return data;
+}
+
+
+- (NSAttributedString *)superOrSubscriptStringAtIndex:(NSInteger)index super:(BOOL)isSuperScript originalString:(NSString *)originalString {
+    UIFont *fnt = [UIFont fontWithName:@"Helvetica" size:12.0];
+    
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:originalString
+                                                                                         attributes:@{NSFontAttributeName: [fnt fontWithSize:12]}];
+    NSNumber *offSet = (isSuperScript) ? @15 : [NSNumber numberWithDouble:-3];
+    
+    [attributedString setAttributes:@{NSFontAttributeName : [fnt fontWithSize:10]
+                                      , NSBaselineOffsetAttributeName : offSet} range:NSMakeRange(index ,1)];
+    
+    
+    
+    return attributedString;
+}
+
 - (void)setUpLeftText {
     NSArray *basicInfoDiatomic = @[@"Formula" , @"Name" , @"Atomic Number" , @"Electron Configuration" , @"Block" , @"Group" , @"Period", @"Atomic Mass" ];
     NSArray *thermoInfoDiatomic = @[@"Phase (STP)", @"Melting Point", @"Boiling Point", @"Critical Temperature", @"Critical Pressure", @"Molar Heat of Fusion", @"Molar Heat of Vaporization", @"Specific Heat at STP"];
     NSArray *materialInfoDiatomic = @[@"Density" , @"Molar Volume", @"Thermal Conductivity"];
     NSArray *electromageticInfoDiatomic = @[@"Electrical Type" , @"Resistivity" , @"Electrical Conductivity"];
-
-        //COMPLEX MOLECULES
+    
+    NSString *inputString = @"Specific Heat Capacity cp";
+    NSAttributedString *s = [self superOrSubscriptStringAtIndex:inputString.length -1 super:NO originalString:inputString ];
+    
     NSArray *basicInfoComplex = @[@"Formula" , @"Name", @"Mass Fractions" , @"Molar Mass" , @"Phase (STP)" , @"Melting Point" , @"Boiling Point" , @"Density"];
-    NSArray *thermoInfoComplex = @[@"Specific Heat Capacity c𝓅𝓅𝘱" , @"Specific Heat of formation Δ𝑓H°" , @"Specific Entropy S°" , @"Specific Heat of Vaporization" , @"Specific Heat of Combustion" , @"Specific Heat of Fusion" , @"Critical Temperature"  , @"Critical Pressure"];
-    
-    
-    NSArray *complexInfo = @[basicInfoComplex , thermoInfoComplex];
+    NSArray *thermoInfoComplex = @[ s, @"Specific Heat of formation Δ\u0192H°" , @"Specific Entropy S°" , @"Specific Heat of Vaporization" , @"Specific Heat of Combustion" , @"Specific Heat of Fusion" , @"Critical Temperature"  , @"Critical Pressure"];
     if(self.isDiatomic) {
         self.leftTextCollection = @{@"Basic" : basicInfoDiatomic ,
                                     @"Thermo" : thermoInfoDiatomic,
@@ -301,13 +334,17 @@ static NSArray *leftTextValues = nil;
     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
     UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:12];
     
-    NSDictionary *superscriptAttrs = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCTSuperscriptAttributeName];
-    NSAttributedString *aString = [[NSAttributedString alloc]initWithString:[self rightTextForIndexPath:indexPath] attributes:superscriptAttrs];
+    NSAttributedString *aString = [[NSAttributedString alloc]initWithString:[self rightTextForIndexPath:indexPath] attributes:self.attributedStringOptions];
     
     cell.textLabel.font = cellFont;
     cell.detailTextLabel.font = cellFont;
     cell.detailTextLabel.attributedText = aString;
-    cell.textLabel.text = [self leftTextForIndexPath:indexPath];
+    if([[self leftTextForIndexPath:indexPath] isKindOfClass:[NSAttributedString class]]) {
+        cell.textLabel.attributedText = (NSAttributedString *)[self leftTextForIndexPath:indexPath];
+    } else {
+        cell.textLabel.text = [self leftTextForIndexPath:indexPath];
+
+    }
     return cell;
 }
 
