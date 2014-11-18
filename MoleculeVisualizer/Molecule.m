@@ -18,9 +18,10 @@ This class will output a dictionary of information based on the chemical input
     
     NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:@"plist"];
     NSDictionary *moleculeData = [[NSDictionary alloc]initWithContentsOfFile:path];
-//    NSArray *basicInfo = moleculeData[@"Basic Info"];
-//    NSArray *thermoInfo = moleculeData[@"Thermo Info"];
-//    do this where we call this method
+    if(!moleculeData) {
+        NSLog(@"molecule file does not exist!");
+        return nil;
+    }
     return moleculeData;
 }
 

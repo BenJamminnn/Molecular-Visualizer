@@ -108,12 +108,12 @@ static NSArray *elements = nil;
         self.navigationItem.leftBarButtonItem = backButton;
         self.attributedStringOptions = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCTSuperscriptAttributeName];
 
-        self.moleculeName = @"Nitric Acid";
+        self.moleculeName = molecule;
         [self unpackMoleculeDataWithName:self.moleculeName];
         [self setUpLeftText];
         self.tableView = [self setUpTableView];
         [self.view addSubview:self.tableView];
-        self.title = [self.basicInfo objectAtIndex:1];
+        self.title = molecule;
     }
     return self;
 }
@@ -195,6 +195,7 @@ static NSArray *elements = nil;
 
 - (void)unpackMoleculeDataWithName:(NSString *)name {
     NSDictionary *dict = [Molecule dataForMoleculeName:name];    //unpack a dictionary of data values
+    
     self.basicInfo = dict[@"Basic Properties"];
     self.thermoInfo = dict[@"Thermo Properties"];
     if(self.isDiatomic) {

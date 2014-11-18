@@ -35,8 +35,8 @@ static CGFloat currentAngle = 0;
     UIBarButtonItem *details = [[UIBarButtonItem alloc]initWithTitle:@"Details" style:UIBarButtonItemStylePlain target:self action:@selector(details)];
     self.navigationItem.rightBarButtonItem = details;
     self.navigationItem.leftBarButtonItem = backButton;
-    self.navigationController.navigationBar.topItem.title = self.geometryNode.name;
-    
+    self.title = self.geometryNode.name;
+
     [self sceneSetup];
 
 }
@@ -88,7 +88,7 @@ static CGFloat currentAngle = 0;
     self.sceneView.scene = scene;
     
     //transformation is messing up our double tap, look into RW tut for details
-    //[self.sceneView addGestureRecognizer:doubleTap];
+   // [self.sceneView addGestureRecognizer:doubleTap];
     
     
     [self.sceneView addGestureRecognizer:pan];
@@ -101,14 +101,9 @@ static CGFloat currentAngle = 0;
 
 #pragma mark - gesture recognizers
 
+//TODO
 - (void)doubleTap:(UITapGestureRecognizer *)sender {
-    SCNNode *cam = [self.sceneView.scene.rootNode childNodeWithName:@"camNode" recursively:NO];
-    if(cam.position.z < 50) {   //zoom out to 80
-        [self zoomCameraToPosition:80];
-    } else {                //zoom in to 20
-        [self zoomCameraToPosition:20];
-    }
-    //[self.geometryNode runAction:[SCNAction scaleTo:1.5 duration:0.5]];
+
 }
 
 - (void)pinchGesture:(UIPinchGestureRecognizer *)sender {
