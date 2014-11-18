@@ -81,7 +81,8 @@ latest plan is to use plists
  
 */
 
-static NSArray *leftTextValues = nil;
+
+static NSArray *elements = nil;
 
 @interface DetailsViewController ()  <UITableViewDataSource , UITableViewDelegate>
 @property (strong, nonatomic) NSString *moleculeName;
@@ -107,17 +108,19 @@ static NSArray *leftTextValues = nil;
         self.navigationItem.leftBarButtonItem = backButton;
         self.attributedStringOptions = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCTSuperscriptAttributeName];
 
-        self.moleculeName = @"Ammonia";
+        self.moleculeName = @"Nitric Acid";
         [self unpackMoleculeDataWithName:self.moleculeName];
+        [self setUpLeftText];
+        self.tableView = [self setUpTableView];
+        [self.view addSubview:self.tableView];
+        self.title = [self.basicInfo objectAtIndex:1];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setUpLeftText];
-    self.tableView = [self setUpTableView];
-    [self.view addSubview:self.tableView];
+
     
 }
 
@@ -151,23 +154,6 @@ static NSArray *leftTextValues = nil;
 
 #pragma mark - convienience
 
-- (NSData *)dataFromHexString:(NSString *)originalHexString
-{
-    NSString *hexString = [originalHexString stringByReplacingOccurrencesOfString:@"[ <>]" withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, [originalHexString length])]; // strip out spaces (between every four bytes), "<" (at the start) and ">" (at the end)
-    NSMutableData *data = [NSMutableData dataWithCapacity:[hexString length] / 2];
-    for (NSInteger i = 0; i < [hexString length]; i += 2)
-    {
-        NSString *hexChar = [hexString substringWithRange: NSMakeRange(i, 2)];
-        int value;
-        sscanf([hexChar cStringUsingEncoding:NSASCIIStringEncoding], "%x", &value);
-        uint8_t byte = value;
-        [data appendBytes:&byte length:1];
-    }
-    
-    return data;
-}
-
-
 - (NSAttributedString *)superOrSubscriptStringAtIndex:(NSInteger)index super:(BOOL)isSuperScript originalString:(NSString *)originalString {
     UIFont *fnt = [UIFont fontWithName:@"Helvetica" size:12.0];
     
@@ -193,7 +179,7 @@ static NSArray *leftTextValues = nil;
     NSAttributedString *s = [self superOrSubscriptStringAtIndex:inputString.length -1 super:NO originalString:inputString ];
     
     NSArray *basicInfoComplex = @[@"Formula" , @"Name", @"Mass Fractions" , @"Molar Mass" , @"Phase (STP)" , @"Melting Point" , @"Boiling Point" , @"Density"];
-    NSArray *thermoInfoComplex = @[ s, @"Specific Heat of formation Δ\u0192H°" , @"Specific Entropy S°" , @"Specific Heat of Vaporization" , @"Specific Heat of Combustion" , @"Specific Heat of Fusion" , @"Critical Temperature"  , @"Critical Pressure"];
+    NSArray *thermoInfoComplex = @[ s, @"Specific Heat of formation Δ\u0192H°" , @"Specific Entropy S°" , @"Specific Heat of Vaporization" , @"Specific Heat of Fusion" , @"Critical Temperature"  , @"Critical Pressure"];
     if(self.isDiatomic) {
         self.leftTextCollection = @{@"Basic" : basicInfoDiatomic ,
                                     @"Thermo" : thermoInfoDiatomic,
@@ -217,9 +203,11 @@ static NSArray *leftTextValues = nil;
     }
 }
 
-#warning clean this up
 - (BOOL)isDiatomic {
-    NSArray *elements = @[@"Chlorine" , @"Bromine" , @"Fluorine", @"Carbon", @"Phosphorous" , @"Oxygen" , @"Iodine" , @"Hydrogen" , @"Nitrogen" , @"Ozone" , @"Sulfur"];
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        elements = @[@"Chlorine" , @"Bromine" , @"Fluorine", @"Carbon", @"Phosphorous" , @"Oxygen" , @"Iodine" , @"Hydrogen" , @"Nitrogen" , @"Ozone" , @"Sulfur"];
+    });
     for(NSString *str in elements) {
         if([self.moleculeName isEqualToString:str]) {
             return YES;
@@ -288,6 +276,12 @@ static NSArray *leftTextValues = nil;
 
 #pragma mark - tableView
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *rightHandString = [self rightTextForIndexPath:indexPath];
+    return (rightHandString.length > 25) ? 88 : 44;
+}
+
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     switch (section) {
         case 0:
@@ -333,17 +327,20 @@ static NSArray *leftTextValues = nil;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
     UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:12];
+    NSAttributedString *rightString = [[NSAttributedString alloc]initWithString:[self rightTextForIndexPath:indexPath] attributes:self.attributedStringOptions];
     
-    NSAttributedString *aString = [[NSAttributedString alloc]initWithString:[self rightTextForIndexPath:indexPath] attributes:self.attributedStringOptions];
-    
+    if(rightString.length > 25) {
+        [cell.detailTextLabel setNumberOfLines:2];
+        [cell.detailTextLabel setLineBreakMode:NSLineBreakByWordWrapping];
+    }
+
     cell.textLabel.font = cellFont;
     cell.detailTextLabel.font = cellFont;
-    cell.detailTextLabel.attributedText = aString;
+    cell.detailTextLabel.attributedText = rightString;
     if([[self leftTextForIndexPath:indexPath] isKindOfClass:[NSAttributedString class]]) {
         cell.textLabel.attributedText = (NSAttributedString *)[self leftTextForIndexPath:indexPath];
     } else {
         cell.textLabel.text = [self leftTextForIndexPath:indexPath];
-
     }
     return cell;
 }

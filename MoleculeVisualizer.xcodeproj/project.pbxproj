@@ -22,6 +22,7 @@
 		46E06F921A0997FA003CEFC4 /* Molecule.m in Sources */ = {isa = PBXBuildFile; fileRef = 46E06F911A0997FA003CEFC4 /* Molecule.m */; };
 		46E06FC61A1183AC003CEFC4 /* Chlorine.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46E06FC51A1183AC003CEFC4 /* Chlorine.plist */; };
 		46E06FC81A145EAA003CEFC4 /* Ammonia.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46E06FC71A145EAA003CEFC4 /* Ammonia.plist */; };
+		46E06FCA1A1ABC15003CEFC4 /* Nitric Acid.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46E06FC91A1ABC15003CEFC4 /* Nitric Acid.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		46E06F911A0997FA003CEFC4 /* Molecule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Molecule.m; sourceTree = "<group>"; };
 		46E06FC51A1183AC003CEFC4 /* Chlorine.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Chlorine.plist; sourceTree = "<group>"; };
 		46E06FC71A145EAA003CEFC4 /* Ammonia.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Ammonia.plist; sourceTree = "<group>"; };
+		46E06FC91A1ABC15003CEFC4 /* Nitric Acid.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Nitric Acid.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +179,7 @@
 			children = (
 				46E06FC51A1183AC003CEFC4 /* Chlorine.plist */,
 				46E06FC71A145EAA003CEFC4 /* Ammonia.plist */,
+				46E06FC91A1ABC15003CEFC4 /* Nitric Acid.plist */,
 			);
 			name = "Chemical Plists";
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				46E06FC61A1183AC003CEFC4 /* Chlorine.plist in Resources */,
+				46E06FCA1A1ABC15003CEFC4 /* Nitric Acid.plist in Resources */,
 				4661D1F319EC8C3C001F819E /* Main2.storyboard in Resources */,
 				46E06FC81A145EAA003CEFC4 /* Ammonia.plist in Resources */,
 				4689290919EB592700308E42 /* LaunchScreen.xib in Resources */,

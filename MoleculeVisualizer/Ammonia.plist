@@ -11,7 +11,7 @@
 		<string>Gas</string>
 		<string>-77.73 °C</string>
 		<string>-33.3 °C</string>
-		<string>6.96 x 10⁻⁴ g/cm³</string>
+		<string>0.73  kg/m³</string>
 	</array>
 	<key>Thermo Properties</key>
 	<array>
@@ -19,7 +19,6 @@
 		<string>-2.695 kJ/g</string>
 		<string>11.33 J/(gK) (gas)</string>
 		<string>1.37 kJ/g</string>
-		<string>18.6 kJ/g</string>
 		<string>0.332 kJ/g</string>
 		<string>405.5 K</string>
 		<string>11.3 MPa</string>
