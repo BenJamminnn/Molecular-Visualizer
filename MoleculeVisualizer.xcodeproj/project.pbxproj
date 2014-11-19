@@ -14,7 +14,6 @@
 		468928FE19EB592700308E42 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 468928FD19EB592700308E42 /* AppDelegate.m */; };
 		4689290119EB592700308E42 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4689290019EB592700308E42 /* ViewController.m */; };
 		4689290619EB592700308E42 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4689290519EB592700308E42 /* Images.xcassets */; };
-		4689290919EB592700308E42 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4689290719EB592700308E42 /* LaunchScreen.xib */; };
 		4689291519EB592700308E42 /* MoleculeVisualizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4689291419EB592700308E42 /* MoleculeVisualizerTests.m */; };
 		46D71A1719EB977900053A5E /* MoleculeImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D71A1619EB977900053A5E /* MoleculeImage.m */; };
 		46D71A1A19EB97AF00053A5E /* Atom.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D71A1919EB97AF00053A5E /* Atom.m */; };
@@ -49,7 +48,6 @@
 		468928FF19EB592700308E42 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		4689290019EB592700308E42 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		4689290519EB592700308E42 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		4689290819EB592700308E42 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		4689290E19EB592700308E42 /* MoleculeVisualizerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoleculeVisualizerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4689291319EB592700308E42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4689291419EB592700308E42 /* MoleculeVisualizerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoleculeVisualizerTests.m; sourceTree = "<group>"; };
@@ -113,7 +111,6 @@
 				46DDE49019F8B19100F5CDB6 /* Model */,
 				46DDE49119F8B19A00F5CDB6 /* Controllers */,
 				4689290519EB592700308E42 /* Images.xcassets */,
-				4689290719EB592700308E42 /* LaunchScreen.xib */,
 				468928F819EB592700308E42 /* Supporting Files */,
 			);
 			path = MoleculeVisualizer;
@@ -268,7 +265,6 @@
 				46E06FCA1A1ABC15003CEFC4 /* Nitric Acid.plist in Resources */,
 				4661D1F319EC8C3C001F819E /* Main2.storyboard in Resources */,
 				46E06FC81A145EAA003CEFC4 /* Ammonia.plist in Resources */,
-				4689290919EB592700308E42 /* LaunchScreen.xib in Resources */,
 				4689290619EB592700308E42 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -316,17 +312,6 @@
 			targetProxy = 4689290F19EB592700308E42 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		4689290719EB592700308E42 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4689290819EB592700308E42 /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		4689291619EB592700308E42 /* Debug */ = {
