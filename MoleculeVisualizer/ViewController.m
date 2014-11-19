@@ -10,14 +10,18 @@
 #import "MoleculeImage.h"
 #import "MoleculesTableViewController.h"
 #import "DetailsViewController.h"
-
-static CGFloat currentAngle = 0;
-
+#import <GLKit/GLKit.h>
+static CGFloat currentAngleX = 0;
+static CGFloat currentAngleY = 0;
 @interface ViewController ()
+
+
+
 @property (weak, nonatomic) IBOutlet SCNView *sceneView;
 @end
 
-@implementation ViewController
+@implementation ViewController {
+}
 
 #pragma mark - lifecycle
 
@@ -38,7 +42,8 @@ static CGFloat currentAngle = 0;
     self.title = self.geometryNode.name;
 
     [self sceneSetup];
-
+    
+ 
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -118,18 +123,24 @@ static CGFloat currentAngle = 0;
 
 - (void)panGesture:(UIPanGestureRecognizer *)sender {
     CGPoint translation = [sender translationInView:sender.view];
-    CGFloat newAngle = (float)(translation.x) * (float)(M_PI)/180.0;
-    
-    newAngle += currentAngle;
-    
-    self.geometryNode.transform = SCNMatrix4MakeRotation(newAngle, 0, 1, 0);
-    if(sender.state == UIGestureRecognizerStateEnded) {
-        currentAngle = newAngle;
-    }
+    CGFloat newAngleX = (float)(translation.x) * (float)(M_PI)/180.0;
+    CGFloat newAngleY = (float)(translation.y) * (float)(M_PI)/180.0;
 
+    newAngleX += currentAngleX;
+    newAngleY += currentAngleY;
+
+    SCNMatrix4 yDiff = SCNMatrix4MakeRotation(newAngleY, 1, 0, 0);
+    SCNMatrix4 xDiff =  SCNMatrix4MakeRotation(newAngleX, 0, 1, 0);
+    SCNMatrix4 sum = SCNMatrix4Mult(yDiff, xDiff);
+    
+    self.geometryNode.transform = sum;
+    if(sender.state == UIGestureRecognizerStateEnded) {
+        currentAngleX = newAngleX;
+        currentAngleY = newAngleY;
+    }
 }
 
-#pragma mark - convienience 
+#pragma mark - convienience
 
 - (void)zoomCameraToPosition:(int)zPosition {
     //get a ref to the cam
@@ -145,5 +156,8 @@ static CGFloat currentAngle = 0;
     }
     [self.geometryNode runAction:scale];
 }
+
+#pragma mark - rotation convienience
+
 
 @end
