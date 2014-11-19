@@ -157,7 +157,5 @@ static CGFloat currentAngleY = 0;
     [self.geometryNode runAction:scale];
 }
 
-#pragma mark - rotation convienience
-
 
 @end

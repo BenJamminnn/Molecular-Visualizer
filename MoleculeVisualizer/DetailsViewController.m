@@ -74,7 +74,8 @@ latest plan is to use plists
  TODO +++++
  CHECK  +didSelectRowAtIndexPath should do nothing
  CHECK  +figure out the reason the 3 is getting cut off. contentViewSize?
-   +find unicode for Cp and 'f' (getting turned into aliens)
+ CHECK  +find unicode for Cp and 'f' (getting turned into aliens)
+ CHECK  +3D panning
     +get picture for app launch
  +fill info for other compounds.
  
