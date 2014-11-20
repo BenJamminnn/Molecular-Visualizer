@@ -18,12 +18,14 @@
 
 @end
 
-@implementation MoleculesTableViewController
+@implementation MoleculesTableViewController {
+    MoleculeImage *_m;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView = [self setUpTableView];
-    
+    _m = [MoleculeImage new];
 }
 
 #pragma mark - convienience
@@ -156,32 +158,28 @@
 
 - (NSArray *)normalMolecules   {
     if(!_normalMolecules) {
-        MoleculeImage *m = [MoleculeImage new];
-        _normalMolecules = m.otherMolecules;
+        _normalMolecules = _m.otherMolecules;
     }
     return _normalMolecules;
 }
 
 - (NSArray *)diatomicMolecules {
     if(!_diatomicMolecules) {
-        MoleculeImage *m = [MoleculeImage new];
-        _diatomicMolecules = m.diatomicMolecules;
+        _diatomicMolecules = _m.diatomicMolecules;
     }
     return _diatomicMolecules;
 }
 
 - (NSArray *)hydrocarbonMolecules {
     if(!_hydrocarbonMolecules) {
-        MoleculeImage *m = [MoleculeImage new];
-        _hydrocarbonMolecules = m.hydrocarbonMolecules;
+        _hydrocarbonMolecules = _m.hydrocarbonMolecules;
     }
     return _hydrocarbonMolecules;
 }
 
 - (NSArray *)acidMolecules {
     if(!_acidMolecules) {
-        MoleculeImage *m = [MoleculeImage new];
-        _acidMolecules = m.acidMolecules;
+        _acidMolecules = _m.acidMolecules;
     }
     return _acidMolecules;
 }
