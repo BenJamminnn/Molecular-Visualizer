@@ -12,10 +12,15 @@
 
 static NSArray *molecules = nil;
 static NSArray *diatomicMolecules = nil;
+static NSArray *acidMolecules = nil;
+static NSArray *hydrocarbonMolecules = nil;
+
 
 @interface MoleculeImage()
-@property (nonatomic, strong, readwrite) NSArray *normalMolecules;
+@property (nonatomic, strong, readwrite) NSArray *otherMolecules;
 @property (nonatomic, strong, readwrite) NSArray *diatomicMolecules;
+@property (nonatomic, readwrite, strong) NSArray *acidMolecules;
+@property (nonatomic, readwrite, strong) NSArray *hydrocarbonMolecules;
 
 @end
 @implementation MoleculeImage
@@ -1004,20 +1009,23 @@ static NSArray *diatomicMolecules = nil;
 
 #pragma mark - all exposed molecules
 
-- (NSArray *)normalMolecules {
-    if(!_normalMolecules) {
+- (NSArray *)otherMolecules {
+    if(!_otherMolecules) {
+        SCNNode *placeHolder= [SCNNode node];
+        placeHolder.name = @"PlaceHolder";
+        _otherMolecules =  @[placeHolder];
+        
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            NSMutableArray *allMolecs = [NSMutableArray array];
-            NSArray *acids =@[  [self nitricAcidMolecule] , [self aceticAcidMolecule], [self sulfuricAcidMolecule], ];
-            NSArray *hydroCarbons = @[[self nitrousOxideMolecule] , [self etherMolecule] , [self acetoneMolecule] , [self benzeneMolecule] ,[self pentaneMolecule] ,[self butaneMolecule] , [self propaneMolecule] , [self ethaneMolecule] , [self carbonDioxideMolecule] , [self carbonMonoxideMolecule], [self sulfurTrioxideMolecule], [self sulfurDioxideMolecule] , [self hydrogenChlorideMolecule] , [self hydrogenPeroxideMolecule] , [self waterMolecule], [self ammoniaMolecule] , [self ptfeMolecule] , [self methaneMolecule]];
-            [allMolecs addObjectsFromArray:acids];
-            [allMolecs addObjectsFromArray:hydroCarbons];
-            molecules = (NSArray *)allMolecs;
+            NSMutableArray *allMolecules = [NSMutableArray new];
+            [allMolecules addObjectsFromArray:self.diatomicMolecules];
+            [allMolecules addObjectsFromArray:self.acidMolecules];
+            [allMolecules addObjectsFromArray:self.hydrocarbonMolecules];
+            [allMolecules addObjectsFromArray:_otherMolecules];
+            molecules = (NSArray *)allMolecules;
         });
-        _normalMolecules = molecules;
     }
-    return _normalMolecules;
+    return _otherMolecules;
 }
 
 - (NSArray *)diatomicMolecules {
@@ -1030,6 +1038,29 @@ static NSArray *diatomicMolecules = nil;
     }
     return _diatomicMolecules;
 }
+
+- (NSArray *)hydrocarbonMolecules {
+    if(!_hydrocarbonMolecules) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            hydrocarbonMolecules = @[[self nitrousOxideMolecule] , [self etherMolecule] , [self acetoneMolecule] , [self benzeneMolecule] ,[self pentaneMolecule] ,[self butaneMolecule] , [self propaneMolecule] , [self ethaneMolecule] , [self carbonDioxideMolecule] , [self carbonMonoxideMolecule], [self sulfurTrioxideMolecule], [self sulfurDioxideMolecule] , [self hydrogenChlorideMolecule] , [self hydrogenPeroxideMolecule] , [self waterMolecule], [self ammoniaMolecule] , [self ptfeMolecule] , [self methaneMolecule]];
+        });
+        _hydrocarbonMolecules = hydrocarbonMolecules;
+    }
+    return _hydrocarbonMolecules;
+}
+
+- (NSArray *)acidMolecules {
+    if(!_acidMolecules) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            acidMolecules = @[[self nitricAcidMolecule] , [self aceticAcidMolecule], [self sulfuricAcidMolecule]];
+        });
+        _acidMolecules = acidMolecules;
+    }
+    return _acidMolecules;
+}
+
 
 #pragma mark - convienience submolecules
 

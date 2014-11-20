@@ -12,8 +12,11 @@
 
 @interface MoleculeImage : NSObject
 
-@property (nonatomic, readonly, strong) NSArray *normalMolecules;
+@property (nonatomic, readonly, strong) NSArray *otherMolecules;
 @property (nonatomic, readonly, strong) NSArray *diatomicMolecules;
+@property (nonatomic, readonly, strong) NSArray *acidMolecules;
+@property (nonatomic, readonly, strong) NSArray *hydrocarbonMolecules;
+
 
 + (SCNNode *)moleculeForName:(NSString *)name;
 

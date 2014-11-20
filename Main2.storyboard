@@ -29,8 +29,8 @@
             <objects>
                 <viewController storyboardIdentifier="Molecule" id="mCJ-fC-1vu" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="w12-32-LI8"/>
-                        <viewControllerLayoutGuide type="bottom" id="7vh-3e-VtN"/>
+                        <viewControllerLayoutGuide type="top" id="mdv-Gc-yoa"/>
+                        <viewControllerLayoutGuide type="bottom" id="ISX-5E-Hkl"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="2ue-2X-utl">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
@@ -49,15 +49,15 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="esZ-5c-srt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4258.125" y="-85.563380281690129"/>
+            <point key="canvasLocation" x="4258.125" y="-85.563380281690115"/>
         </scene>
         <!--Details View Controller-->
         <scene sceneID="hDW-HB-w6E">
             <objects>
                 <viewController storyboardIdentifier="DetailsVC" id="cll-9c-Oh0" customClass="DetailsViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="LIb-5m-vMb"/>
-                        <viewControllerLayoutGuide type="bottom" id="HWC-RF-820"/>
+                        <viewControllerLayoutGuide type="top" id="R4K-BZ-XQS"/>
+                        <viewControllerLayoutGuide type="bottom" id="G4U-rZ-UQH"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Qzc-mJ-CIT">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
@@ -67,7 +67,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VMT-Sx-wU6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5143.125" y="-85.563380281690129"/>
+            <point key="canvasLocation" x="5143.125" y="-85.563380281690115"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ZbQ-u8-eJ5">

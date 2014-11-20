@@ -78,7 +78,7 @@ latest plan is to use plists
  CHECK  +3D panning
     +get picture for app launch
  +fill info for other compounds.
- 
+ +look for N/A for right text values and dont use that cell
  
 */
 
@@ -121,8 +121,6 @@ static NSArray *elements = nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    
 }
 
 #pragma mark - back button
@@ -223,7 +221,7 @@ static NSArray *elements = nil;
     tableView.delegate = self;
     tableView.dataSource = self;
     tableView.backgroundColor = [UIColor whiteColor];
-    tableView.rowHeight = 45;
+    tableView.rowHeight = 44;
     tableView.sectionFooterHeight = 22;
     tableView.sectionHeaderHeight = 22;
     tableView.scrollEnabled = YES;
