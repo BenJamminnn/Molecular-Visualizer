@@ -76,7 +76,6 @@ latest plan is to use plists
  CHECK  +figure out the reason the 3 is getting cut off. contentViewSize?
  CHECK  +find unicode for Cp and 'f' (getting turned into aliens)
  CHECK  +3D panning
-    +get picture for app launch
  +fill info for other compounds.
  +look for N/A for right text values and dont use that cell
  
@@ -103,7 +102,7 @@ static NSArray *elements = nil;
 
 - (instancetype)initWithMolecule:(NSString *)molecule {
     if(self = [super init]) {
-        UIBarButtonItem* backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self
+        UIBarButtonItem* backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self
                                                                     action:@selector(back)];
         self.view.backgroundColor = [UIColor whiteColor];
         self.navigationItem.leftBarButtonItem = backButton;

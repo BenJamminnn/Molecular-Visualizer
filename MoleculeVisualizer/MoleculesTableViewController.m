@@ -26,6 +26,8 @@
     
 }
 
+#pragma mark - convienience
+
 - (UITableView *)setUpTableView {
     UITableView *tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     tableView.delegate = self;
@@ -42,7 +44,6 @@
 }
 
 #pragma mark - Table view data source
-#pragma mark - convienience
 
 - (NSString *)nameForRowAtIndexPath:(NSIndexPath *)path {
     NSString *name = @"";
@@ -92,10 +93,10 @@
     NSString *headerName = @"";
     switch (section) {
         case 0:
-            headerName = @"Diatomic Molecules";
+            headerName = @"Diatomic and Polyatomic";
             break;
         case 1:
-            headerName = @"Acid Molecules";
+            headerName = @"Acids";
             break;
         case 2:
             headerName = @"Hydrocarbons";
@@ -143,8 +144,6 @@
     return cell;
 }
 
-
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main2" bundle:[NSBundle mainBundle]];
     ViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"Molecule"];
@@ -152,7 +151,6 @@
     UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:vc];
     [self presentViewController:navController animated:YES completion:nil];
 }
-
 
 #pragma mark - lazy loading
 

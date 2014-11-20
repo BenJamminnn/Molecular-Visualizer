@@ -15,6 +15,8 @@
 		4689290119EB592700308E42 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4689290019EB592700308E42 /* ViewController.m */; };
 		4689290619EB592700308E42 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4689290519EB592700308E42 /* Images.xcassets */; };
 		4689291519EB592700308E42 /* MoleculeVisualizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4689291419EB592700308E42 /* MoleculeVisualizerTests.m */; };
+		469BBCA31A1DEEC80024E979 /* Sulfuric Acid.plist in Resources */ = {isa = PBXBuildFile; fileRef = 469BBCA21A1DEEC80024E979 /* Sulfuric Acid.plist */; };
+		469BBCA51A1DF1820024E979 /* Nitrous Oxide.plist in Resources */ = {isa = PBXBuildFile; fileRef = 469BBCA41A1DF1820024E979 /* Nitrous Oxide.plist */; };
 		46D71A1719EB977900053A5E /* MoleculeImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D71A1619EB977900053A5E /* MoleculeImage.m */; };
 		46D71A1A19EB97AF00053A5E /* Atom.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D71A1919EB97AF00053A5E /* Atom.m */; };
 		46D71A1D19EB9F8600053A5E /* MoleculesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D71A1C19EB9F8600053A5E /* MoleculesTableViewController.m */; };
@@ -25,6 +27,7 @@
 		46E06FD81A1D68B5003CEFC4 /* Benzene.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46E06FD71A1D68B5003CEFC4 /* Benzene.plist */; };
 		46E06FDA1A1D6AC1003CEFC4 /* Ether.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46E06FD91A1D6AC1003CEFC4 /* Ether.plist */; };
 		46E06FDC1A1D6E7C003CEFC4 /* Ozone.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46E06FDB1A1D6E7C003CEFC4 /* Ozone.plist */; };
+		46E06FDE1A1DE96D003CEFC4 /* Acetic Acid.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46E06FDD1A1DE96D003CEFC4 /* Acetic Acid.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +57,8 @@
 		4689290E19EB592700308E42 /* MoleculeVisualizerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoleculeVisualizerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4689291319EB592700308E42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4689291419EB592700308E42 /* MoleculeVisualizerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoleculeVisualizerTests.m; sourceTree = "<group>"; };
+		469BBCA21A1DEEC80024E979 /* Sulfuric Acid.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Sulfuric Acid.plist"; sourceTree = "<group>"; };
+		469BBCA41A1DF1820024E979 /* Nitrous Oxide.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Nitrous Oxide.plist"; sourceTree = "<group>"; };
 		46D71A1519EB977900053A5E /* MoleculeImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoleculeImage.h; sourceTree = "<group>"; };
 		46D71A1619EB977900053A5E /* MoleculeImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoleculeImage.m; sourceTree = "<group>"; };
 		46D71A1819EB97AF00053A5E /* Atom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Atom.h; sourceTree = "<group>"; };
@@ -69,6 +74,7 @@
 		46E06FD71A1D68B5003CEFC4 /* Benzene.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Benzene.plist; sourceTree = "<group>"; };
 		46E06FD91A1D6AC1003CEFC4 /* Ether.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Ether.plist; sourceTree = "<group>"; };
 		46E06FDB1A1D6E7C003CEFC4 /* Ozone.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Ozone.plist; sourceTree = "<group>"; };
+		46E06FDD1A1DE96D003CEFC4 /* Acetic Acid.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Acetic Acid.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +192,9 @@
 				46E06FD71A1D68B5003CEFC4 /* Benzene.plist */,
 				46E06FD91A1D6AC1003CEFC4 /* Ether.plist */,
 				46E06FDB1A1D6E7C003CEFC4 /* Ozone.plist */,
+				46E06FDD1A1DE96D003CEFC4 /* Acetic Acid.plist */,
+				469BBCA21A1DEEC80024E979 /* Sulfuric Acid.plist */,
+				469BBCA41A1DF1820024E979 /* Nitrous Oxide.plist */,
 			);
 			name = "Chemical Plists";
 			sourceTree = "<group>";
@@ -275,9 +284,12 @@
 				46E06FCA1A1ABC15003CEFC4 /* Nitric Acid.plist in Resources */,
 				4661D1F319EC8C3C001F819E /* Main2.storyboard in Resources */,
 				46E06FDA1A1D6AC1003CEFC4 /* Ether.plist in Resources */,
+				469BBCA31A1DEEC80024E979 /* Sulfuric Acid.plist in Resources */,
 				46E06FC81A145EAA003CEFC4 /* Ammonia.plist in Resources */,
+				469BBCA51A1DF1820024E979 /* Nitrous Oxide.plist in Resources */,
 				46E06FD81A1D68B5003CEFC4 /* Benzene.plist in Resources */,
 				4689290619EB592700308E42 /* Images.xcassets in Resources */,
+				46E06FDE1A1DE96D003CEFC4 /* Acetic Acid.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

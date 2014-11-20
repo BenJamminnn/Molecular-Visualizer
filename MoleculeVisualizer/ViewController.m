@@ -13,6 +13,7 @@
 #import <GLKit/GLKit.h>
 static CGFloat currentAngleX = 0;
 static CGFloat currentAngleY = 0;
+static SCNVector3 startingPosition;
 @interface ViewController ()
 
 
@@ -21,12 +22,14 @@ static CGFloat currentAngleY = 0;
 @end
 
 @implementation ViewController {
+
 }
 
 #pragma mark - lifecycle
 
 - (instancetype)initWithMolecule:(SCNNode *)molecule {
     if(self = [super init]) {
+        startingPosition = molecule.position;
         self.geometryNode = molecule;
     }
     return self;
@@ -34,7 +37,7 @@ static CGFloat currentAngleY = 0;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIBarButtonItem* backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self
+    UIBarButtonItem* backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self
                                                                   action:@selector(done)];
     UIBarButtonItem *details = [[UIBarButtonItem alloc]initWithTitle:@"Details" style:UIBarButtonItemStylePlain target:self action:@selector(details)];
     self.navigationItem.rightBarButtonItem = details;
@@ -42,8 +45,6 @@ static CGFloat currentAngleY = 0;
     self.title = self.geometryNode.name;
 
     [self sceneSetup];
-    
- 
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -51,7 +52,7 @@ static CGFloat currentAngleY = 0;
     [self.sceneView play:nil];
 }
 
-#pragma mark - UINavigationBar actions
+#pragma mark - UINavigationBar actions and reset button
 
 - (void)details {
     DetailsViewController *vc = [[DetailsViewController alloc]initWithMolecule:self.geometryNode.name];
@@ -103,6 +104,21 @@ static CGFloat currentAngleY = 0;
     
     [self.sceneView.scene.rootNode addChildNode:self.geometryNode];
 }
+
+//- (void)addResetButton {
+//    UIButton *resetButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//    [resetButton setBackgroundColor:[UIColor greenColor]];
+//    [resetButton setTitle:@"Reset" forState:UIControlStateNormal];
+//    resetButton.frame = CGRectMake(self.view.frame.size.width/2,self.view.frame.size.height/1.2, 120, 40);
+//    [resetButton addTarget:self action:@selector(reset) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:resetButton];
+//}
+//
+//- (void)reset {
+//#warning implement reset, make the button look nice, mess with UI
+//    SCNNode *geoNode = [self.sceneView.scene.rootNode childNodeWithName:self.geometryNode.name recursively:NO];
+//    geoNode.position = SCNVector3Make(0, 0, 0);
+//}
 
 #pragma mark - gesture recognizers
 

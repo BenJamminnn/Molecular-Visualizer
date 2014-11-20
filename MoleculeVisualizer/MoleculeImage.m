@@ -1032,7 +1032,7 @@ static NSArray *hydrocarbonMolecules = nil;
     if(!_diatomicMolecules) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            diatomicMolecules = @[[self sulfurMolecule] ,[self ozoneMolecule] , [self IodineMolecule], [self chlorineMolecule] ,[self oxygenMolecule], [self bromineMolecule] , [self phosphorousMolecule], [self nitrogenMolecule] , [self fluorineMolecule]];
+            diatomicMolecules = @[[self sulfurMolecule] ,[self ozoneMolecule], [self IodineMolecule], [self chlorineMolecule] ,[self oxygenMolecule], [self bromineMolecule] , [self phosphorousMolecule], [self nitrogenMolecule] , [self fluorineMolecule]];
         });
         _diatomicMolecules = diatomicMolecules;
     }
@@ -1060,7 +1060,6 @@ static NSArray *hydrocarbonMolecules = nil;
     }
     return _acidMolecules;
 }
-
 
 #pragma mark - convienience submolecules
 
