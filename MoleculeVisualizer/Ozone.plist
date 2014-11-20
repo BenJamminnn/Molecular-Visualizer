@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Basic Properties</key>
+        <array>
+            <string>O₃</string>
+            <string>Ozone</string>
+            <string>Oxygen (100.0%) </string>
+            <string>47.9982 g/mol</string>
+            <string>Gas</string>
+            <string>-192.2 °C</string>
+            <string>-111.9 °C</string>
+            <string>2.14 kg/m³</string>
+        </array>
+        <key>Thermo Properties</key>
+        <array>
+            <string>0.8167 (gas) J/(gK)</string>
+            <string>2.973 kJ/g</string>
+            <string>4.979 J/(gK) </string>
+            <string>N/A</string>
+            <string>N/A</string>
+            <string>261 K</string>
+            <string>5.45 MPa</string>
+        </array>
+    </dict></plist>

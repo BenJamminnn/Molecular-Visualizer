@@ -208,7 +208,7 @@ static NSArray *elements = nil;
 - (BOOL)isDiatomic {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        elements = @[@"Chlorine" , @"Bromine" , @"Fluorine", @"Carbon", @"Phosphorous" , @"Oxygen" , @"Iodine" , @"Hydrogen" , @"Nitrogen" , @"Ozone" , @"Sulfur"];
+        elements = @[@"Chlorine" , @"Bromine" , @"Fluorine", @"Carbon", @"Phosphorous" , @"Oxygen" , @"Iodine" , @"Hydrogen" , @"Nitrogen", @"Sulfur"];
     });
     for(NSString *str in elements) {
         if([self.moleculeName isEqualToString:str]) {
@@ -281,7 +281,7 @@ static NSArray *elements = nil;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *rightHandString = [self rightTextForIndexPath:indexPath];
-    return (rightHandString.length > 25) ? 88 : 44;
+    return (rightHandString.length > 35) ? 88 : 44;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -331,7 +331,7 @@ static NSArray *elements = nil;
     UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:12];
     NSAttributedString *rightString = [[NSAttributedString alloc]initWithString:[self rightTextForIndexPath:indexPath] attributes:self.attributedStringOptions];
     
-    if(rightString.length > 25) {
+    if(rightString.length > 30) {
         [cell.detailTextLabel setNumberOfLines:2];
         [cell.detailTextLabel setLineBreakMode:NSLineBreakByWordWrapping];
     }

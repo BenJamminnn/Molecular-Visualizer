@@ -11,9 +11,12 @@
 #import "MathFunctions.h"
 
 static NSArray *molecules = nil;
+static NSArray *diatomicMolecules = nil;
 
 @interface MoleculeImage()
-@property (nonatomic, strong, readwrite) NSArray *allMolecules;
+@property (nonatomic, strong, readwrite) NSArray *normalMolecules;
+@property (nonatomic, strong, readwrite) NSArray *diatomicMolecules;
+
 @end
 @implementation MoleculeImage
 
@@ -1001,22 +1004,31 @@ static NSArray *molecules = nil;
 
 #pragma mark - all exposed molecules
 
-- (NSArray *)allMolecules {
-    if(!_allMolecules) {
+- (NSArray *)normalMolecules {
+    if(!_normalMolecules) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             NSMutableArray *allMolecs = [NSMutableArray array];
-            NSArray *diatomics = @[[self sulfurMolecule] ,[self ozoneMolecule] , [self IodineMolecule], [self chlorineMolecule] ,[self oxygenMolecule], [self bromineMolecule] , [self phosphorousMolecule], [self nitrogenMolecule] , [self fluorineMolecule]];
             NSArray *acids =@[  [self nitricAcidMolecule] , [self aceticAcidMolecule], [self sulfuricAcidMolecule], ];
             NSArray *hydroCarbons = @[[self nitrousOxideMolecule] , [self etherMolecule] , [self acetoneMolecule] , [self benzeneMolecule] ,[self pentaneMolecule] ,[self butaneMolecule] , [self propaneMolecule] , [self ethaneMolecule] , [self carbonDioxideMolecule] , [self carbonMonoxideMolecule], [self sulfurTrioxideMolecule], [self sulfurDioxideMolecule] , [self hydrogenChlorideMolecule] , [self hydrogenPeroxideMolecule] , [self waterMolecule], [self ammoniaMolecule] , [self ptfeMolecule] , [self methaneMolecule]];
-            [allMolecs addObjectsFromArray:diatomics];
             [allMolecs addObjectsFromArray:acids];
             [allMolecs addObjectsFromArray:hydroCarbons];
             molecules = (NSArray *)allMolecs;
         });
-        _allMolecules = molecules;
+        _normalMolecules = molecules;
     }
-    return _allMolecules;
+    return _normalMolecules;
+}
+
+- (NSArray *)diatomicMolecules {
+    if(!_diatomicMolecules) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            diatomicMolecules = @[[self sulfurMolecule] ,[self ozoneMolecule] , [self IodineMolecule], [self chlorineMolecule] ,[self oxygenMolecule], [self bromineMolecule] , [self phosphorousMolecule], [self nitrogenMolecule] , [self fluorineMolecule]];
+        });
+        _diatomicMolecules = diatomicMolecules;
+    }
+    return _diatomicMolecules;
 }
 
 #pragma mark - convienience submolecules

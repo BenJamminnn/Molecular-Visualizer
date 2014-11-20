@@ -22,6 +22,9 @@
 		46E06FC61A1183AC003CEFC4 /* Chlorine.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46E06FC51A1183AC003CEFC4 /* Chlorine.plist */; };
 		46E06FC81A145EAA003CEFC4 /* Ammonia.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46E06FC71A145EAA003CEFC4 /* Ammonia.plist */; };
 		46E06FCA1A1ABC15003CEFC4 /* Nitric Acid.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46E06FC91A1ABC15003CEFC4 /* Nitric Acid.plist */; };
+		46E06FD81A1D68B5003CEFC4 /* Benzene.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46E06FD71A1D68B5003CEFC4 /* Benzene.plist */; };
+		46E06FDA1A1D6AC1003CEFC4 /* Ether.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46E06FD91A1D6AC1003CEFC4 /* Ether.plist */; };
+		46E06FDC1A1D6E7C003CEFC4 /* Ozone.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46E06FDB1A1D6E7C003CEFC4 /* Ozone.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +66,9 @@
 		46E06FC51A1183AC003CEFC4 /* Chlorine.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Chlorine.plist; sourceTree = "<group>"; };
 		46E06FC71A145EAA003CEFC4 /* Ammonia.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Ammonia.plist; sourceTree = "<group>"; };
 		46E06FC91A1ABC15003CEFC4 /* Nitric Acid.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Nitric Acid.plist"; sourceTree = "<group>"; };
+		46E06FD71A1D68B5003CEFC4 /* Benzene.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Benzene.plist; sourceTree = "<group>"; };
+		46E06FD91A1D6AC1003CEFC4 /* Ether.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Ether.plist; sourceTree = "<group>"; };
+		46E06FDB1A1D6E7C003CEFC4 /* Ozone.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Ozone.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +183,9 @@
 				46E06FC51A1183AC003CEFC4 /* Chlorine.plist */,
 				46E06FC71A145EAA003CEFC4 /* Ammonia.plist */,
 				46E06FC91A1ABC15003CEFC4 /* Nitric Acid.plist */,
+				46E06FD71A1D68B5003CEFC4 /* Benzene.plist */,
+				46E06FD91A1D6AC1003CEFC4 /* Ether.plist */,
+				46E06FDB1A1D6E7C003CEFC4 /* Ozone.plist */,
 			);
 			name = "Chemical Plists";
 			sourceTree = "<group>";
@@ -261,10 +270,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46E06FDC1A1D6E7C003CEFC4 /* Ozone.plist in Resources */,
 				46E06FC61A1183AC003CEFC4 /* Chlorine.plist in Resources */,
 				46E06FCA1A1ABC15003CEFC4 /* Nitric Acid.plist in Resources */,
 				4661D1F319EC8C3C001F819E /* Main2.storyboard in Resources */,
+				46E06FDA1A1D6AC1003CEFC4 /* Ether.plist in Resources */,
 				46E06FC81A145EAA003CEFC4 /* Ammonia.plist in Resources */,
+				46E06FD81A1D68B5003CEFC4 /* Benzene.plist in Resources */,
 				4689290619EB592700308E42 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
