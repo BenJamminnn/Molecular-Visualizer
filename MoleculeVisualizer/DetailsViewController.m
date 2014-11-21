@@ -87,10 +87,10 @@ static NSArray *elements = nil;
 @interface DetailsViewController ()  <UITableViewDataSource , UITableViewDelegate>
 @property (strong, nonatomic) NSString *moleculeName;
 @property (strong, nonatomic) NSArray *basicInfo;
-@property (strong, nonatomic) NSArray *thermoInfo;
+@property (strong, nonatomic) NSMutableArray *thermoInfo;
 @property (strong, nonatomic) NSArray *electroInfo;
 @property (strong, nonatomic) NSArray *materialInfo;
-@property (strong, nonatomic) NSDictionary *leftTextCollection;
+@property (strong, nonatomic) NSMutableDictionary *leftTextCollection;
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) NSDictionary *attributedStringOptions;
 @property (nonatomic) BOOL isDiatomic;
@@ -169,7 +169,7 @@ static NSArray *elements = nil;
 
 - (void)setUpLeftText {
     NSArray *basicInfoDiatomic = @[@"Formula" , @"Name" , @"Atomic Number" , @"Electron Configuration" , @"Block" , @"Group" , @"Period", @"Atomic Mass" ];
-    NSArray *thermoInfoDiatomic = @[@"Phase (STP)", @"Melting Point", @"Boiling Point", @"Critical Temperature", @"Critical Pressure", @"Molar Heat of Fusion", @"Molar Heat of Vaporization", @"Specific Heat at STP"];
+    NSMutableArray *thermoInfoDiatomic = [NSMutableArray arrayWithArray:@[@"Phase (STP)", @"Melting Point", @"Boiling Point", @"Critical Temperature", @"Critical Pressure", @"Molar Heat of Fusion", @"Molar Heat of Vaporization", @"Specific Heat at STP"]];
     NSArray *materialInfoDiatomic = @[@"Density" , @"Molar Volume", @"Thermal Conductivity"];
     NSArray *electromageticInfoDiatomic = @[@"Electrical Type" , @"Resistivity" , @"Electrical Conductivity"];
     
@@ -177,17 +177,17 @@ static NSArray *elements = nil;
     NSAttributedString *s = [self superOrSubscriptStringAtIndex:inputString.length -1 super:NO originalString:inputString ];
     
     NSArray *basicInfoComplex = @[@"Formula" , @"Name", @"Mass Fractions" , @"Molar Mass" , @"Phase (STP)" , @"Melting Point" , @"Boiling Point" , @"Density"];
-    NSArray *thermoInfoComplex = @[ s, @"Specific Heat of formation Δ\u0192H°" , @"Specific Entropy S°" , @"Specific Heat of Vaporization" , @"Specific Heat of Fusion" , @"Critical Temperature"  , @"Critical Pressure"];
+    NSMutableArray *thermoInfoComplex = [NSMutableArray arrayWithArray: @[ s, @"Specific Heat of formation Δ\u0192H°" , @"Specific Entropy S°" , @"Specific Heat of Vaporization" , @"Specific Heat of Fusion" , @"Critical Temperature"  , @"Critical Pressure"]];
     if(self.isDiatomic) {
-        self.leftTextCollection = @{@"Basic" : basicInfoDiatomic ,
+        self.leftTextCollection = [NSMutableDictionary dictionaryWithDictionary:@{@"Basic" : basicInfoDiatomic ,
                                     @"Thermo" : thermoInfoDiatomic,
                                     @"Electro" : electromageticInfoDiatomic,
                                     @"Material" : materialInfoDiatomic
-                                    };
+                                    }];
     } else {
-        self.leftTextCollection = @{@"Basic" : basicInfoComplex ,
+        self.leftTextCollection = [NSMutableDictionary dictionaryWithDictionary:@{@"Basic" : basicInfoComplex ,
                                     @"Thermo" : thermoInfoComplex
-                                    };
+                                    }];
     }
 }
 
@@ -195,7 +195,7 @@ static NSArray *elements = nil;
     NSDictionary *dict = [Molecule dataForMoleculeName:name];    //unpack a dictionary of data values
     
     self.basicInfo = dict[@"Basic Properties"];
-    self.thermoInfo = dict[@"Thermo Properties"];
+    self.thermoInfo = [NSMutableArray arrayWithArray:dict[@"Thermo Properties"]];
     if(self.isDiatomic) {
         self.electroInfo = dict[@"Electromagnetic Properties"];
         self.materialInfo = dict[@"Material Properties"];
@@ -241,7 +241,6 @@ static NSArray *elements = nil;
             break;
         case 2:
             text = [self.electroInfo objectAtIndex:indexPath.row];
-
             break;
         case 3:
             text = [self.materialInfo objectAtIndex:indexPath.row];
@@ -272,6 +271,9 @@ static NSArray *elements = nil;
     return leftText;
 }
 
+- (BOOL)shouldBeEmptyCell:(NSString *)cellText {
+    return [cellText isEqualToString:@"N/A"];
+}
 
 #pragma mark - tableView
 
@@ -328,14 +330,21 @@ static NSArray *elements = nil;
     UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:12];
     NSAttributedString *rightString = [[NSAttributedString alloc]initWithString:[self rightTextForIndexPath:indexPath] attributes:self.attributedStringOptions];
     
+    if([self shouldBeEmptyCell:[rightString string]]) {
+        [self.leftTextCollection[@"Thermo"] removeObjectAtIndex:indexPath.row];
+        [self.thermoInfo removeObjectAtIndex:indexPath.row];
+        [tableView reloadData];
+    }
+    
     if(rightString.length > 30) {
         [cell.detailTextLabel setNumberOfLines:2];
         [cell.detailTextLabel setLineBreakMode:NSLineBreakByWordWrapping];
     }
-
+    
     cell.textLabel.font = cellFont;
     cell.detailTextLabel.font = cellFont;
     cell.detailTextLabel.attributedText = rightString;
+    
     if([[self leftTextForIndexPath:indexPath] isKindOfClass:[NSAttributedString class]]) {
         cell.textLabel.attributedText = (NSAttributedString *)[self leftTextForIndexPath:indexPath];
     } else {

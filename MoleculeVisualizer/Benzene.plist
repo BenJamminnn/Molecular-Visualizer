@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-    <dict>
-        <key>Basic Properties</key>
-        <array>
-            <string>C₆H₆</string>
-            <string>Benzene</string>
-            <string>Carbon (92.26%) | Hydrogen (7.74%) </string>
-            <string>78.1118 g/mol</string>
-            <string>Liquid</string>
-            <string>5.5 °C</string>
-            <string>80 °C</string>
-            <string>876.50 kg/m³</string>
-        </array>
-        <key>Thermo Properties</key>
-        <array>
-            <string>1.055 (gas) J/(gK)</string>
-            <string>1.061 kJ/g</string>
-            <string>N/A </string>
-            <string>0.4331 kJ/g</string>
-            <string>0.12636 kJ/g</string>
-            <string>562 K</string>
-            <string>4.92 MPa</string>
-        </array>
-    </dict>
+<dict>
+	<key>Basic Properties</key>
+	<array>
+		<string>C₆H₆</string>
+		<string>Benzene</string>
+		<string>Carbon (92.26%) | Hydrogen (7.74%) </string>
+		<string>78.1118 g/mol</string>
+		<string>Liquid</string>
+		<string>5.5 °C</string>
+		<string>80 °C</string>
+		<string>876.50 kg/m³</string>
+	</array>
+	<key>Thermo Properties</key>
+	<array>
+		<string>1.055 (gas) J/(gK)</string>
+		<string>1.061 kJ/g</string>
+		<string>N/A</string>
+		<string>0.4331 kJ/g</string>
+		<string>0.12636 kJ/g</string>
+		<string>562 K</string>
+		<string>4.92 MPa</string>
+	</array>
+</dict>
 </plist>
