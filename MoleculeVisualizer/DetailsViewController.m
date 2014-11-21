@@ -77,7 +77,7 @@ latest plan is to use plists
  CHECK  +find unicode for Cp and 'f' (getting turned into aliens)
  CHECK  +3D panning
  +fill info for other compounds.
- +look for N/A for right text values and dont use that cell
+ CHECK +look for N/A for right text values and dont use that cell
  +do research and order accordingly (hydrocarbons vs acids vs bases vs polyatomics)
 */
 

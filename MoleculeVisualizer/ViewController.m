@@ -68,7 +68,7 @@ static SCNVector3 startingPosition;
     
     SCNNode *ambientLight = [SCNNode node];
     ambientLight.light = [SCNLight light];
-    ambientLight.light.type = SCNLightTypeAmbient;
+    ambientLight.light.type = SCNLightTypeDirectional;
     ambientLight.light.color = [UIColor colorWithWhite:0.67 alpha:1.0];
     [scene.rootNode addChildNode:ambientLight];
     
