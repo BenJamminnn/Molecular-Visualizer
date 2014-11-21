@@ -86,11 +86,8 @@ static NSArray *elements = nil;
 
 @interface DetailsViewController ()  <UITableViewDataSource , UITableViewDelegate>
 @property (strong, nonatomic) NSString *moleculeName;
-@property (strong, nonatomic) NSArray *basicInfo;
-@property (strong, nonatomic) NSMutableArray *thermoInfo;
-@property (strong, nonatomic) NSArray *electroInfo;
-@property (strong, nonatomic) NSArray *materialInfo;
 @property (strong, nonatomic) NSMutableDictionary *leftTextCollection;
+@property (strong, nonatomic) Molecule *molecule;
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) NSDictionary *attributedStringOptions;
 @property (nonatomic) BOOL isDiatomic;
@@ -107,10 +104,10 @@ static NSArray *elements = nil;
         self.view.backgroundColor = [UIColor whiteColor];
         self.navigationItem.leftBarButtonItem = backButton;
         self.attributedStringOptions = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCTSuperscriptAttributeName];
-
         self.moleculeName = molecule;
-        [self unpackMoleculeDataWithName:self.moleculeName];
-        [self setUpLeftText];
+    
+        self.molecule = [[Molecule alloc]initWithMolecule:self.moleculeName];
+
         self.tableView = [self setUpTableView];
         [self.view addSubview:self.tableView];
         self.title = molecule;
@@ -129,8 +126,6 @@ static NSArray *elements = nil;
     ViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"Molecule"];
     vc.geometryNode = [MoleculeImage moleculeForName:self.moleculeName];
 
-    
-    
     [self.view addSubview:vc.view];
     [vc.view setFrame:self.view.window.frame];
     [vc.view setTransform:CGAffineTransformMakeScale(0.5,0.5)];
@@ -147,7 +142,6 @@ static NSArray *elements = nil;
                          [vc.view removeFromSuperview];
                          [self.navigationController pushViewController:vc animated:NO];
                      }];
-    
 }
 
 #pragma mark - convienience
@@ -167,54 +161,6 @@ static NSArray *elements = nil;
     return attributedString;
 }
 
-- (void)setUpLeftText {
-    NSArray *basicInfoDiatomic = @[@"Formula" , @"Name" , @"Atomic Number" , @"Electron Configuration" , @"Block" , @"Group" , @"Period", @"Atomic Mass" ];
-    NSMutableArray *thermoInfoDiatomic = [NSMutableArray arrayWithArray:@[@"Phase (STP)", @"Melting Point", @"Boiling Point", @"Critical Temperature", @"Critical Pressure", @"Molar Heat of Fusion", @"Molar Heat of Vaporization", @"Specific Heat at STP"]];
-    NSArray *materialInfoDiatomic = @[@"Density" , @"Molar Volume", @"Thermal Conductivity"];
-    NSArray *electromageticInfoDiatomic = @[@"Electrical Type" , @"Resistivity" , @"Electrical Conductivity"];
-    
-    NSString *inputString = @"Specific Heat Capacity cp";
-    NSAttributedString *s = [self superOrSubscriptStringAtIndex:inputString.length -1 super:NO originalString:inputString ];
-    
-    NSArray *basicInfoComplex = @[@"Formula" , @"Name", @"Mass Fractions" , @"Molar Mass" , @"Phase (STP)" , @"Melting Point" , @"Boiling Point" , @"Density"];
-    NSMutableArray *thermoInfoComplex = [NSMutableArray arrayWithArray: @[ s, @"Specific Heat of formation Δ\u0192H°" , @"Specific Entropy S°" , @"Specific Heat of Vaporization" , @"Specific Heat of Fusion" , @"Critical Temperature"  , @"Critical Pressure"]];
-    if(self.isDiatomic) {
-        self.leftTextCollection = [NSMutableDictionary dictionaryWithDictionary:@{@"Basic" : basicInfoDiatomic ,
-                                    @"Thermo" : thermoInfoDiatomic,
-                                    @"Electro" : electromageticInfoDiatomic,
-                                    @"Material" : materialInfoDiatomic
-                                    }];
-    } else {
-        self.leftTextCollection = [NSMutableDictionary dictionaryWithDictionary:@{@"Basic" : basicInfoComplex ,
-                                    @"Thermo" : thermoInfoComplex
-                                    }];
-    }
-}
-
-- (void)unpackMoleculeDataWithName:(NSString *)name {
-    NSDictionary *dict = [Molecule dataForMoleculeName:name];    //unpack a dictionary of data values
-    
-    self.basicInfo = dict[@"Basic Properties"];
-    self.thermoInfo = [NSMutableArray arrayWithArray:dict[@"Thermo Properties"]];
-    if(self.isDiatomic) {
-        self.electroInfo = dict[@"Electromagnetic Properties"];
-        self.materialInfo = dict[@"Material Properties"];
-    }
-}
-
-- (BOOL)isDiatomic {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        elements = @[@"Chlorine" , @"Bromine" , @"Fluorine", @"Carbon", @"Phosphorous" , @"Oxygen" , @"Iodine" , @"Hydrogen" , @"Nitrogen", @"Sulfur"];
-    });
-    for(NSString *str in elements) {
-        if([self.moleculeName isEqualToString:str]) {
-            return YES;
-        }
-    }
-    return NO;
-}
-
 - (UITableView *)setUpTableView {
     UITableView *tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     tableView.delegate = self;
@@ -230,56 +176,11 @@ static NSArray *elements = nil;
     return tableView;
 }
 
-- (NSString *)rightTextForIndexPath:(NSIndexPath *)indexPath {
-    NSString *text = @"";
-    switch (indexPath.section) {
-        case 0:
-            text = [self.basicInfo objectAtIndex:indexPath.row];
-            break;
-        case 1:
-            text = [self.thermoInfo objectAtIndex:indexPath.row];
-            break;
-        case 2:
-            text = [self.electroInfo objectAtIndex:indexPath.row];
-            break;
-        case 3:
-            text = [self.materialInfo objectAtIndex:indexPath.row];
-        default:
-            break;
-    }
-    return text;
-}
-
-- (NSString *)leftTextForIndexPath:(NSIndexPath *)indexPath {
-    NSString *leftText = @"";
-    switch (indexPath.section) {
-        case 0:
-            leftText = [self.leftTextCollection[@"Basic"] objectAtIndex:indexPath.row];
-            break;
-        case 1:
-            leftText = [self.leftTextCollection[@"Thermo"] objectAtIndex:indexPath.row];
-            break;
-        case 2:
-            leftText = [self.leftTextCollection[@"Electro"] objectAtIndex:indexPath.row];
-            break;
-        case 3:
-            leftText = [self.leftTextCollection[@"Material"] objectAtIndex:indexPath.row];
-            break;
-        default:
-            break;
-    }
-    return leftText;
-}
-
-- (BOOL)shouldBeEmptyCell:(NSString *)cellText {
-    return [cellText isEqualToString:@"N/A"];
-}
-
 #pragma mark - tableView
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *rightHandString = [self rightTextForIndexPath:indexPath];
+    NSString *rightHandString = [self.molecule rightTextForIndexPath:indexPath];
     return (rightHandString.length > 35) ? 88 : 44;
 }
 
@@ -303,22 +204,22 @@ static NSArray *elements = nil;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return (self.isDiatomic) ? 4 : 2;
+    return (self.molecule.isDiatomic) ? 4 : 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return self.basicInfo.count;
+            return self.molecule.basicInfo.count;
             break;
         case 1:
-            return self.thermoInfo.count;
+            return self.molecule.thermoInfo.count;
             break;
         case 2:
-            return self.electroInfo.count;
+            return self.molecule.electroInfo.count;
             break;
         case 3:
-            return self.materialInfo.count;
+            return self.molecule.materialInfo.count;
         default:
             return 0;
             break;
@@ -328,13 +229,7 @@ static NSArray *elements = nil;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
     UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:12];
-    NSAttributedString *rightString = [[NSAttributedString alloc]initWithString:[self rightTextForIndexPath:indexPath] attributes:self.attributedStringOptions];
-    
-    if([self shouldBeEmptyCell:[rightString string]]) {
-        [self.leftTextCollection[@"Thermo"] removeObjectAtIndex:indexPath.row];
-        [self.thermoInfo removeObjectAtIndex:indexPath.row];
-        [tableView reloadData];
-    }
+    NSAttributedString *rightString = [[NSAttributedString alloc]initWithString:[self.molecule rightTextForIndexPath:indexPath] attributes:self.attributedStringOptions];
     
     if(rightString.length > 30) {
         [cell.detailTextLabel setNumberOfLines:2];
@@ -345,10 +240,10 @@ static NSArray *elements = nil;
     cell.detailTextLabel.font = cellFont;
     cell.detailTextLabel.attributedText = rightString;
     
-    if([[self leftTextForIndexPath:indexPath] isKindOfClass:[NSAttributedString class]]) {
-        cell.textLabel.attributedText = (NSAttributedString *)[self leftTextForIndexPath:indexPath];
+    if([[self.molecule leftTextForIndexPath:indexPath] isKindOfClass:[NSAttributedString class]]) {
+        cell.textLabel.attributedText = (NSAttributedString *)[self.molecule leftTextForIndexPath:indexPath];
     } else {
-        cell.textLabel.text = [self leftTextForIndexPath:indexPath];
+        cell.textLabel.text = [self.molecule leftTextForIndexPath:indexPath];
     }
     return cell;
 }
