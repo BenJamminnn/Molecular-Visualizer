@@ -10,20 +10,20 @@
 #import "MoleculeImage.h"
 #import "MoleculesTableViewController.h"
 #import "DetailsViewController.h"
-#import <GLKit/GLKit.h>
+#import "BGColorTableViewController.h"
+#import "WYPopoverController.h"
 static CGFloat currentAngleX = 0;
 static CGFloat currentAngleY = 0;
+static UIColor *currentBackgroundColor = nil;
 static SCNVector3 startingPosition;
-@interface ViewController ()
 
-
-
+@interface ViewController () <ColorPickerDelegate, WYPopoverControllerDelegate>
 @property (weak, nonatomic) IBOutlet SCNView *sceneView;
+@property (nonatomic, strong) BGColorTableViewController *colorPicker;
+@property (nonatomic, strong) WYPopoverController *colorPickerPopover;
 @end
 
-@implementation ViewController {
-
-}
+@implementation ViewController
 
 #pragma mark - lifecycle
 
@@ -43,7 +43,6 @@ static SCNVector3 startingPosition;
     self.navigationItem.rightBarButtonItem = details;
     self.navigationItem.leftBarButtonItem = backButton;
     self.title = self.geometryNode.name;
-
     [self sceneSetup];
 }
 
@@ -69,14 +68,8 @@ static SCNVector3 startingPosition;
     SCNNode *ambientLight = [SCNNode node];
     ambientLight.light = [SCNLight light];
     ambientLight.light.type = SCNLightTypeDirectional;
-    ambientLight.light.color = [UIColor colorWithWhite:0.67 alpha:1.0];
+    ambientLight.light.color = [UIColor colorWithWhite:0.75 alpha:1.0];
     [scene.rootNode addChildNode:ambientLight];
-    
-    SCNNode *omniLight = [SCNNode node];
-    omniLight.light = [SCNLight light];
-    omniLight.light.type = SCNLightTypeOmni;
-    omniLight.light.color = [UIColor colorWithWhite:0.75 alpha:1.0];
-    [scene.rootNode addChildNode:omniLight];
     
     SCNNode *camNode = [SCNNode node];
     camNode.camera = [SCNCamera camera];
@@ -92,10 +85,10 @@ static SCNVector3 startingPosition;
     UIGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(pinchGesture:)];
     UIGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panGesture:)];
     self.sceneView.scene = scene;
-    
     //transformation is messing up our double tap, look into RW tut for details
    // [self.sceneView addGestureRecognizer:doubleTap];
     
+    self.sceneView.backgroundColor = (currentBackgroundColor) ? currentBackgroundColor : [UIColor lightGrayColor];
     
     [self.sceneView addGestureRecognizer:pan];
     [self.sceneView addGestureRecognizer:pinch];
@@ -105,20 +98,42 @@ static SCNVector3 startingPosition;
     [self.sceneView.scene.rootNode addChildNode:self.geometryNode];
 }
 
-//- (void)addResetButton {
-//    UIButton *resetButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//    [resetButton setBackgroundColor:[UIColor greenColor]];
-//    [resetButton setTitle:@"Reset" forState:UIControlStateNormal];
-//    resetButton.frame = CGRectMake(self.view.frame.size.width/2,self.view.frame.size.height/1.2, 120, 40);
-//    [resetButton addTarget:self action:@selector(reset) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:resetButton];
-//}
-//
-//- (void)reset {
-//#warning implement reset, make the button look nice, mess with UI
-//    SCNNode *geoNode = [self.sceneView.scene.rootNode childNodeWithName:self.geometryNode.name recursively:NO];
-//    geoNode.position = SCNVector3Make(0, 0, 0);
-//}
+#pragma mark - picking background color
+
+- (IBAction)backgroundColorTapped:(UIButton *)sender {
+    if(!_colorPicker) {
+        _colorPicker = [[BGColorTableViewController alloc]initWithStyle:UITableViewStylePlain];
+        _colorPicker.colorDelegate = self;
+    }
+    if(!_colorPickerPopover) {
+        _colorPickerPopover = [[WYPopoverController alloc]initWithContentViewController:_colorPicker];
+        _colorPickerPopover.delegate = self;
+        [_colorPickerPopover presentPopoverFromRect:sender.frame inView:self.view permittedArrowDirections:WYPopoverArrowDirectionDown animated:YES];
+        
+    } else {
+        [_colorPickerPopover dismissPopoverAnimated:YES];
+        _colorPickerPopover = nil;
+    }
+}
+
+- (BOOL)popoverControllerShouldDismissPopover:(WYPopoverController *)popoverController {
+    return YES;
+}
+
+- (void)popoverControllerDidDismissPopover:(WYPopoverController *)controller
+{
+    _colorPickerPopover.delegate = nil;
+    _colorPickerPopover = nil;
+}
+
+- (void)selectedColor:(UIColor *)color {
+    self.sceneView.backgroundColor = color;
+    currentBackgroundColor = color;
+    if (_colorPickerPopover) {
+        [_colorPickerPopover dismissPopoverAnimated:YES];
+        _colorPickerPopover = nil;
+    }
+}
 
 #pragma mark - gesture recognizers
 

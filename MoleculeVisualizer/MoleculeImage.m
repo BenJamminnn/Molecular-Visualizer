@@ -551,16 +551,13 @@ static NSArray *hydrocarbonMolecules = nil;
     
     //3 sulfur positions for double bonding
     SCNVector3 sulfurPosition = SCNVector3Make(0, 0, 0);
-    SCNVector3 sulfurPositive = SCNVector3Make(0, 0, 2);
-    SCNVector3 sulfurNegative = SCNVector3Make(0, 0, 1);
+
     //oxygens on the yz plane, double bonded at 45 and 135 degrees
-    SCNVector3 oxygenZPositiveA = SCNVector3Make(0, -4, -5);
-    SCNVector3 oxygenZPositiveB = SCNVector3Make(0, -3, -3);
+
     SCNVector3 oxygenZPosition = SCNVector3Make(0, -4, -4);
     
     SCNVector3 oxygenZPositionNeg = SCNVector3Make(0, 4, -4);
-    SCNVector3 oxygenZNegativeA = SCNVector3Make(0, 4, -4.5);
-    SCNVector3 oxygenZNegativeB = SCNVector3Make(0, 4, -4.5);
+
     
     //oxygens on the xz plane, single bonded 45 and 135 degrees
     SCNVector3 oxygenXZaxisA = SCNVector3Make(4, 0, 3.5);
@@ -585,12 +582,10 @@ static NSArray *hydrocarbonMolecules = nil;
     [self nodeWithAtom:[Atom hydrogenAtom] molecule:H2SO4 position:hydrogenNegative];
     
     //+Z double bond
-    [H2SO4 addChildNode:[self connectorWithPositions:sulfurPositive and:oxygenZPositiveA command:@"-45yz"]];
-    [H2SO4 addChildNode:[self connectorWithPositions:sulfurPosition and:oxygenZPositiveB command:@"-45yz"]];
+    [H2SO4 addChildNode:[self doubleBondConnectorPositionA:sulfurPosition b:oxygenZPosition YBased:YES command:@"-45yz"]];
     
     //-Z double bond
-    [H2SO4 addChildNode:[self connectorWithPositions:sulfurPosition and:oxygenZNegativeA command:@"45yz"]];
-    [H2SO4 addChildNode:[self connectorWithPositions:sulfurNegative and:oxygenZNegativeB command:@"45yz"]];
+    [H2SO4 addChildNode:[self doubleBondConnectorPositionA:sulfurPosition b:oxygenZPositionNeg YBased:YES command:@"45yz"]];
     
     //other 2 oxygens bonds xz plane
     [H2SO4 addChildNode:[self connectorWithPositions:sulfurPosition and:oxygenXZaxisA command:@"45xz"]];

@@ -86,7 +86,6 @@ static NSArray *elements = nil;
 
 @interface DetailsViewController ()  <UITableViewDataSource , UITableViewDelegate>
 @property (strong, nonatomic) NSString *moleculeName;
-@property (strong, nonatomic) NSMutableDictionary *leftTextCollection;
 @property (strong, nonatomic) Molecule *molecule;
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) NSDictionary *attributedStringOptions;
@@ -155,8 +154,6 @@ static NSArray *elements = nil;
     
     [attributedString setAttributes:@{NSFontAttributeName : [fnt fontWithSize:10]
                                       , NSBaselineOffsetAttributeName : offSet} range:NSMakeRange(index ,1)];
-    
-    
     
     return attributedString;
 }

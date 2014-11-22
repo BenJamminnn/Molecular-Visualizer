@@ -18,6 +18,8 @@
 		469BBCA31A1DEEC80024E979 /* Sulfuric Acid.plist in Resources */ = {isa = PBXBuildFile; fileRef = 469BBCA21A1DEEC80024E979 /* Sulfuric Acid.plist */; };
 		469BBCA51A1DF1820024E979 /* Nitrous Oxide.plist in Resources */ = {isa = PBXBuildFile; fileRef = 469BBCA41A1DF1820024E979 /* Nitrous Oxide.plist */; };
 		469BBCA71A1E180C0024E979 /* Acetone.plist in Resources */ = {isa = PBXBuildFile; fileRef = 469BBCA61A1E180C0024E979 /* Acetone.plist */; };
+		469BBCAA1A1FF9380024E979 /* BGColorTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 469BBCA91A1FF9380024E979 /* BGColorTableViewController.m */; };
+		46A799D61A20625900DE9C10 /* WYPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A799D31A20625900DE9C10 /* WYPopoverController.m */; };
 		46D71A1719EB977900053A5E /* MoleculeImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D71A1619EB977900053A5E /* MoleculeImage.m */; };
 		46D71A1A19EB97AF00053A5E /* Atom.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D71A1919EB97AF00053A5E /* Atom.m */; };
 		46D71A1D19EB9F8600053A5E /* MoleculesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D71A1C19EB9F8600053A5E /* MoleculesTableViewController.m */; };
@@ -61,6 +63,10 @@
 		469BBCA21A1DEEC80024E979 /* Sulfuric Acid.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Sulfuric Acid.plist"; sourceTree = "<group>"; };
 		469BBCA41A1DF1820024E979 /* Nitrous Oxide.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Nitrous Oxide.plist"; sourceTree = "<group>"; };
 		469BBCA61A1E180C0024E979 /* Acetone.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Acetone.plist; sourceTree = "<group>"; };
+		469BBCA81A1FF9380024E979 /* BGColorTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGColorTableViewController.h; sourceTree = "<group>"; };
+		469BBCA91A1FF9380024E979 /* BGColorTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGColorTableViewController.m; sourceTree = "<group>"; };
+		46A799D21A20625900DE9C10 /* WYPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYPopoverController.h; sourceTree = "<group>"; };
+		46A799D31A20625900DE9C10 /* WYPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPopoverController.m; sourceTree = "<group>"; };
 		46D71A1519EB977900053A5E /* MoleculeImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoleculeImage.h; sourceTree = "<group>"; };
 		46D71A1619EB977900053A5E /* MoleculeImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoleculeImage.m; sourceTree = "<group>"; };
 		46D71A1819EB97AF00053A5E /* Atom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Atom.h; sourceTree = "<group>"; };
@@ -179,8 +185,12 @@
 				4607DE8D19F84F34008A4E94 /* DetailsViewController.m */,
 				46D71A1B19EB9F8600053A5E /* MoleculesTableViewController.h */,
 				46D71A1C19EB9F8600053A5E /* MoleculesTableViewController.m */,
+				46A799D21A20625900DE9C10 /* WYPopoverController.h */,
+				46A799D31A20625900DE9C10 /* WYPopoverController.m */,
 				468928FF19EB592700308E42 /* ViewController.h */,
 				4689290019EB592700308E42 /* ViewController.m */,
+				469BBCA81A1FF9380024E979 /* BGColorTableViewController.h */,
+				469BBCA91A1FF9380024E979 /* BGColorTableViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -317,6 +327,8 @@
 				46E06F921A0997FA003CEFC4 /* Molecule.m in Sources */,
 				468755AA19EC993100AC4503 /* MathFunctions.m in Sources */,
 				468928FE19EB592700308E42 /* AppDelegate.m in Sources */,
+				46A799D61A20625900DE9C10 /* WYPopoverController.m in Sources */,
+				469BBCAA1A1FF9380024E979 /* BGColorTableViewController.m in Sources */,
 				468928FB19EB592700308E42 /* main.m in Sources */,
 				46D71A1719EB977900053A5E /* MoleculeImage.m in Sources */,
 				4607DE8E19F84F34008A4E94 /* DetailsViewController.m in Sources */,

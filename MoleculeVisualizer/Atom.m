@@ -21,7 +21,7 @@
 
 + (SCNGeometry *)hydrogenAtom {
     SCNGeometry *hydrogen = [SCNSphere sphereWithRadius:1.2];
-    hydrogen.firstMaterial.diffuse.contents = [UIColor lightGrayColor];
+    hydrogen.firstMaterial.diffuse.contents = [UIColor colorWithWhite:0.2 alpha:1];
     hydrogen.firstMaterial.specular.contents = [UIColor whiteColor];
     hydrogen.name = @"hydrogen";
     return hydrogen;

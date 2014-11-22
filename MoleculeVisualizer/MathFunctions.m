@@ -13,11 +13,11 @@
 + (CGFloat)distanceFormulaWithVectors:(SCNVector3)vectorA and:(SCNVector3)vectorB {
     CGFloat result = 0;
     
-    CGFloat xArguement = pow((vectorB.x - vectorA.x), 2);
-    CGFloat yArguement = pow((vectorB.y - vectorA.y), 2);
-    CGFloat zArguement = pow((vectorB.z - vectorA.z), 2);
+    CGFloat xArgument = pow((vectorB.x - vectorA.x), 2);
+    CGFloat yArgument = pow((vectorB.y - vectorA.y), 2);
+    CGFloat zArgument = pow((vectorB.z - vectorA.z), 2);
     
-    result = sqrt(xArguement + yArguement + zArguement);
+    result = sqrt(xArgument + yArgument + zArgument);
     
     return result;
 }
