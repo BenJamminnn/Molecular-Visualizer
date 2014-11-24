@@ -225,7 +225,7 @@ static NSArray *elements = nil;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
-    UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:12];
+    UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:13];
     NSAttributedString *rightString = [[NSAttributedString alloc]initWithString:[self.molecule rightTextForIndexPath:indexPath] attributes:self.attributedStringOptions];
     
     if(rightString.length > 30) {

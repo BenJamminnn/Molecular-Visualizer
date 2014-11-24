@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-    <dict>
-        <key>Basic Properties</key>
-        <array>
-            <string>N₂O  </string>
-            <string>Nitrous Oxide</string>
-            <string>Nitrogen (63.6) | Oxygen (36.4%) </string>
-            <string>44.0128 g/mol</string>
-            <string>Gas</string>
-            <string>-91 °C</string>
-            <string>-88 °C</string>
-            <string>1.98 g/cm³</string>
-        </array>
-        <key>Thermo Properties</key>
-        <array>
-            <string>0.877 J/(gK)</string>
-            <string>1.854 kJ/g</string>
-            <string>4.999 J/(gK) </string>
-            <string>0.375 kJ/g</string>
-            <string>0.149 kJ/g</string>
-            <string>310 K</string>
-            <string>7.27 MPa</string>
-        </array>
-    </dict>
+<dict>
+	<key>Basic Properties</key>
+	<array>
+		<string>N₂O  </string>
+		<string>Nitrous Oxide</string>
+		<string>Nitrogen (63.6%) | Oxygen (36.4%) </string>
+		<string>44.0128 g/mol</string>
+		<string>Gas</string>
+		<string>-91 °C</string>
+		<string>-88 °C</string>
+		<string>1.98 g/cm³</string>
+	</array>
+	<key>Thermo Properties</key>
+	<array>
+		<string>0.877 J/(gK)</string>
+		<string>1.854 kJ/g</string>
+		<string>4.999 J/(gK) </string>
+		<string>0.375 kJ/g</string>
+		<string>0.149 kJ/g</string>
+		<string>310 K</string>
+		<string>7.27 MPa</string>
+	</array>
+</dict>
 </plist>
