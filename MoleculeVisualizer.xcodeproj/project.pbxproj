@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4607DE8E19F84F34008A4E94 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4607DE8D19F84F34008A4E94 /* DetailsViewController.m */; };
+		465969161A23DB7B00316E48 /* Pentane.plist in Resources */ = {isa = PBXBuildFile; fileRef = 465969151A23DB7B00316E48 /* Pentane.plist */; };
 		4661D1F319EC8C3C001F819E /* Main2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4661D1F219EC8C3C001F819E /* Main2.storyboard */; };
 		468755AA19EC993100AC4503 /* MathFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 468755A919EC993100AC4503 /* MathFunctions.m */; };
 		468928FB19EB592700308E42 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 468928FA19EB592700308E42 /* main.m */; };
@@ -46,6 +47,7 @@
 /* Begin PBXFileReference section */
 		4607DE8C19F84F34008A4E94 /* DetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
 		4607DE8D19F84F34008A4E94 /* DetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
+		465969151A23DB7B00316E48 /* Pentane.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Pentane.plist; sourceTree = "<group>"; };
 		4661D1F219EC8C3C001F819E /* Main2.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main2.storyboard; path = ../Main2.storyboard; sourceTree = "<group>"; };
 		468755A819EC993100AC4503 /* MathFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathFunctions.h; sourceTree = "<group>"; };
 		468755A919EC993100AC4503 /* MathFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MathFunctions.m; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 				469BBCA21A1DEEC80024E979 /* Sulfuric Acid.plist */,
 				469BBCA41A1DF1820024E979 /* Nitrous Oxide.plist */,
 				469BBCA61A1E180C0024E979 /* Acetone.plist */,
+				465969151A23DB7B00316E48 /* Pentane.plist */,
 			);
 			name = "Chemical Plists";
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 			files = (
 				46E06FDC1A1D6E7C003CEFC4 /* Ozone.plist in Resources */,
 				46E06FC61A1183AC003CEFC4 /* Chlorine.plist in Resources */,
+				465969161A23DB7B00316E48 /* Pentane.plist in Resources */,
 				46E06FCA1A1ABC15003CEFC4 /* Nitric Acid.plist in Resources */,
 				4661D1F319EC8C3C001F819E /* Main2.storyboard in Resources */,
 				46E06FDA1A1D6AC1003CEFC4 /* Ether.plist in Resources */,
