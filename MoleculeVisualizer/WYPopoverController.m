@@ -2538,7 +2538,7 @@ static WYPopoverTheme *defaultTheme_ = nil;
         backgroundView.frame = containerFrame;
     }
     
-    WY_LOG(@"popoverContainerView.frame = %@", NSStringFromCGRect(backgroundView.frame));
+//    WY_LOG(@"popoverContainerView.frame = %@", NSStringFromCGRect(backgroundView.frame));
 }
 
 - (void)dismissPopoverAnimated:(BOOL)aAnimated

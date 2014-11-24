@@ -12,6 +12,7 @@
 		465969181A23E1C800316E48 /* Butane.plist in Resources */ = {isa = PBXBuildFile; fileRef = 465969171A23E1C800316E48 /* Butane.plist */; };
 		4659691A1A23E3C300316E48 /* Propane.plist in Resources */ = {isa = PBXBuildFile; fileRef = 465969191A23E3C300316E48 /* Propane.plist */; };
 		4659691C1A23E62200316E48 /* Ethane.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4659691B1A23E62200316E48 /* Ethane.plist */; };
+		4659691E1A23F51D00316E48 /* Carbon Dioxide.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4659691D1A23F51D00316E48 /* Carbon Dioxide.plist */; };
 		4661D1F319EC8C3C001F819E /* Main2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4661D1F219EC8C3C001F819E /* Main2.storyboard */; };
 		468755AA19EC993100AC4503 /* MathFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 468755A919EC993100AC4503 /* MathFunctions.m */; };
 		468928FB19EB592700308E42 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 468928FA19EB592700308E42 /* main.m */; };
@@ -54,6 +55,7 @@
 		465969171A23E1C800316E48 /* Butane.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Butane.plist; sourceTree = "<group>"; };
 		465969191A23E3C300316E48 /* Propane.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Propane.plist; sourceTree = "<group>"; };
 		4659691B1A23E62200316E48 /* Ethane.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Ethane.plist; sourceTree = "<group>"; };
+		4659691D1A23F51D00316E48 /* Carbon Dioxide.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Carbon Dioxide.plist"; sourceTree = "<group>"; };
 		4661D1F219EC8C3C001F819E /* Main2.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main2.storyboard; path = ../Main2.storyboard; sourceTree = "<group>"; };
 		468755A819EC993100AC4503 /* MathFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathFunctions.h; sourceTree = "<group>"; };
 		468755A919EC993100AC4503 /* MathFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MathFunctions.m; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 				465969171A23E1C800316E48 /* Butane.plist */,
 				465969191A23E3C300316E48 /* Propane.plist */,
 				4659691B1A23E62200316E48 /* Ethane.plist */,
+				4659691D1A23F51D00316E48 /* Carbon Dioxide.plist */,
 			);
 			name = "Chemical Plists";
 			sourceTree = "<group>";
@@ -311,6 +314,7 @@
 				465969181A23E1C800316E48 /* Butane.plist in Resources */,
 				46E06FCA1A1ABC15003CEFC4 /* Nitric Acid.plist in Resources */,
 				4661D1F319EC8C3C001F819E /* Main2.storyboard in Resources */,
+				4659691E1A23F51D00316E48 /* Carbon Dioxide.plist in Resources */,
 				46E06FDA1A1D6AC1003CEFC4 /* Ether.plist in Resources */,
 				469BBCA31A1DEEC80024E979 /* Sulfuric Acid.plist in Resources */,
 				46E06FC81A145EAA003CEFC4 /* Ammonia.plist in Resources */,
