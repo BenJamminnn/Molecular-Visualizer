@@ -25,6 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView = [self setUpTableView];
+    self.title = @"Molecules";
     _m = [MoleculeImage new];
 }
 

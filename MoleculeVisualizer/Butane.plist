@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Basic Properties</key>
+        <array>
+            <string>C₄H₁₀ </string>
+            <string>Butane</string>
+            <string>Carbon (82.7%) | Hydrogen (17.3%) </string>
+            <string>58.1222 g/mol</string>
+            <string>Gas</string>
+            <string>-138.3 °C</string>
+            <string>-0.5 °C</string>
+            <string>0.00249343 g/cm³</string>
+        </array>
+        <key>Thermo Properties</key>
+        <array>
+            <string>2.424 (liquid) J/(gK)</string>
+            <string>-2.163 (gas) kJ/g</string>
+            <string>N/A</string>
+            <string>0.425 kJ/g </string>
+            <string>0.0802 kJ/g</string>
+            <string>426.3 K</string>
+            <string>3.8 MPa</string>
+        </array>
+    </dict>
+</plist>
