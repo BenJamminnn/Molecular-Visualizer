@@ -15,7 +15,6 @@
 static CGFloat currentAngleX = 0;
 static CGFloat currentAngleY = 0;
 static UIColor *currentBackgroundColor = nil;
-static SCNVector3 startingPosition;
 
 @interface ViewController () <ColorPickerDelegate, WYPopoverControllerDelegate>
 @property (weak, nonatomic) IBOutlet SCNView *sceneView;
@@ -29,7 +28,6 @@ static SCNVector3 startingPosition;
 
 - (instancetype)initWithMolecule:(SCNNode *)molecule {
     if(self = [super init]) {
-        startingPosition = molecule.position;
         self.geometryNode = molecule;
     }
     return self;
@@ -52,6 +50,12 @@ static SCNVector3 startingPosition;
 }
 
 #pragma mark - UINavigationBar actions and reset button
+
+- (IBAction)resetButtonTapped:(id)sender {
+    [self.geometryNode removeFromParentNode];
+    self.geometryNode = [MoleculeImage moleculeForName:self.geometryNode.name];
+    [self.sceneView.scene.rootNode addChildNode:self.geometryNode];
+}
 
 - (void)details {
     DetailsViewController *vc = [[DetailsViewController alloc]initWithMolecule:self.geometryNode.name];
@@ -78,23 +82,16 @@ static SCNVector3 startingPosition;
     [scene.rootNode addChildNode:camNode];
     
     scene.rootNode.position = SCNVector3Make(self.view.bounds.size.width/2, self.view.bounds.size.height/2, 0);
-
-    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doubleTap:)];
-    doubleTap.numberOfTapsRequired = 2;
     
     UIGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(pinchGesture:)];
     UIGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panGesture:)];
     self.sceneView.scene = scene;
-    //transformation is messing up our double tap, look into RW tut for details
-   // [self.sceneView addGestureRecognizer:doubleTap];
-    
+
     self.sceneView.backgroundColor = (currentBackgroundColor) ? currentBackgroundColor : [UIColor lightGrayColor];
     
     [self.sceneView addGestureRecognizer:pan];
     [self.sceneView addGestureRecognizer:pinch];
 
-
-    
     [self.sceneView.scene.rootNode addChildNode:self.geometryNode];
 }
 
@@ -135,12 +132,8 @@ static SCNVector3 startingPosition;
     }
 }
 
+
 #pragma mark - gesture recognizers
-
-//TODO
-- (void)doubleTap:(UITapGestureRecognizer *)sender {
-
-}
 
 - (void)pinchGesture:(UIPinchGestureRecognizer *)sender {
     CGFloat scale = sender.scale;
@@ -172,21 +165,5 @@ static SCNVector3 startingPosition;
 }
 
 #pragma mark - convienience
-
-- (void)zoomCameraToPosition:(int)zPosition {
-    //get a ref to the cam
-    SCNNode *cam = [self.sceneView.scene.rootNode childNodeWithName:@"camNode" recursively:NO];
-    
-    //find out if we're zooming in or out, get the amount we have to zoom in/out
-    BOOL zoomIn = (cam.position.z > zPosition) ? YES : NO;
-    SCNAction *scale = nil;
-    if(zoomIn) {
-        scale = [SCNAction scaleBy:2.0 duration:0.3];
-    } else {
-        scale = [SCNAction scaleBy:0.5 duration:0.3];
-    }
-    [self.geometryNode runAction:scale];
-}
-
 
 @end

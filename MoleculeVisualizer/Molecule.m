@@ -117,6 +117,7 @@ static NSArray *elements = nil;
         if([self shouldBeEmptyCell:temp]) {
             [self.thermoInfo removeObjectAtIndex:i];
             [self.leftTextCollection[@"leftThermo"] removeObjectAtIndex:i];
+            i -= 1;
         }
     }
 }

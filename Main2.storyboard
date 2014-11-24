@@ -57,6 +57,9 @@
                                     <color key="titleColor" red="0.1502289718" green="0.1493897038" blue="0.1510682398" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="resetButtonTapped:" destination="mCJ-fC-1vu" eventType="touchUpInside" id="uXC-Zs-h9T"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
