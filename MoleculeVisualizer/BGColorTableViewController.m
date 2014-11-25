@@ -14,13 +14,13 @@
 
 - (instancetype)initWithStyle:(UITableViewStyle)style {
     if(self = [super initWithStyle:style]) {
-        self.colorNames = @[@"Sea Green" , @"Light Gray" , @"Dark Blue" , @"Orange", @"Teal" , @"Sky Blue"];
+        self.colorNames = @[@"Sea Green" , @"Light Gray" , @"Dark Blue" , @"Orange", @"Sky Blue" , @"Stars"];
         self.colorsDictionary = @{@"Sea Green" : [UIColor colorWithRed:131.0f/255.0f green:1.0f blue:179.0/255.0f alpha:1.0f],
                                   @"Light Gray" : [UIColor colorWithRed:178.0f/255.0f green:178.0f/255.0f blue:178.0f/255.0f alpha:1.0f],
                                   @"Dark Blue" : [UIColor colorWithRed:33.0f/255.0f green:23.0f/255.0f blue:178.0f/255.0f alpha:1.0f],
                                   @"Orange" : [UIColor colorWithRed:1.0f green:168.0f/255.0f blue:6.0f/255.0f alpha:1],
-                                  @"Teal" : [UIColor colorWithRed:90.0f/255.0f green:210.0f/255.0f blue:171.0f alpha:1.0f],
-                                  @"Sky Blue" : [UIColor colorWithRed:1.0f/255.0f green:218.0f blue:1.0f alpha:1.0]
+                                  @"Sky Blue" : [UIColor colorWithRed:90.0f/255.0f green:210.0f/255.0f blue:171.0f alpha:1.0f],
+                                  @"Stars" : [UIColor whiteColor]
                                 };
         self.clearsSelectionOnViewWillAppear = NO;
         

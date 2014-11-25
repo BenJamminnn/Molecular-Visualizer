@@ -19,6 +19,8 @@ static UIColor *currentBackgroundColor = nil;
 @interface ViewController () <ColorPickerDelegate, WYPopoverControllerDelegate>
 @property (weak, nonatomic) IBOutlet SCNView *sceneView;
 @property (nonatomic, strong) BGColorTableViewController *colorPicker;
+@property (weak, nonatomic) IBOutlet UIButton *backgroundColorButton;
+@property (weak, nonatomic) IBOutlet UIButton *resetButton;
 @property (nonatomic, strong) WYPopoverController *colorPickerPopover;
 @end
 
@@ -42,6 +44,9 @@ static UIColor *currentBackgroundColor = nil;
     self.navigationItem.leftBarButtonItem = backButton;
     self.title = self.geometryNode.name;
     [self sceneSetup];
+    if(self.sceneView.backgroundColor == [UIColor whiteColor]) {
+        [self selectedColor:[UIColor whiteColor]];
+    }
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -124,8 +129,18 @@ static UIColor *currentBackgroundColor = nil;
 }
 
 - (void)selectedColor:(UIColor *)color {
+    if([color isEqual:[UIColor whiteColor]]) {
+        self.sceneView.scene.background.contents = [UIImage imageNamed:@"space"];
+        [self.backgroundColorButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self.resetButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    } else {
+        self.sceneView.scene.background.contents = nil;
+        [self.backgroundColorButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.resetButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    }
     self.sceneView.backgroundColor = color;
     currentBackgroundColor = color;
+    
     if (_colorPickerPopover) {
         [_colorPickerPopover dismissPopoverAnimated:YES];
         _colorPickerPopover = nil;
@@ -136,6 +151,7 @@ static UIColor *currentBackgroundColor = nil;
 #pragma mark - gesture recognizers
 
 - (void)pinchGesture:(UIPinchGestureRecognizer *)sender {
+    
     CGFloat scale = sender.scale;
     SCNNode *cam = [self.sceneView.scene.rootNode childNodeWithName:@"camNode" recursively:NO];
     CGFloat zValue = cam.position.z - log(scale);
