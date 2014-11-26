@@ -165,7 +165,6 @@ static NSArray *elements = nil;
     }
 }
 
-
 - (void)back {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main2" bundle:[NSBundle mainBundle]];
     ViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"Molecule"];
@@ -285,6 +284,8 @@ static NSArray *elements = nil;
     
     if([[self.molecule leftTextForIndexPath:indexPath] isKindOfClass:[NSAttributedString class]]) {
         cell.textLabel.attributedText = (NSAttributedString *)[self.molecule leftTextForIndexPath:indexPath];
+        cell.textLabel.font = cellFont;
+
     } else {
         cell.textLabel.text = [self.molecule leftTextForIndexPath:indexPath];
     }

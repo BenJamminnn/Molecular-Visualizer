@@ -145,6 +145,7 @@ static NSArray *elements = nil;
     
     NSString *inputString = @"Specific Heat Capacity cp";
     NSAttributedString *s = [self superOrSubscriptStringAtIndex:inputString.length -1 super:NO originalString:inputString ];
+    
     NSMutableDictionary *leftText = [NSMutableDictionary new];
     if(self.isDiatomic) {
         NSArray *basicInfoDiatomic = @[@"Formula" , @"Name" , @"Atomic Number" , @"Electron Configuration" , @"Block" , @"Group" , @"Period", @"Atomic Mass" ];
