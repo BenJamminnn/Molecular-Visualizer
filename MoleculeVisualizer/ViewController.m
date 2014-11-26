@@ -152,7 +152,6 @@ static UIColor *currentBackgroundColor = nil;
     }
 }
 
-
 #pragma mark - gesture recognizers
 
 - (void)pinchGesture:(UIPinchGestureRecognizer *)sender {

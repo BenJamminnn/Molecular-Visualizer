@@ -10,6 +10,8 @@
 #import "MoleculeImage.h"
 #import "ViewController.h"
 #import "Molecule.h"
+#import "WYPopoverController.h"
+#import "BGFontSelectorTVC.h"
 #import <CoreText/CoreText.h>
 /*
 latest plan is to use plists 
@@ -81,15 +83,18 @@ latest plan is to use plists
  +do research and order accordingly (hydrocarbons vs acids vs bases vs polyatomics)
 */
 
-
+static UIFont *selectedFont = nil;
 static NSArray *elements = nil;
 
-@interface DetailsViewController ()  <UITableViewDataSource , UITableViewDelegate>
+@interface DetailsViewController ()  <UITableViewDataSource , UITableViewDelegate, FontSelectorDelegate, WYPopoverControllerDelegate>
 @property (strong, nonatomic) NSString *moleculeName;
 @property (strong, nonatomic) Molecule *molecule;
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) NSDictionary *attributedStringOptions;
 @property (nonatomic) BOOL isDiatomic;
+
+@property (nonatomic, strong) WYPopoverController *fontSelectorPopover;
+@property (nonatomic, strong) BGFontSelectorTVC *fontSelectorTVC;
 @end
 
 @implementation DetailsViewController
@@ -100,8 +105,11 @@ static NSArray *elements = nil;
     if(self = [super init]) {
         UIBarButtonItem* backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self
                                                                     action:@selector(back)];
+        UIBarButtonItem *fontSelector = [[UIBarButtonItem alloc]initWithTitle:@"Font Size" style:UIBarButtonItemStylePlain target:self action:@selector(fontChanged:)];
+        
         self.view.backgroundColor = [UIColor whiteColor];
         self.navigationItem.leftBarButtonItem = backButton;
+        self.navigationItem.rightBarButtonItem = fontSelector;
         self.attributedStringOptions = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCTSuperscriptAttributeName];
         self.moleculeName = molecule;
     
@@ -116,9 +124,47 @@ static NSArray *elements = nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    selectedFont = (selectedFont) ? selectedFont : [UIFont fontWithName:@"Helvetica" size:12];
 }
 
-#pragma mark - back button
+#pragma mark - back and font button
+
+- (void)fontChanged:(UIFont *)font {
+    if(!_fontSelectorTVC) {
+        _fontSelectorTVC = [[BGFontSelectorTVC alloc]initWithStyle:UITableViewStylePlain];
+        _fontSelectorTVC.fontDelegate = self;
+    }
+    if(!_fontSelectorPopover) {
+        _fontSelectorPopover = [[WYPopoverController alloc]initWithContentViewController:_fontSelectorTVC];
+        _fontSelectorPopover.delegate = self;
+        [_fontSelectorPopover presentPopoverFromBarButtonItem:self.navigationItem.rightBarButtonItem permittedArrowDirections:WYPopoverArrowDirectionDown animated:YES];
+
+        
+    } else {
+        [_fontSelectorPopover dismissPopoverAnimated:YES];
+        _fontSelectorPopover = nil;
+    }
+}
+
+- (BOOL)popoverControllerShouldDismissPopover:(WYPopoverController *)popoverController {
+    return YES;
+}
+
+- (void)popoverControllerDidDismissPopover:(WYPopoverController *)controller
+{
+    _fontSelectorPopover.delegate = nil;
+    _fontSelectorPopover = nil;
+}
+
+- (void)selectedFont:(UIFont *)font {
+    selectedFont = font;
+    [self.tableView reloadData];
+    if (_fontSelectorPopover) {
+        [_fontSelectorPopover dismissPopoverAnimated:YES];
+        _fontSelectorPopover = nil;
+    }
+}
+
 
 - (void)back {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main2" bundle:[NSBundle mainBundle]];
@@ -225,7 +271,7 @@ static NSArray *elements = nil;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"Cell"];
-    UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:12];
+    UIFont *cellFont = selectedFont;
     NSAttributedString *rightString = [[NSAttributedString alloc]initWithString:[self.molecule rightTextForIndexPath:indexPath] attributes:self.attributedStringOptions];
     
     if(rightString.length > 30) {
