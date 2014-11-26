@@ -14,6 +14,8 @@
 #import "WYPopoverController.h"
 static CGFloat currentAngleX = 0;
 static CGFloat currentAngleY = 0;
+static BOOL isFirstPosition = YES;
+static SCNNode *clonedMolecule;
 static UIColor *currentBackgroundColor = nil;
 
 @interface ViewController () <ColorPickerDelegate, WYPopoverControllerDelegate>
@@ -47,6 +49,7 @@ static UIColor *currentBackgroundColor = nil;
     if(self.sceneView.backgroundColor == [UIColor whiteColor]) {
         [self selectedColor:[UIColor whiteColor]];
     }
+    
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -57,9 +60,6 @@ static UIColor *currentBackgroundColor = nil;
 #pragma mark - UINavigationBar actions and reset button
 
 - (IBAction)resetButtonTapped:(id)sender {
-    [self.geometryNode removeFromParentNode];
-    self.geometryNode = [MoleculeImage moleculeForName:self.geometryNode.name];
-    [self.sceneView.scene.rootNode addChildNode:self.geometryNode];
 }
 
 - (void)details {
@@ -68,6 +68,8 @@ static UIColor *currentBackgroundColor = nil;
 }
 
 - (void)done {
+    currentAngleX = 0;
+    currentAngleY = 0;
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -172,8 +174,8 @@ static UIColor *currentBackgroundColor = nil;
     SCNMatrix4 yDiff = SCNMatrix4MakeRotation(newAngleY, 1, 0, 0);
     SCNMatrix4 xDiff =  SCNMatrix4MakeRotation(newAngleX, 0, 1, 0);
     SCNMatrix4 sum = SCNMatrix4Mult(yDiff, xDiff);
-    
     self.geometryNode.transform = sum;
+    
     if(sender.state == UIGestureRecognizerStateEnded) {
         currentAngleX = newAngleX;
         currentAngleY = newAngleY;
