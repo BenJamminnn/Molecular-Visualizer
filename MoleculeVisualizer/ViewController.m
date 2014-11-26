@@ -12,10 +12,8 @@
 #import "DetailsViewController.h"
 #import "BGColorTableViewController.h"
 #import "WYPopoverController.h"
-static CGFloat currentAngleX = 0;
-static CGFloat currentAngleY = 0;
-static BOOL isFirstPosition = YES;
-static SCNNode *clonedMolecule;
+
+
 static UIColor *currentBackgroundColor = nil;
 
 @interface ViewController () <ColorPickerDelegate, WYPopoverControllerDelegate>
@@ -26,7 +24,10 @@ static UIColor *currentBackgroundColor = nil;
 @property (nonatomic, strong) WYPopoverController *colorPickerPopover;
 @end
 
-@implementation ViewController
+@implementation ViewController {
+    CGFloat currentAngleX;
+    CGFloat currentAngleY;
+}
 
 #pragma mark - lifecycle
 
@@ -49,7 +50,7 @@ static UIColor *currentBackgroundColor = nil;
     if(self.sceneView.backgroundColor == [UIColor whiteColor]) {
         [self selectedColor:[UIColor whiteColor]];
     }
-    
+    [self resetMolecule];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -60,6 +61,7 @@ static UIColor *currentBackgroundColor = nil;
 #pragma mark - UINavigationBar actions and reset button
 
 - (IBAction)resetButtonTapped:(id)sender {
+    [self resetMolecule];
 }
 
 - (void)details {
@@ -68,9 +70,10 @@ static UIColor *currentBackgroundColor = nil;
 }
 
 - (void)done {
-    currentAngleX = 0;
-    currentAngleY = 0;
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self resetMolecule];
+    });
 }
 
 - (void)sceneSetup {
@@ -183,5 +186,17 @@ static UIColor *currentBackgroundColor = nil;
 }
 
 #pragma mark - convienience
+
+- (void)resetMolecule {
+    [self zeroAngles];
+    self.geometryNode.eulerAngles = SCNVector3Make(0, 0, 0);
+    SCNNode *cam = [self.sceneView.scene.rootNode childNodeWithName:@"camNode" recursively:NO];
+    cam.position = SCNVector3Make(cam.position.x, cam.position.y, 40);
+}
+
+- (void)zeroAngles {
+    currentAngleX = 0;
+    currentAngleY = 0;
+}
 
 @end
