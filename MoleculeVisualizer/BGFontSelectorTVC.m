@@ -11,7 +11,6 @@
 static NSArray *fontOptions = nil;
 static NSArray *fontNames = nil;
 @interface BGFontSelectorTVC ()
-@property (nonatomic, strong, readwrite) UIFont *selectedFont;
 
 @end
 

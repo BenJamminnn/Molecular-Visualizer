@@ -222,8 +222,39 @@ static NSArray *elements = nil;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *rightHandString = [self.molecule rightTextForIndexPath:indexPath];
-    return (rightHandString.length > 35) ? 88 : 44;
+    NSUInteger baseHeight = 44;
+    NSUInteger fontSize = (int)selectedFont.pointSize;
+    switch (fontSize) {
+        case 12:
+            return baseHeight;
+            break;
+        case 14:
+            return baseHeight * 1.3;
+            break;
+        case 16:
+            return baseHeight * 1.8;
+            break;
+        default:
+            return baseHeight;
+            break;
+    }
+}
+
+- (NSUInteger)stringLengthForFontSize {
+    NSUInteger fontSize = (int)selectedFont.pointSize;
+    switch (fontSize) {
+        case 12:
+            return 20;
+            break;
+        case 14:
+            return 14;
+            break;
+        case 16:
+            return 7;
+        default:
+            break;
+    }
+    return 25;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -273,8 +304,8 @@ static NSArray *elements = nil;
     UIFont *cellFont = selectedFont;
     NSAttributedString *rightString = [[NSAttributedString alloc]initWithString:[self.molecule rightTextForIndexPath:indexPath] attributes:self.attributedStringOptions];
     
-    if(rightString.length > 30) {
-        [cell.detailTextLabel setNumberOfLines:2];
+    if(rightString.length > [self stringLengthForFontSize]) {
+        [cell.detailTextLabel setNumberOfLines:3];
         [cell.detailTextLabel setLineBreakMode:NSLineBreakByWordWrapping];
     }
     
