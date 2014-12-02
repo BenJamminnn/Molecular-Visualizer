@@ -29,6 +29,8 @@
 		46B18DCC1A2D405500776845 /* Carbon Monoxide.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46B18DCB1A2D405500776845 /* Carbon Monoxide.plist */; };
 		46B18DCE1A2D423700776845 /* Sulfur Trioxide.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46B18DCD1A2D423700776845 /* Sulfur Trioxide.plist */; };
 		46B18DD01A2D44D100776845 /* Sulfur Dioxide.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46B18DCF1A2D44D100776845 /* Sulfur Dioxide.plist */; };
+		46B18DD21A2D477000776845 /* Hydrogen Chloride.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46B18DD11A2D477000776845 /* Hydrogen Chloride.plist */; };
+		46B18DD41A2D48AE00776845 /* Hydrogen Peroxide.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46B18DD31A2D48AE00776845 /* Hydrogen Peroxide.plist */; };
 		46D71A1719EB977900053A5E /* MoleculeImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D71A1619EB977900053A5E /* MoleculeImage.m */; };
 		46D71A1A19EB97AF00053A5E /* Atom.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D71A1919EB97AF00053A5E /* Atom.m */; };
 		46D71A1D19EB9F8600053A5E /* MoleculesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D71A1C19EB9F8600053A5E /* MoleculesTableViewController.m */; };
@@ -86,6 +88,8 @@
 		46B18DCB1A2D405500776845 /* Carbon Monoxide.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Carbon Monoxide.plist"; sourceTree = "<group>"; };
 		46B18DCD1A2D423700776845 /* Sulfur Trioxide.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Sulfur Trioxide.plist"; sourceTree = "<group>"; };
 		46B18DCF1A2D44D100776845 /* Sulfur Dioxide.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Sulfur Dioxide.plist"; sourceTree = "<group>"; };
+		46B18DD11A2D477000776845 /* Hydrogen Chloride.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Hydrogen Chloride.plist"; sourceTree = "<group>"; };
+		46B18DD31A2D48AE00776845 /* Hydrogen Peroxide.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Hydrogen Peroxide.plist"; sourceTree = "<group>"; };
 		46D71A1519EB977900053A5E /* MoleculeImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoleculeImage.h; sourceTree = "<group>"; };
 		46D71A1619EB977900053A5E /* MoleculeImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoleculeImage.m; sourceTree = "<group>"; };
 		46D71A1819EB97AF00053A5E /* Atom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Atom.h; sourceTree = "<group>"; };
@@ -237,6 +241,8 @@
 				46B18DCB1A2D405500776845 /* Carbon Monoxide.plist */,
 				46B18DCD1A2D423700776845 /* Sulfur Trioxide.plist */,
 				46B18DCF1A2D44D100776845 /* Sulfur Dioxide.plist */,
+				46B18DD11A2D477000776845 /* Hydrogen Chloride.plist */,
+				46B18DD31A2D48AE00776845 /* Hydrogen Peroxide.plist */,
 			);
 			name = "Chemical Plists";
 			sourceTree = "<group>";
@@ -336,11 +342,13 @@
 				46E06FC81A145EAA003CEFC4 /* Ammonia.plist in Resources */,
 				46B18DCC1A2D405500776845 /* Carbon Monoxide.plist in Resources */,
 				469BBCA51A1DF1820024E979 /* Nitrous Oxide.plist in Resources */,
+				46B18DD21A2D477000776845 /* Hydrogen Chloride.plist in Resources */,
 				4659691C1A23E62200316E48 /* Ethane.plist in Resources */,
 				46E06FD81A1D68B5003CEFC4 /* Benzene.plist in Resources */,
 				4689290619EB592700308E42 /* Images.xcassets in Resources */,
 				469BBCA71A1E180C0024E979 /* Acetone.plist in Resources */,
 				46E06FDE1A1DE96D003CEFC4 /* Acetic Acid.plist in Resources */,
+				46B18DD41A2D48AE00776845 /* Hydrogen Peroxide.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

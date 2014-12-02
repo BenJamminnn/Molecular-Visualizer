@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Basic Properties</key>
+        <array>
+            <string>HCl</string>
+            <string>Hydrogen Chloride</string>
+            <string>Hydrogen (2.76%) | Chlorine (97.24%) </string>
+            <string>36.461 g/mol</string>
+            <string>Gas</string>
+            <string>-114.17 °C</string>
+            <string>-85 °C</string>
+            <string>0.00149 (25 °C) g/cm³</string>
+        </array>
+        <key>Thermo Properties</key>
+        <array>
+            <string>0.7981 (Gas) J/(gK)</string>
+            <string>-2.531 (Gas) kJ/g</string>
+            <string>5.129 J/(gK)</string>
+            <string>0.414 kJ/g</string>
+            <string>0.05 kJ/g</string>
+            <string>325 K</string>
+            <string>8.27 MPa</string>
+        </array>
+    </dict>
+</plist>
