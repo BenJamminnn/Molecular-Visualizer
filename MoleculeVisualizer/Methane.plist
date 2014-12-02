@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Basic Properties</key>
+        <array>
+            <string>CH₄</string>
+            <string>Methane</string>
+            <string>Hydrogen (25.1%) | Carbon (74.9%) </string>
+            <string>16.0425 g/mol</string>
+            <string>Gas</string>
+            <string>-182.47 °C</string>
+            <string>-161.48 °C</string>
+            <string>6.67151 x 10⁻⁴ g/cm³</string>
+        </array>
+        <key>Thermo Properties</key>
+        <array>
+            <string>2.225 (Gas) | 3.481 (Liquid) J/(gK)</string>
+            <string>-4.65 (Gas) kJ/g</string>
+            <string>11.59 J/(gK)</string>
+            <string>0.511 kJ/g</string>
+            <string>0.059 kJ/g</string>
+            <string>190 K</string>
+            <string>4.599 MPa</string>
+        </array>
+    </dict>
+</plist>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Basic Properties</key>
+        <array>
+            <string>H₂O</string>
+            <string>Water</string>
+            <string>Hydrogen (11.2%) | Oxygen (88.8%) </string>
+            <string>18.0153 g/mol</string>
+            <string>Liquid</string>
+            <string>0 °C</string>
+            <string>100 °C</string>
+            <string>1 g/cm³</string>
+        </array>
+        <key>Thermo Properties</key>
+        <array>
+            <string>1.865 (Gas) | 4.18 (Liquid) J/(gK)</string>
+            <string>-13.42 (Gas)| 15.87 (Liquid) kJ/g</string>
+            <string>10.48 (Gas) | 3.881 (Liquid) J/(gK)</string>
+            <string>2.23 kJ/g</string>
+            <string>0.334 kJ/g</string>
+            <string>647.14 K</string>
+            <string>22.064 MPa</string>
+        </array>
+    </dict>
+</plist>
