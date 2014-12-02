@@ -223,38 +223,28 @@ static NSArray *elements = nil;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSUInteger baseHeight = 44;
-    NSUInteger fontSize = (int)selectedFont.pointSize;
-    switch (fontSize) {
-        case 12:
-            return baseHeight;
-            break;
-        case 14:
-            return baseHeight * 1.3;
-            break;
-        case 16:
-            return baseHeight * 1.8;
-            break;
-        default:
-            return baseHeight;
-            break;
-    }
-}
 
-- (NSUInteger)stringLengthForFontSize {
-    NSUInteger fontSize = (int)selectedFont.pointSize;
-    switch (fontSize) {
-        case 12:
-            return 20;
-            break;
-        case 14:
-            return 14;
-            break;
-        case 16:
-            return 7;
-        default:
-            break;
+    NSUInteger numberOfRightChars = [[self.molecule rightTextForIndexPath:indexPath] length];
+    NSUInteger numberOfLeftChars = [[self.molecule leftTextForIndexPath:indexPath] length];
+    NSUInteger sum = numberOfLeftChars + numberOfRightChars;
+    if(selectedFont.pointSize == 14) {
+        baseHeight += 10;
+        if(sum > 25) {
+            baseHeight += 20;
+            
+        }
+    } else if(selectedFont.pointSize == 16) {
+        if(sum < 30) {
+            baseHeight += 10;
+        } else if(sum >= 30 && sum < 45) {
+            baseHeight += 25;
+        } else {
+            baseHeight += 90;
+        }
     }
-    return 25;
+    
+    
+    return baseHeight;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -304,15 +294,14 @@ static NSArray *elements = nil;
     UIFont *cellFont = selectedFont;
     NSAttributedString *rightString = [[NSAttributedString alloc]initWithString:[self.molecule rightTextForIndexPath:indexPath] attributes:self.attributedStringOptions];
     
-    if(rightString.length > [self stringLengthForFontSize]) {
-        [cell.detailTextLabel setNumberOfLines:3];
-        [cell.detailTextLabel setLineBreakMode:NSLineBreakByWordWrapping];
-    }
+    cell.textLabel.numberOfLines = 0;
+    cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    cell.detailTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    cell.detailTextLabel.numberOfLines = 0;
     
     cell.textLabel.font = cellFont;
     cell.detailTextLabel.font = cellFont;
     cell.detailTextLabel.attributedText = rightString;
-    
     if([[self.molecule leftTextForIndexPath:indexPath] isKindOfClass:[NSAttributedString class]]) {
         cell.textLabel.attributedText = (NSAttributedString *)[self.molecule leftTextForIndexPath:indexPath];
         cell.textLabel.font = cellFont;

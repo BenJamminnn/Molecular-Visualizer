@@ -28,9 +28,8 @@ static NSArray *fontNames = nil;
 }
 
 - (CGSize)preferredContentSize {
-#warning doesnt scale
     NSUInteger height = 90;
-    return CGSizeMake(100, height);
+    return CGSizeMake(55, height);
 }
 
 #pragma mark - Table view data source
