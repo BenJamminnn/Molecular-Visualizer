@@ -52,7 +52,7 @@
     NSString *name = @"";
     switch (path.section) {
         case 0:
-            return [[self.diatomicMolecules objectAtIndex:path.row]name];
+            return [[self.normalMolecules objectAtIndex:path.row]name];
             break;
         case 1:
             return [[self.acidMolecules objectAtIndex:path.row]name];
@@ -61,7 +61,7 @@
             return [[self.hydrocarbonMolecules objectAtIndex:path.row]name];
             break;
         case 3:
-            return [[self.normalMolecules objectAtIndex:path.row]name];
+            return [[self.diatomicMolecules objectAtIndex:path.row]name];
             break;
         default:
             NSLog(@"Something wrong nameForRowAtIndexPath, path: %@" , path);
@@ -74,7 +74,7 @@
     SCNNode *selectedMolecule;
     switch (path.section) {
         case 0:
-            return [self.diatomicMolecules objectAtIndex:path.row];
+            return [self.normalMolecules objectAtIndex:path.row];
             break;
         case 1:
             return [self.acidMolecules objectAtIndex:path.row];
@@ -83,7 +83,7 @@
             return [self.hydrocarbonMolecules objectAtIndex:path.row];
             break;
         case 3:
-            return [self.normalMolecules objectAtIndex:path.row];
+            return [self.diatomicMolecules objectAtIndex:path.row];
             break;
         default:
             NSLog(@"Something wrong nodeForRowAtIndexPath, path: %@" , path);
@@ -96,7 +96,7 @@
     NSString *headerName = @"";
     switch (section) {
         case 0:
-            headerName = @"Diatomic and Polyatomic";
+            headerName = @"Other";
             break;
         case 1:
             headerName = @"Acids";
@@ -105,7 +105,7 @@
             headerName = @"Hydrocarbons";
             break;
         case 3:
-            headerName = @"Other";
+            headerName = @"Diatomic and Polyatomic";
             break;
         default:
             break;
