@@ -26,6 +26,9 @@
 		469BBCAA1A1FF9380024E979 /* BGColorTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 469BBCA91A1FF9380024E979 /* BGColorTableViewController.m */; };
 		46A799D61A20625900DE9C10 /* WYPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A799D31A20625900DE9C10 /* WYPopoverController.m */; };
 		46B18DB41A257A7400776845 /* BGFontSelectorTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B18DB31A257A7400776845 /* BGFontSelectorTVC.m */; };
+		46B18DCC1A2D405500776845 /* Carbon Monoxide.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46B18DCB1A2D405500776845 /* Carbon Monoxide.plist */; };
+		46B18DCE1A2D423700776845 /* Sulfur Trioxide.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46B18DCD1A2D423700776845 /* Sulfur Trioxide.plist */; };
+		46B18DD01A2D44D100776845 /* Sulfur Dioxide.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46B18DCF1A2D44D100776845 /* Sulfur Dioxide.plist */; };
 		46D71A1719EB977900053A5E /* MoleculeImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D71A1619EB977900053A5E /* MoleculeImage.m */; };
 		46D71A1A19EB97AF00053A5E /* Atom.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D71A1919EB97AF00053A5E /* Atom.m */; };
 		46D71A1D19EB9F8600053A5E /* MoleculesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D71A1C19EB9F8600053A5E /* MoleculesTableViewController.m */; };
@@ -80,6 +83,9 @@
 		46A799D31A20625900DE9C10 /* WYPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPopoverController.m; sourceTree = "<group>"; };
 		46B18DB21A257A7400776845 /* BGFontSelectorTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGFontSelectorTVC.h; sourceTree = "<group>"; };
 		46B18DB31A257A7400776845 /* BGFontSelectorTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGFontSelectorTVC.m; sourceTree = "<group>"; };
+		46B18DCB1A2D405500776845 /* Carbon Monoxide.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Carbon Monoxide.plist"; sourceTree = "<group>"; };
+		46B18DCD1A2D423700776845 /* Sulfur Trioxide.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Sulfur Trioxide.plist"; sourceTree = "<group>"; };
+		46B18DCF1A2D44D100776845 /* Sulfur Dioxide.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Sulfur Dioxide.plist"; sourceTree = "<group>"; };
 		46D71A1519EB977900053A5E /* MoleculeImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoleculeImage.h; sourceTree = "<group>"; };
 		46D71A1619EB977900053A5E /* MoleculeImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoleculeImage.m; sourceTree = "<group>"; };
 		46D71A1819EB97AF00053A5E /* Atom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Atom.h; sourceTree = "<group>"; };
@@ -228,6 +234,9 @@
 				465969191A23E3C300316E48 /* Propane.plist */,
 				4659691B1A23E62200316E48 /* Ethane.plist */,
 				4659691D1A23F51D00316E48 /* Carbon Dioxide.plist */,
+				46B18DCB1A2D405500776845 /* Carbon Monoxide.plist */,
+				46B18DCD1A2D423700776845 /* Sulfur Trioxide.plist */,
+				46B18DCF1A2D44D100776845 /* Sulfur Dioxide.plist */,
 			);
 			name = "Chemical Plists";
 			sourceTree = "<group>";
@@ -313,16 +322,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				4659691A1A23E3C300316E48 /* Propane.plist in Resources */,
+				46B18DD01A2D44D100776845 /* Sulfur Dioxide.plist in Resources */,
 				46E06FDC1A1D6E7C003CEFC4 /* Ozone.plist in Resources */,
 				46E06FC61A1183AC003CEFC4 /* Chlorine.plist in Resources */,
 				465969161A23DB7B00316E48 /* Pentane.plist in Resources */,
 				465969181A23E1C800316E48 /* Butane.plist in Resources */,
 				46E06FCA1A1ABC15003CEFC4 /* Nitric Acid.plist in Resources */,
+				46B18DCE1A2D423700776845 /* Sulfur Trioxide.plist in Resources */,
 				4661D1F319EC8C3C001F819E /* Main2.storyboard in Resources */,
 				4659691E1A23F51D00316E48 /* Carbon Dioxide.plist in Resources */,
 				46E06FDA1A1D6AC1003CEFC4 /* Ether.plist in Resources */,
 				469BBCA31A1DEEC80024E979 /* Sulfuric Acid.plist in Resources */,
 				46E06FC81A145EAA003CEFC4 /* Ammonia.plist in Resources */,
+				46B18DCC1A2D405500776845 /* Carbon Monoxide.plist in Resources */,
 				469BBCA51A1DF1820024E979 /* Nitrous Oxide.plist in Resources */,
 				4659691C1A23E62200316E48 /* Ethane.plist in Resources */,
 				46E06FD81A1D68B5003CEFC4 /* Benzene.plist in Resources */,

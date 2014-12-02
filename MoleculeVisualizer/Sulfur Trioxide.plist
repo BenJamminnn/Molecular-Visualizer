@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Basic Properties</key>
+        <array>
+            <string>SO₃</string>
+            <string>Sulfur Trioxide</string>
+            <string>Sulfur (40%) | Oxygen (60%) </string>
+            <string>80.063 g/mol</string>
+            <string>Liquid (STP)</string>
+            <string>16.8 °C</string>
+            <string>44.7 °C</string>
+            <string>1.97 g/cm³</string>
+        </array>
+        <key>Thermo Properties</key>
+        <array>
+            <string>0.6332 (Gas) J/(gK)</string>
+            <string>-4.942 (Gas) | -5.677 (solid) kJ/g</string>
+            <string>3.21 J/(gK)</string>
+            <string>N/A</string>
+            <string>N/A</string>
+            <string>490.9 K</string>
+            <string>8.2 MPa</string>
+        </array>
+    </dict>
+</plist>
