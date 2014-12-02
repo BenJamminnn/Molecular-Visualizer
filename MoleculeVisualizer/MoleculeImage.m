@@ -1006,9 +1006,8 @@ static NSArray *hydrocarbonMolecules = nil;
 
 - (NSArray *)otherMolecules {
     if(!_otherMolecules) {
-        SCNNode *placeHolder= [SCNNode node];
-        placeHolder.name = @"PlaceHolder";
-        _otherMolecules =  @[placeHolder];
+
+        _otherMolecules =  @[[self nitrousOxideMolecule] , [self etherMolecule], [self acetoneMolecule], [self carbonDioxideMolecule], [self carbonMonoxideMolecule], [self sulfurTrioxideMolecule] , [self sulfurDioxideMolecule] , [self hydrogenChlorideMolecule] , [self hydrogenPeroxideMolecule], [self ammoniaMolecule] , [self ptfeMolecule] , [self methaneMolecule], [self waterMolecule]];
         
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
@@ -1038,7 +1037,7 @@ static NSArray *hydrocarbonMolecules = nil;
     if(!_hydrocarbonMolecules) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            hydrocarbonMolecules = @[[self nitrousOxideMolecule] , [self etherMolecule] , [self acetoneMolecule] , [self benzeneMolecule] ,[self pentaneMolecule] ,[self butaneMolecule] , [self propaneMolecule] , [self ethaneMolecule] , [self carbonDioxideMolecule] , [self carbonMonoxideMolecule], [self sulfurTrioxideMolecule], [self sulfurDioxideMolecule] , [self hydrogenChlorideMolecule] , [self hydrogenPeroxideMolecule] , [self waterMolecule], [self ammoniaMolecule] , [self ptfeMolecule] , [self methaneMolecule]];
+            hydrocarbonMolecules = @[ [self benzeneMolecule] ,[self pentaneMolecule] ,[self butaneMolecule] , [self propaneMolecule] , [self ethaneMolecule]];
         });
         _hydrocarbonMolecules = hydrocarbonMolecules;
     }

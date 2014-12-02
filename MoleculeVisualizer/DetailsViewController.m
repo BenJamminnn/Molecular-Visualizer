@@ -223,7 +223,6 @@ static NSArray *elements = nil;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSUInteger baseHeight = 44;
-
     NSUInteger numberOfRightChars = [[self.molecule rightTextForIndexPath:indexPath] length];
     NSUInteger numberOfLeftChars = [[self.molecule leftTextForIndexPath:indexPath] length];
     NSUInteger sum = numberOfLeftChars + numberOfRightChars;
@@ -242,8 +241,6 @@ static NSArray *elements = nil;
             baseHeight += 90;
         }
     }
-    
-    
     return baseHeight;
 }
 

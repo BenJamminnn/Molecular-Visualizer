@@ -167,7 +167,6 @@ static NSArray *elements = nil;
     self.leftTextCollection = leftText;
 }
 
-
 #pragma mark - lazy loading
 
 - (BOOL)isDiatomic {
