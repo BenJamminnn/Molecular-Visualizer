@@ -120,7 +120,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return self.diatomicMolecules.count;
+            return self.normalMolecules.count;
             break;
         case 1:
             return self.acidMolecules.count;
@@ -129,7 +129,7 @@
             return self.hydrocarbonMolecules.count;
             break;
         case 3:
-            return self.normalMolecules.count;
+            return self.diatomicMolecules.count;
         default:
             break;
     }
@@ -139,7 +139,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *identifier = [self nameForRowAtIndexPath:indexPath];
     UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:16];
-
+    
     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
     cell.textLabel.font = cellFont;
     cell.textLabel.text = identifier;

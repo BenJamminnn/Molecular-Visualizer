@@ -1007,7 +1007,7 @@ static NSArray *hydrocarbonMolecules = nil;
 - (NSArray *)otherMolecules {
     if(!_otherMolecules) {
 
-        _otherMolecules =  @[[self nitrousOxideMolecule] , [self etherMolecule], [self acetoneMolecule], [self carbonDioxideMolecule], [self carbonMonoxideMolecule], [self sulfurTrioxideMolecule] , [self sulfurDioxideMolecule] , [self hydrogenChlorideMolecule] , [self hydrogenPeroxideMolecule], [self ammoniaMolecule] , [self ptfeMolecule] , [self methaneMolecule], [self waterMolecule]];
+        _otherMolecules =  @[[self nitrousOxideMolecule] , [self etherMolecule], [self acetoneMolecule], [self carbonDioxideMolecule], [self carbonMonoxideMolecule], [self sulfurTrioxideMolecule] , [self sulfurDioxideMolecule] , [self hydrogenChlorideMolecule] , [self hydrogenPeroxideMolecule], [self ammoniaMolecule], [self methaneMolecule], [self waterMolecule]];
         
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
