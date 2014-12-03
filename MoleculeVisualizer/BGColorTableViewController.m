@@ -30,7 +30,7 @@
 
 - (CGSize)preferredContentSize {
     NSUInteger width = 100;
-    NSUInteger height = 33 * self.colorNames.count;
+    NSUInteger height = 31 * self.colorNames.count;
     return CGSizeMake(width, height);
 }
 
