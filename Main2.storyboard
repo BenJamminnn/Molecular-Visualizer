@@ -36,12 +36,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eED-o2-GxE">
-                                <rect key="frame" x="0.0" y="44" width="320" height="528"/>
+                            <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" sceneName="" translatesAutoresizingMaskIntoConstraints="NO" id="eED-o2-GxE">
+                                <rect key="frame" x="0.0" y="-3" width="605" height="606"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </sceneKitView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jzG-cb-h8b">
-                                <rect key="frame" x="16" y="521" width="115" height="26.5"/>
+                                <rect key="frame" x="128" y="469" width="115" height="27"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <state key="normal" title="Background Color">
                                     <color key="titleColor" red="0.1502289718" green="0.1493897038" blue="0.1510682398" alpha="1" colorSpace="calibratedRGB"/>
@@ -51,7 +51,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1Z-dy-Lxc">
-                                <rect key="frame" x="259" y="521" width="40" height="30"/>
+                                <rect key="frame" x="390" y="469" width="40" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <state key="normal" title="Reset">
                                     <color key="titleColor" red="0.1502289718" green="0.1493897038" blue="0.1510682398" alpha="1" colorSpace="calibratedRGB"/>
@@ -63,6 +63,12 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="eED-o2-GxE" firstAttribute="leading" secondItem="2ue-2X-utl" secondAttribute="leading" id="5l2-df-r7t"/>
+                            <constraint firstAttribute="centerX" secondItem="eED-o2-GxE" secondAttribute="centerX" constant="-2.5" id="6zB-ZB-rNI"/>
+                            <constraint firstItem="eED-o2-GxE" firstAttribute="top" secondItem="2ue-2X-utl" secondAttribute="top" id="AhX-oi-CyE"/>
+                            <constraint firstAttribute="centerY" secondItem="eED-o2-GxE" secondAttribute="centerY" constant="-8" id="rRK-4G-938"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="backgroundColorButton" destination="jzG-cb-h8b" id="Jip-4e-oZy"/>
@@ -85,7 +91,7 @@
                     <view key="view" contentMode="scaleToFill" id="Qzc-mJ-CIT">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="0.65988499245322552" blue="0.021584575006178386" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VMT-Sx-wU6" userLabel="First Responder" sceneMemberID="firstResponder"/>
