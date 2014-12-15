@@ -1058,16 +1058,16 @@ static NSArray *hydrocarbonMolecules = nil;
 - (SCNNode *)doubleBondConnectorPositionA:(SCNVector3)positionA b:(SCNVector3)positionB YBased:(BOOL)yBased command:(NSString *)command {
     SCNNode *connectors = [SCNNode node];
     
-    SCNVector3 connectorPointA = SCNVector3Make(positionA.x, positionA.y - 0.3, positionA.z);
-    SCNVector3 connectorPointB = SCNVector3Make(positionA.x, positionA.y + 0.3, positionA.z);
+    SCNVector3 connectorPointA = SCNVector3Make(positionA.x, positionA.y - 0.25, positionA.z);
+    SCNVector3 connectorPointB = SCNVector3Make(positionA.x, positionA.y + 0.25, positionA.z);
     
-    SCNVector3 connectorPointC = SCNVector3Make(positionB.x, positionB.y + 0.3, positionB.z);
-    SCNVector3 connectorPointD = SCNVector3Make(positionB.x, positionB.y - 0.3, positionB.z);
+    SCNVector3 connectorPointC = SCNVector3Make(positionB.x, positionB.y + 0.25, positionB.z);
+    SCNVector3 connectorPointD = SCNVector3Make(positionB.x, positionB.y - 0.25, positionB.z);
     if(!yBased) {
-        connectorPointA = SCNVector3Make(positionA.x - 0.3, positionA.y, positionA.z);
-        connectorPointB = SCNVector3Make(positionA.x + 0.3, positionA.y, positionA.z);
-        connectorPointC = SCNVector3Make(positionB.x + 0.3, positionB.y, positionB.z);
-        connectorPointD = SCNVector3Make(positionB.x - 0.3, positionB.y, positionB.z);
+        connectorPointA = SCNVector3Make(positionA.x - 0.25, positionA.y, positionA.z);
+        connectorPointB = SCNVector3Make(positionA.x + 0.25, positionA.y, positionA.z);
+        connectorPointC = SCNVector3Make(positionB.x + 0.25, positionB.y, positionB.z);
+        connectorPointD = SCNVector3Make(positionB.x - 0.25, positionB.y, positionB.z);
     }
     
     [connectors addChildNode:[self connectorWithPositions:connectorPointB and:connectorPointC command:command]];

@@ -60,9 +60,9 @@
         case 2:
             return [[self.hydrocarbonMolecules objectAtIndex:path.row]name];
             break;
-        case 3:
-            return [[self.diatomicMolecules objectAtIndex:path.row]name];
-            break;
+//        case 3:
+//            return [[self.diatomicMolecules objectAtIndex:path.row]name];
+//            break;
         default:
             NSLog(@"Something wrong nameForRowAtIndexPath, path: %@" , path);
             break;
@@ -96,7 +96,7 @@
     NSString *headerName = @"";
     switch (section) {
         case 0:
-            headerName = @"Other";
+            headerName = @"General";
             break;
         case 1:
             headerName = @"Acids";
@@ -114,7 +114,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 4;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

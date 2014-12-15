@@ -27,6 +27,7 @@ static NSArray *elements = nil;
 @property (nonatomic, strong) NSString *moleculeName;
 
 @property (nonatomic, strong) NSDictionary *leftTextCollection;
+
 @end
 
 @implementation Molecule
