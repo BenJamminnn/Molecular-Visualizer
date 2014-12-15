@@ -15,16 +15,16 @@ static NSArray *diatomicMolecules = nil;
 static NSArray *acidMolecules = nil;
 static NSArray *hydrocarbonMolecules = nil;
 
-
 @interface MoleculeImage()
+
 @property (nonatomic, strong, readwrite) NSArray *otherMolecules;
 @property (nonatomic, strong, readwrite) NSArray *diatomicMolecules;
 @property (nonatomic, readwrite, strong) NSArray *acidMolecules;
 @property (nonatomic, readwrite, strong) NSArray *hydrocarbonMolecules;
 
 @end
-@implementation MoleculeImage
 
+@implementation MoleculeImage
 
 #pragma mark - hydrocarbons
 
@@ -57,14 +57,13 @@ static NSArray *hydrocarbonMolecules = nil;
 
 - (SCNNode *)ptfeMolecule {
     SCNNode *ptfe = [SCNNode node];
+
     SCNVector3 carbonLeft = SCNVector3Make(-3, 0, 0);
     SCNVector3 carbonRight = SCNVector3Make(+3, 0, 0);
     SCNVector3 carbonDoubleBondLeft = SCNVector3Make(+3, +0.3, 0);
     SCNVector3 carbonDoubleBondRight = SCNVector3Make(-3, +0.3, 0);
     SCNVector3 carbonDoubleBondLeftSecond = SCNVector3Make(+3, -0.3, 0);
     SCNVector3 carbonDoubleBondRightSecond = SCNVector3Make(-3, -0.3, 0);
-
-
     
     SCNVector3 fluorineTopLeft = SCNVector3Make(-7, +4, 0);
     SCNVector3 fluorineTopRight = SCNVector3Make(+7, +4, 0);
@@ -83,7 +82,6 @@ static NSArray *hydrocarbonMolecules = nil;
     [ptfe addChildNode:[self connectorWithPositions:carbonLeft and:fluorineTopLeft command:@"135xy"]];
     [ptfe addChildNode:[self connectorWithPositions:carbonLeft and:fluorineBottomLeft command:@"45xy"]];
 
-    
     //right fluorines
     [self nodeWithAtom:[Atom fluorineAtom] molecule: ptfe position:fluorineTopRight];
     [self nodeWithAtom:[Atom fluorineAtom] molecule: ptfe position:fluorineBottomRight];

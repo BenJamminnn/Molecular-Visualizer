@@ -40,7 +40,7 @@ static UIColor *currentBackgroundColor = nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIBarButtonItem* backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self
                                                                   action:@selector(done)];
     UIBarButtonItem *details = [[UIBarButtonItem alloc]initWithTitle:@"Details" style:UIBarButtonItemStylePlain target:self action:@selector(details)];
     self.navigationItem.rightBarButtonItem = details;
