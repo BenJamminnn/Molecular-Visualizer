@@ -19,7 +19,7 @@ static UIColor *currentBackgroundColor = nil;
 @interface ViewController () <ColorPickerDelegate, WYPopoverControllerDelegate>
 @property (weak, nonatomic) IBOutlet SCNView *sceneView;
 @property (nonatomic, strong) BGColorTableViewController *colorPicker;
-@property (weak, nonatomic) IBOutlet UIButton *backgroundColorButton;
+@property (weak, nonatomic) IBOutlet UIButton *backgroundColorButton; //reffing to change bg to rounded rect
 @property (weak, nonatomic) IBOutlet UIButton *resetButton;
 @property (nonatomic, strong) WYPopoverController *colorPickerPopover;
 @end
@@ -46,6 +46,7 @@ static UIColor *currentBackgroundColor = nil;
     self.navigationItem.rightBarButtonItem = details;
     self.navigationItem.leftBarButtonItem = backButton;
     self.title = self.geometryNode.name;
+
     [self sceneSetup];
     if(self.sceneView.backgroundColor == [UIColor whiteColor]) {
         [self selectedColor:[UIColor whiteColor]];
